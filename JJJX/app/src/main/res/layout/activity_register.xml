@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register_bg"
+    android:orientation="vertical">
+
+
+    <com.jjjx.widget.ClearWriteEditText
+        android:id="@+id/jx_reg_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="120dp"
+        android:drawablePadding="5dip"
+        android:hint="邮箱/手机"
+        android:maxLines="1"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:textColor="#FFF"
+        android:textColorHint="#FFFFFF" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+
+        <com.jjjx.widget.ClearWriteEditText
+            android:id="@+id/jx_reg_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="7"
+            android:drawablePadding="5dip"
+            android:hint="验证码"
+            android:inputType="number"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:textColor="#FFF"
+            android:textColorHint="#FFFFFF" />
+
+
+        <Button
+            android:id="@+id/jx_reg_get_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="4"
+            android:background="@drawable/rs_select_btn_yellow"
+            android:minHeight="1dp"
+            android:minWidth="1dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="发送验证码"
+            android:textColor="#FFF"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <com.jjjx.widget.ClearWriteEditText
+        android:id="@+id/jx_reg_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:drawablePadding="5dip"
+        android:hint="密码"
+        android:inputType="textPassword"
+        android:maxLength="16"
+        android:maxLines="1"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:textColor="#FFF"
+        android:textColorHint="#FFFFFF" />
+
+
+    <Button
+        android:id="@+id/jx_reg_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rs_select_btn_yellow"
+        android:text="注册"
+        android:textColor="#FFF" />
+
+
+</LinearLayout>
+
