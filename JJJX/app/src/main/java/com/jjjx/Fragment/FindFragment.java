@@ -1,4 +1,4 @@
-package com.jjjx.Fragment;
+package com.jjjx.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

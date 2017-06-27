@@ -13,13 +13,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jjjx.Fragment.FindFragment;
-import com.jjjx.Fragment.IndexFragment;
-import com.jjjx.Fragment.MineFragment;
+import com.jjjx.fragment.FindFragment;
+import com.jjjx.fragment.IndexFragment;
+import com.jjjx.fragment.MineFragment;
 import com.jjjx.R;
 import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.utils.CacheTask;
-import com.jjjx.utils.NToast;
 import com.jjjx.widget.DragPointView;
 import com.jjjx.widget.JxViewPager;
 
@@ -32,8 +31,6 @@ import java.util.List;
 
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
-
-import static android.R.attr.start;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, DragPointView.OnDragListener, ViewPager.OnPageChangeListener {
 

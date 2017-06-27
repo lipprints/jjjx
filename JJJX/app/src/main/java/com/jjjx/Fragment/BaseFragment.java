@@ -3,7 +3,7 @@
     Copyright (c) 2014 ShengDao Tech Company Limited
  */
 
-package com.jjjx.Fragment;
+package com.jjjx.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
