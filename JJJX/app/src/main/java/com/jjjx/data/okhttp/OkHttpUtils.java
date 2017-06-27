@@ -153,8 +153,9 @@ public class OkHttpUtils {
     public void uploadImage(String user_id, File file, final UploadImageListener uploadImageListener) {
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder();
         multipartBodyBuilder.setType(MultipartBody.FORM);
-//        multipartBodyBuilder.addFormDataPart("user_id", user_id);
-        multipartBodyBuilder.addPart(RequestBody.create(MEDIA_TYPE_PNG, file));
+        multipartBodyBuilder.addFormDataPart("user_id", user_id);
+        multipartBodyBuilder.addFormDataPart("filename", file.getName(), RequestBody.create(MEDIA_TYPE_PNG, file));
+//        multipartBodyBuilder.addPart(RequestBody.create(MEDIA_TYPE_PNG, file));
         final RequestBody requestBody = multipartBodyBuilder.build();
         Request.Builder RequestBuilder = new Request.Builder();
         RequestBuilder.url(Constants.DOMAIN + Constants.ADD_PIC);// 添加URL地址
