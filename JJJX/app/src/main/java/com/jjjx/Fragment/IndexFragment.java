@@ -7,7 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.jjjx.App;
+import com.jjjx.OnBDLocationListener;
 import com.jjjx.R;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.banner.GlideImageLoader;
@@ -21,7 +25,7 @@ import java.util.List;
  * Created by AMing on 17/5/8.
  * Company RongCloud
  */
-public class IndexFragment extends Fragment {
+public class IndexFragment extends Fragment implements OnBDLocationListener {
     private List<String> images;
 
     @Nullable
@@ -54,6 +58,25 @@ public class IndexFragment extends Fragment {
                 }
             }
         });
+        App.getInstance().addOnBDLocationObserver(this);
         return v;
+    }
+
+    @Override
+    public void onLocation(BDLocation bdLocation) {
+        NToast.longToast(getActivity(), "当前位置: \r\n 经纬度:" + bdLocation.getLongitude() + "---" + bdLocation.getLatitude() +
+                "\r\n 当前城市:" + bdLocation.getCity() +
+                "\r\n 当前区县:" + bdLocation.getDistrict() +
+                "\r\n 位置语音化信息:" + bdLocation.getLocationDescribe() +
+                "\r\n 当前街道信息:" + bdLocation.getStreet() +
+                "\r\n 当前位置:" + bdLocation.getAddrStr()
+        );
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        App.getInstance().removeOnBDLocationObserver(this);
     }
 }

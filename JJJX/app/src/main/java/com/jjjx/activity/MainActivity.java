@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jjjx.App;
 import com.jjjx.fragment.FindFragment;
 import com.jjjx.fragment.IndexFragment;
 import com.jjjx.fragment.MineFragment;
@@ -32,6 +33,8 @@ import java.util.List;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
 
+import static android.R.attr.start;
+
 public class MainActivity extends BaseActivity implements View.OnClickListener, DragPointView.OnDragListener, ViewPager.OnPageChangeListener {
 
     private JxViewPager mViewPager;
@@ -50,6 +53,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         changeTextViewColor();
         changeSelectedTabState(0);
         initMainViewPager();
+        startBaidu();
+    }
+
+    private void startBaidu() {
+        App.getInstance().startLocationObserver();
     }
 
     private void initMainViewPager() {
@@ -217,7 +225,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 OkHttpUtils.getInstance(this).uploadImage(CacheTask.getInstance().getUserId(), imageFile, new OkHttpUtils.UploadImageListener() {
                     @Override
                     public void onSuccess(String result) {
-                        Log.e(TAG,result);
+                        Log.e(TAG, result);
                         //{"head":{"msg":"发布失败！","code":"E0005"}}
                     }
 
