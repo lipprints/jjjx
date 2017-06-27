@@ -51,7 +51,7 @@ public class App extends MultiDexApplication implements BDLocationListener {
 
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
-        Log.e("APP", "bdLocation");
+        Log.e("APP", "bdLocation"); //30秒定位一次
         for (OnBDLocationListener listener : listenerList) {
             listener.onLocation(bdLocation);
         }
