@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -21,18 +22,24 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.baidu.location.h.j.p;
+
 /**
  * Created by AMing on 17/5/8.
  * Company RongCloud
  */
-public class IndexFragment extends Fragment implements OnBDLocationListener {
+public class IndexFragment extends Fragment implements OnBDLocationListener, View.OnClickListener {
     private List<String> images;
+    private TextView locationTextView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_index, container, false);
         Banner banner = (Banner) v.findViewById(R.id.banner);
+        locationTextView = (TextView) v.findViewById(R.id.titleBar_city_name);
+        locationTextView.setText("定位中...");
+        locationTextView.setOnClickListener(this);
         images = new ArrayList<>();
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1499136189&di=cbbd537c7eb6ed7f907d005b19031b98&imgtype=jpg&er=1&src=http%3A%2F%2Fpic2.ooopic.com%2F13%2F58%2F87%2F63bOOOPICb3_1024.jpg");
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1499136210&di=c0d88cb26a88a6b0cf78a8f7beb49653&imgtype=jpg&er=1&src=http%3A%2F%2Fpic74.nipic.com%2Ffile%2F20150805%2F12033066_235333091000_2.jpg");
@@ -62,15 +69,12 @@ public class IndexFragment extends Fragment implements OnBDLocationListener {
         return v;
     }
 
+    private BDLocation bdLocation;
+
     @Override
     public void onLocation(BDLocation bdLocation) {
-        NToast.longToast(getActivity(), "当前位置: \r\n 经纬度:" + bdLocation.getLongitude() + "---" + bdLocation.getLatitude() +
-                "\r\n 当前城市:" + bdLocation.getCity() +
-                "\r\n 当前区县:" + bdLocation.getDistrict() +
-                "\r\n 位置语音化信息:" + bdLocation.getLocationDescribe() +
-                "\r\n 当前街道信息:" + bdLocation.getStreet() +
-                "\r\n 当前位置:" + bdLocation.getAddrStr()
-        );
+        this.bdLocation = bdLocation;
+        locationTextView.setText(bdLocation.getCity());
     }
 
 
@@ -78,5 +82,20 @@ public class IndexFragment extends Fragment implements OnBDLocationListener {
     public void onDestroy() {
         super.onDestroy();
         App.getInstance().removeOnBDLocationObserver(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.titleBar_city_name:
+                NToast.longToast(getActivity(), "当前位置: \r\n 经纬度:" + bdLocation.getLongitude() + "---" + bdLocation.getLatitude() +
+                        "\r\n 当前城市:" + bdLocation.getCity() +
+                        "\r\n 当前区县:" + bdLocation.getDistrict() +
+                        "\r\n 位置语音化信息:" + bdLocation.getLocationDescribe() +
+                        "\r\n 当前街道信息:" + bdLocation.getStreet() +
+                        "\r\n 当前位置:" + bdLocation.getAddrStr()
+                );
+                break;
+        }
     }
 }

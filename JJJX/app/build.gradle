@@ -39,6 +39,7 @@ dependencies {
     compile 'net.alhazmy13.MediaPicker:libary:2.3.1' //图片选择器
     compile 'com.gyf.barlibrary:barlibrary:2.1.6' //沉浸式
     compile 'com.youth.banner:banner:1.4.9' //轮播图
+    compile 'com.dalong:marqueeview:1.0.1' //首页跑马灯
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
