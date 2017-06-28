@@ -218,23 +218,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
-            List<String> mPaths = (List<String>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH);
-            File imageFile = new File(mPaths.get(0));
-            if (imageFile.exists()) {
-                OkHttpUtils.getInstance(this).uploadImage(CacheTask.getInstance().getUserId(), imageFile, new OkHttpUtils.UploadImageListener() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.e(TAG, result);
-                        //{"head":{"msg":"发布失败！","code":"E0005"}}
-                    }
-
-                    @Override
-                    public void onFailure(IOException e) {
-
-                    }
-                });
-            }
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
         }
+//        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
+//            List<String> mPaths = (List<String>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH);
+//            File imageFile = new File(mPaths.get(0));
+//            if (imageFile.exists()) {
+//                OkHttpUtils.getInstance(this).uploadImage(CacheTask.getInstance().getUserId(), imageFile, new OkHttpUtils.UploadImageListener() {
+//                    @Override
+//                    public void onSuccess(String result) {
+//                        Log.e(TAG, result);
+//                        //{"head":{"msg":"发布失败！","code":"E0005"}}
+//                    }
+//
+//                    @Override
+//                    public void onFailure(IOException e) {
+//
+//                    }
+//                });
+//            }
+//        }
     }
 }

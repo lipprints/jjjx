@@ -1,5 +1,7 @@
 package com.jjjx;
 
+import android.content.Context;
+import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
@@ -26,11 +28,15 @@ public class App extends MultiDexApplication implements BDLocationListener {
 
     public LocationService locationService;
     private List<OnBDLocationListener> listenerList;
+    public static volatile Context applicationContext;
+    public static volatile Handler applicationHandler;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+        applicationContext = getApplicationContext();
+        applicationHandler = new Handler(applicationContext.getMainLooper());
         if (getApplicationInfo().packageName.equals(SystemUtils.getCurProcessName(this))) {
             instance = this;
             listenerList = new ArrayList<>();

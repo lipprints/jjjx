@@ -8,28 +8,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.jjjx.App;
+import com.jjjx.Constants;
 import com.jjjx.R;
 import com.jjjx.data.okhttp.OkHttpUtils;
+import com.jjjx.model.UploadImageModel;
 import com.jjjx.utils.CacheTask;
+import com.jjjx.utils.NLog;
 import com.jjjx.utils.NToast;
+import com.jjjx.widget.CircleImageView;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.alibaba.fastjson.JSON.parseObject;
 
 /**
  * Created by AMing on 17/5/8.
  * Company RongCloud
  */
-public class MineFragment extends android.support.v4.app.Fragment {
+public class MineFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
+
+    CircleImageView circleImageView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mine, container, false);
+        circleImageView = (CircleImageView) v.findViewById(R.id.jx_user_head);
+        circleImageView.setOnClickListener(this);
         v.findViewById(R.id.clean).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,20 +56,7 @@ public class MineFragment extends android.support.v4.app.Fragment {
                 getActivity().finish();
             }
         });
-        v.findViewById(R.id.upload).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new ImagePicker.Builder(getActivity())
-                        .mode(ImagePicker.Mode.GALLERY)
-                        .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
-                        .directory(ImagePicker.Directory.DEFAULT)
-                        .extension(ImagePicker.Extension.PNG)
-                        .scale(600, 600)
-                        .allowMultipleImages(false)
-                        .enableDebuggingMode(true)
-                        .build();
-            }
-        });
+
         return v;
     }
 
@@ -65,15 +70,46 @@ public class MineFragment extends android.support.v4.app.Fragment {
                 OkHttpUtils.getInstance(getActivity()).uploadImage(CacheTask.getInstance().getUserId(), imageFile, new OkHttpUtils.UploadImageListener() {
                     @Override
                     public void onSuccess(String result) {
-                        Log.e("MineFragment", result);
+                        final UploadImageModel model = JSON.parseObject(result, UploadImageModel.class);
+                        App.applicationHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                NToast.shortToast(getActivity(), "上传头像成功");
+                                Log.e("MineFragment", Constants.DOMAIN + model.getUrl());
+                                Glide.with(getActivity()).load(Constants.DOMAIN + model.getUrl()).into(new SimpleTarget<GlideDrawable>() {
+                                    @Override
+                                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                                        circleImageView.setImageDrawable(resource);
+                                    }
+                                });
+                            }
+                        });
                     }
 
                     @Override
                     public void onFailure(IOException e) {
-
+                        App.applicationHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                NToast.shortToast(getActivity(), "上传头像失败");
+                            }
+                        });
                     }
                 });
             }
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        new ImagePicker.Builder(getActivity())
+                .mode(ImagePicker.Mode.GALLERY)
+                .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
+                .directory(ImagePicker.Directory.DEFAULT)
+                .extension(ImagePicker.Extension.PNG)
+                .scale(600, 600)
+                .allowMultipleImages(false)
+                .enableDebuggingMode(true)
+                .build();
     }
 }
