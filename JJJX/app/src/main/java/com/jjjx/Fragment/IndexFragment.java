@@ -46,6 +46,7 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1498541508985&di=decefe3014ec2eba9a1df114460b04c4&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F11%2F72%2F21%2F20bOOOPIC2c_1024.jpg");
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1498541537797&di=f03bc68d54916ed39d027a7567181661&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F018f1b56f2057232f875a9448ab29f.jpg%40900w_1l_2o_100sh.jpg");
         banner.setImages(images).setImageLoader(new GlideImageLoader()).start();
+        banner.setDelayTime(6000);
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
