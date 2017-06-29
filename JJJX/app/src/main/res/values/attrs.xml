@@ -9,4 +9,13 @@
         <attr name="civ_fill_color" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="rce_tv_list_item">
+        <attr name="tv_list_item_allow_arrow" format="boolean" />
+        <attr name="tv_list_item_title" format="string|reference" />
+        <attr name="tv_list_item_title_color" format="color" />
+        <attr name="tv_list_item_detail" format="string" />
+        <attr name="tv_list_item_detail_color" format="color" />
+        <attr name="tv_list_item_title_icon" format="reference" />
+    </declare-styleable>
+
 </resources>

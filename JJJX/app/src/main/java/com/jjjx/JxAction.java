@@ -9,6 +9,7 @@ import com.jjjx.data.response.GetRongCloudTokenResponse;
 import com.jjjx.data.response.GetVerifyCodeResponse;
 import com.jjjx.data.response.LoginResponse;
 import com.jjjx.data.response.RegisterResponse;
+import com.jjjx.data.response.RequestRoleResponse;
 import com.jjjx.utils.AMUtils;
 
 import static android.R.attr.x;
@@ -102,7 +103,12 @@ public class JxAction extends BaseAction {
         return response;
     }
 
-
+    /**
+     * 获取融云token
+     * @param uname
+     * @return
+     * @throws Exception
+     */
     public GetRongCloudTokenResponse getRongCloudToken(String uname) throws Exception {
         GetRongCloudTokenResponse response = new GetRongCloudTokenResponse();
         String url = getURL(Constants.GET_RONGCLOUD_TOKEN);
@@ -113,5 +119,9 @@ public class JxAction extends BaseAction {
             response = jsonToBean(result, GetRongCloudTokenResponse.class);
         }
         return response;
+    }
+
+    public RequestRoleResponse requestRole(){
+        return null;
     }
 }

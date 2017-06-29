@@ -19,20 +19,17 @@ import com.jjjx.R;
 import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.model.UploadImageModel;
 import com.jjjx.utils.CacheTask;
-import com.jjjx.utils.NLog;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.CircleImageView;
+import com.jjjx.widget.ListItemTextView;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.alibaba.fastjson.JSON.parseObject;
 
 /**
  * Created by AMing on 17/5/8.
@@ -41,14 +38,16 @@ import static com.alibaba.fastjson.JSON.parseObject;
 public class MineFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     CircleImageView circleImageView;
+    ListItemTextView quitTextView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mine, container, false);
         circleImageView = (CircleImageView) v.findViewById(R.id.jx_user_head);
+        quitTextView = (ListItemTextView) v.findViewById(R.id.mine_quit);
         circleImageView.setOnClickListener(this);
-        v.findViewById(R.id.clean).setOnClickListener(new View.OnClickListener() {
+        quitTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CacheTask.getInstance().clearAllCache();
@@ -56,7 +55,6 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
                 getActivity().finish();
             }
         });
-
         return v;
     }
 

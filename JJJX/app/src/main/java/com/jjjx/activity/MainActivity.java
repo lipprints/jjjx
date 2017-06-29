@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,22 +18,15 @@ import com.jjjx.fragment.FindFragment;
 import com.jjjx.fragment.IndexFragment;
 import com.jjjx.fragment.MineFragment;
 import com.jjjx.R;
-import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.widget.DragPointView;
 import com.jjjx.widget.JxViewPager;
 
-import net.alhazmy13.mediapicker.Image.ImagePicker;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
-
-import static android.R.attr.start;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, DragPointView.OnDragListener, ViewPager.OnPageChangeListener {
 
@@ -185,7 +178,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.jx_tab_publish:
                 if (CacheTask.getInstance().isLogin()) {
-                    startActivity(new Intent(this, PublishActivity.class));
+                    switch (CacheTask.getInstance().getUserRole()) {
+                        case "0"://无身份
+                            startActivity(new Intent(this, VerifyRoleActivity.class));
+                            //TODO 选择验证教师 或者 机构
+                            break;
+                        case "1"://教师
+                            startActivity(new Intent(this, PublishActivity.class));
+                            break;
+                        case "2"://机构
+                            startActivity(new Intent(this, PublishActivity.class));
+                            break;
+                        case "3"://审核中
+                            //TODO 告知在审核中 可以询问客服进度
+                            break;
+                    }
+
                 } else {
                     startActivity(new Intent(this, LoginActivity.class));
                 }
@@ -221,23 +229,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
-//        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
-//            List<String> mPaths = (List<String>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH);
-//            File imageFile = new File(mPaths.get(0));
-//            if (imageFile.exists()) {
-//                OkHttpUtils.getInstance(this).uploadImage(CacheTask.getInstance().getUserId(), imageFile, new OkHttpUtils.UploadImageListener() {
-//                    @Override
-//                    public void onSuccess(String result) {
-//                        Log.e(TAG, result);
-//                        //{"head":{"msg":"发布失败！","code":"E0005"}}
-//                    }
-//
-//                    @Override
-//                    public void onFailure(IOException e) {
-//
-//                    }
-//                });
-//            }
-//        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

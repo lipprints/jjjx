@@ -85,6 +85,12 @@ public class CacheTask {
         editor.apply();
     }
 
+    public void cacheRole(String role) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("userRole", role);
+        editor.apply();
+    }
+
     public boolean isLogin() {
         return (!TextUtils.isEmpty(preferences.getString("userId", "")));
     }
@@ -96,6 +102,10 @@ public class CacheTask {
      */
     public String getUserId() {
         return preferences.getString("userId", null);
+    }
+
+    public String getUserRole() {
+        return preferences.getString("userRole", "0");
     }
 
     /**
@@ -133,5 +143,6 @@ public class CacheTask {
         preferences.edit().remove("token").apply();
         preferences.edit().remove("account").apply();
         preferences.edit().remove("password").apply();
+        preferences.edit().remove("userRole").apply();
     }
 }

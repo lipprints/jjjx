@@ -12,4 +12,9 @@
 
     <color name="image_view_btn_pressed_bgColor">#30000000</color>
     <color name="transparent">#00000000</color>
+    <color name="color_list_item_hover">#E5E5E5</color>
+    <color name="color_normal_text">#262626</color>
+    <color name="color_gray_text">#939393</color>
+    <color name="color_divider_line">#E5E5E5</color>
+    <color name="color_divider_thick_line">#F2F2F3</color>
 </resources>
