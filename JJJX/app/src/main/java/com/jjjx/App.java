@@ -3,7 +3,6 @@ package com.jjjx;
 import android.content.Context;
 import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
-import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -56,11 +55,16 @@ public class App extends MultiDexApplication implements BDLocationListener {
     }
 
     @Override
-    public void onReceiveLocation(BDLocation bdLocation) {
-        Log.e("APP", "bdLocation"); //30秒定位一次
-        for (OnBDLocationListener listener : listenerList) {
-            listener.onLocation(bdLocation);
-        }
+    public void onReceiveLocation(final BDLocation bdLocation) {
+        App.applicationHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (OnBDLocationListener listener : listenerList) {
+                    listener.onLocation(bdLocation);
+                }
+            }
+        });
+
     }
 
     @Override

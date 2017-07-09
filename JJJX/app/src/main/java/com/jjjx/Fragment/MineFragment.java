@@ -16,6 +16,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.jjjx.App;
 import com.jjjx.Constants;
 import com.jjjx.R;
+import com.jjjx.activity.ProfileSettingActivity;
+import com.jjjx.activity.VerifyRoleActivity;
 import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.model.UploadImageModel;
 import com.jjjx.utils.CacheTask;
@@ -39,6 +41,8 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
 
     CircleImageView circleImageView;
     ListItemTextView quitTextView;
+    ListItemTextView verifyTextView;
+    ListItemTextView profileSettingTextView;
 
     @Nullable
     @Override
@@ -46,15 +50,12 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
         View v = inflater.inflate(R.layout.fragment_mine, container, false);
         circleImageView = (CircleImageView) v.findViewById(R.id.jx_user_head);
         quitTextView = (ListItemTextView) v.findViewById(R.id.mine_quit);
+        verifyTextView = (ListItemTextView) v.findViewById(R.id.mine_i_want_verify);
+        profileSettingTextView = (ListItemTextView) v.findViewById(R.id.mine_profile_setting);
         circleImageView.setOnClickListener(this);
-        quitTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CacheTask.getInstance().clearAllCache();
-                NToast.shortToast(getActivity(), "退出成功");
-                getActivity().finish();
-            }
-        });
+        verifyTextView.setOnClickListener(this);
+        profileSettingTextView.setOnClickListener(this);
+        quitTextView.setOnClickListener(this);
         return v;
     }
 
@@ -100,14 +101,30 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
 
     @Override
     public void onClick(View view) {
-        new ImagePicker.Builder(getActivity())
-                .mode(ImagePicker.Mode.GALLERY)
-                .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
-                .directory(ImagePicker.Directory.DEFAULT)
-                .extension(ImagePicker.Extension.PNG)
-                .scale(600, 600)
-                .allowMultipleImages(false)
-                .enableDebuggingMode(true)
-                .build();
+        switch (view.getId()) {
+            case R.id.mine_i_want_verify:
+                startActivity(new Intent(getActivity(), VerifyRoleActivity.class));
+                break;
+            case R.id.mine_profile_setting:
+                startActivity(new Intent(getActivity(), ProfileSettingActivity.class));
+                break;
+            case R.id.mine_quit:
+                CacheTask.getInstance().clearAllCache();
+                NToast.shortToast(getActivity(), "退出成功");
+                getActivity().finish();
+                break;
+            default:
+                new ImagePicker.Builder(getActivity())
+                        .mode(ImagePicker.Mode.GALLERY)
+                        .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
+                        .directory(ImagePicker.Directory.DEFAULT)
+                        .extension(ImagePicker.Extension.PNG)
+                        .scale(600, 600)
+                        .allowMultipleImages(false)
+                        .enableDebuggingMode(true)
+                        .build();
+                break;
+        }
+
     }
 }

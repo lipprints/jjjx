@@ -36,70 +36,85 @@
 
     <include layout="@layout/rce_item_divider_20" />
 
-    <com.jjjx.widget.ListItemTextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_allow_arrow="true"
-        app:tv_list_item_title="课程管理"
-        app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+        android:layout_height="wrap_content">
 
-    <View style="@style/rce_horizontal_light_thin_divider" />
-
-
-    <com.jjjx.widget.ListItemTextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_allow_arrow="true"
-        app:tv_list_item_title="已售课程"
-        app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
-
-    <View style="@style/rce_horizontal_light_thin_divider" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
-    <com.jjjx.widget.ListItemTextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_allow_arrow="true"
-        app:tv_list_item_title="我的收藏"
-        app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+            <com.jjjx.widget.ListItemTextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="课程管理"
+                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
 
-    <View style="@style/rce_horizontal_light_thin_divider" />
-
-
-    <com.jjjx.widget.ListItemTextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_allow_arrow="true"
-        app:tv_list_item_title="我购买的"
-        app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
-
-    <include layout="@layout/rce_item_divider_20" />
-
-    <com.jjjx.widget.ListItemTextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_allow_arrow="true"
-        app:tv_list_item_title="修改密码"
-        app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
-
-    <View style="@style/rce_horizontal_light_thin_divider" />
+            <View style="@style/rce_horizontal_light_thin_divider" />
 
 
-    <com.jjjx.widget.ListItemTextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_allow_arrow="true"
-        app:tv_list_item_title="我要认证"
-        app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+            <com.jjjx.widget.ListItemTextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="我的点赞"
+                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
 
-    <include layout="@layout/rce_item_divider_20" />
+            <View style="@style/rce_horizontal_light_thin_divider" />
 
-    <com.jjjx.widget.ListItemTextView
-        android:id="@+id/mine_quit"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_allow_arrow="true"
-        app:tv_list_item_title="退出登录"
-        app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+
+            <com.jjjx.widget.ListItemTextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="我的收藏"
+                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+
+
+            <include layout="@layout/rce_item_divider_20" />
+
+            <com.jjjx.widget.ListItemTextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="修改密码"
+                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/mine_i_want_verify"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="我要认证"
+                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+
+            <include layout="@layout/rce_item_divider_20" />
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/mine_profile_setting"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="信息设置"
+                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/mine_quit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="退出登录"
+                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

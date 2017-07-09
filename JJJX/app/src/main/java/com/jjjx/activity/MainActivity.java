@@ -178,7 +178,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.jx_tab_publish:
                 if (CacheTask.getInstance().isLogin()) {
-                    switch (CacheTask.getInstance().getUserRole()) {
+                    switch ("1") {
                         case "0"://无身份
                             startActivity(new Intent(this, VerifyRoleActivity.class));
                             //TODO 选择验证教师 或者 机构

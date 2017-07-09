@@ -75,6 +75,7 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
     @Override
     public void onLocation(BDLocation bdLocation) {
         this.bdLocation = bdLocation;
+        //TODO 切换线程
         locationTextView.setText(bdLocation.getCity());
     }
 

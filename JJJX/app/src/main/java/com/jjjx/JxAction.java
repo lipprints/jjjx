@@ -10,6 +10,7 @@ import com.jjjx.data.response.GetVerifyCodeResponse;
 import com.jjjx.data.response.LoginResponse;
 import com.jjjx.data.response.RegisterResponse;
 import com.jjjx.data.response.RequestRoleResponse;
+import com.jjjx.data.response.UpdateInformationResponse;
 import com.jjjx.utils.AMUtils;
 
 import static android.R.attr.x;
@@ -105,6 +106,7 @@ public class JxAction extends BaseAction {
 
     /**
      * 获取融云token
+     *
      * @param uname
      * @return
      * @throws Exception
@@ -121,7 +123,25 @@ public class JxAction extends BaseAction {
         return response;
     }
 
-    public RequestRoleResponse requestRole(){
+    /**
+     * 申请教师 或者 机构认证
+     * @param role
+     * @return
+     * @throws Exception
+     */
+    public RequestRoleResponse requestRole(String role) throws Exception {
+        RequestRoleResponse response = new RequestRoleResponse();
+        String url = getURL(Constants.AUTH_ROLE);
+        RequestParams params = getContainsUserIdRequestParams();
+        params.put("role", role);
+        String result = httpManager.get(url, params);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result, RequestRoleResponse.class);
+        }
+        return response;
+    }
+
+    public UpdateInformationResponse updateInformation() throws Exception{
         return null;
     }
 }

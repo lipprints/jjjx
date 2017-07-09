@@ -8,7 +8,9 @@ import java.io.File;
  */
 
 public class MediaModel {
-
+    /**
+     * 如果是视频文件则展示第一帧
+     */
     private String displayPicturePath;
 
     private MediaType type;

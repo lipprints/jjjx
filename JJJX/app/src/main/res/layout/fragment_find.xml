@@ -9,4 +9,16 @@
         android:layout_height="wrap_content"
         android:text="发现" />
 
+    <Button
+        android:id="@+id/picker"
+        android:text="picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.jjjx.widget.WheelView
+        android:id="@+id/main_wv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
 </LinearLayout>

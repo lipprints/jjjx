@@ -5,6 +5,7 @@ import android.util.Log;
 
 
 import com.jjjx.Constants;
+import com.jjjx.model.MediaModel;
 import com.jjjx.utils.NLog;
 
 import java.io.File;
@@ -25,6 +26,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.Buffer;
+
+import static com.baidu.location.h.j.F;
+import static com.baidu.location.h.j.e;
 
 
 /**
@@ -149,6 +153,7 @@ public class OkHttpUtils {
     }
 
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+    private static final MediaType MEDIA_TYPE_MP4 = MediaType.parse("video/mpeg4");
 
     public void uploadImage(String user_id, File file, final UploadImageListener uploadImageListener) {
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder();
@@ -158,6 +163,47 @@ public class OkHttpUtils {
         final RequestBody requestBody = multipartBodyBuilder.build();
         Request.Builder RequestBuilder = new Request.Builder();
         RequestBuilder.url(Constants.DOMAIN + Constants.ADD_PIC);// 添加URL地址
+        RequestBuilder.post(requestBody);
+        Request request = RequestBuilder.build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, e.getMessage());
+                if (uploadImageListener != null) {
+                    uploadImageListener.onFailure(e);
+                }
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    if (uploadImageListener != null) {
+                        uploadImageListener.onSuccess(response.body().string());
+                    }
+                }
+            }
+        });
+
+    }
+
+
+    public void uploadImages(String user_id, List<MediaModel> mediaModels, final UploadImageListener uploadImageListener) {
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder();
+        multipartBodyBuilder.setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("user_id", user_id);
+        for (int i = 0; i < mediaModels.size(); i++) {
+            File file = mediaModels.get(i).getMediaFile();
+            if (mediaModels.get(i).getType() == MediaModel.MediaType.IMAGE) {
+                multipartBodyBuilder.addFormDataPart("files", file.getName(), RequestBody.create(MEDIA_TYPE_PNG, file));
+            } else {
+                //TODO 视频
+                multipartBodyBuilder.addFormDataPart("files", file.getName(), RequestBody.create(MEDIA_TYPE_MP4, file));
+            }
+        }
+        final RequestBody requestBody = multipartBodyBuilder.build();
+        Request.Builder RequestBuilder = new Request.Builder();
+        RequestBuilder.url(Constants.DOMAIN + Constants.ISSUE);// 添加URL地址
         RequestBuilder.post(requestBody);
         Request request = RequestBuilder.build();
         client.newCall(request).enqueue(new Callback() {
