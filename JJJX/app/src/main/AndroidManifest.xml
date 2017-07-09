@@ -93,6 +93,9 @@
         <activity
             android:name=".activity.ProfileSettingActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ClassModeActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

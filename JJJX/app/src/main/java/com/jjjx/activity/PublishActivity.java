@@ -2,6 +2,7 @@ package com.jjjx.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,34 +13,41 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.afollestad.materialcamera.MaterialCamera;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jjjx.App;
 import com.jjjx.R;
 import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.model.MediaModel;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
+import com.jjjx.widget.ListItemTextView;
+import com.jjjx.widget.LoadDialog;
 import com.jjjx.widget.MediaGridView;
+import com.jjjx.widget.WheelView;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
-import net.alhazmy13.mediapicker.Video.VideoPicker;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 
-public class PublishActivity extends BaseActivity {
+public class PublishActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int VIDEO_REQUEST_CODE = 22;
     private MediaGridView mGridView;
@@ -51,13 +59,62 @@ public class PublishActivity extends BaseActivity {
     private static final int CHECK_PERMISSION = 8001;
     private static final String SCHEME = "file://";
 
+    private ListItemTextView ageTextView;
+    private ListItemTextView classTypeTextView;
+    private ListItemTextView personsTextView;
+    private ListItemTextView addressTextView;
+    private EditText classNameEditText;
+    private EditText introduceEditText;
+    private EditText feeEditText;
+    private EditText timeEditText;
+    private EditText phoneEditText;
+
+    String[] ageArray = new String[]{"不限", "3~5", "5~10", "10~15"};
+    String[] classTypeArray = new String[]{"不限", "幼儿班", "中小班", "成人班"};
+    String[] personsArray = new String[]{"一对一", "一对二", "一对三", "一对四", "一对五", "一对多"};
+    String ageString;
+    String personsString;
+    String classTypeString;
+    String addressString;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
+        setTitle("发布");
+        initView();
+    }
+
+    private void initView() {
         mGridView = (MediaGridView) findViewById(R.id.media_view);
         mediaGridAdapter = new MediaGridAdapter(publishMediaList, this);
         mGridView.setAdapter(mediaGridAdapter);
+
+        classNameEditText = (EditText) findViewById(R.id.publish_class_name);
+        introduceEditText = (EditText) findViewById(R.id.publish_class_introduce);
+        feeEditText = (EditText) findViewById(R.id.publish_fee);
+        timeEditText = (EditText) findViewById(R.id.publish_time);
+        phoneEditText = (EditText) findViewById(R.id.publish_phone);
+
+        ageTextView = (ListItemTextView) findViewById(R.id.publish_age);
+        classTypeTextView = (ListItemTextView) findViewById(R.id.publish_class_type);
+        personsTextView = (ListItemTextView) findViewById(R.id.publish_persons);
+        addressTextView = (ListItemTextView) findViewById(R.id.publish_address);
+
+        ageTextView.setDetail(ageArray[0]);
+        ageString = ageArray[0];
+
+        classTypeTextView.setDetail(classTypeArray[0]);
+        classTypeString = classTypeArray[0];
+
+        personsTextView.setDetail(personsArray[0]);
+        personsString = personsArray[0];
+
+        ageTextView.setOnClickListener(this);
+        classTypeTextView.setOnClickListener(this);
+        personsTextView.setOnClickListener(this);
+        addressTextView.setOnClickListener(this);
     }
 
     private void image() {
@@ -71,16 +128,6 @@ public class PublishActivity extends BaseActivity {
                 .enableDebuggingMode(true)
                 .build();
     }
-
-    private void video() {
-        new VideoPicker.Builder(PublishActivity.this)
-                .mode(VideoPicker.Mode.GALLERY)
-                .directory(VideoPicker.Directory.DEFAULT)
-                .extension(VideoPicker.Extension.MP4)
-                .enableDebuggingMode(true)
-                .build();
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -115,25 +162,68 @@ public class PublishActivity extends BaseActivity {
             } catch (Exception ex) {
 
             }
+        } else if (requestCode == 98 && resultCode == 99) {
+            addressString = data.getStringExtra("classAddress");
+            addressTextView.setDetail(addressString);
         }
     }
 
 
     public void upload(View view) {
-        OkHttpUtils.getInstance(this).uploadImages(CacheTask.getInstance().getUserId(), mediaGridAdapter.getList(), new OkHttpUtils.UploadImageListener() {
+        String className = classNameEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(className)) {
+            NToast.shortToast(this, "课程名不能为空");
+            return;
+        }
+        String time = timeEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(time)) {
+            NToast.shortToast(this, "授课时间不能为空");
+            return;
+        }
+        String phone = phoneEditText.getText().toString().trim();
+
+        if (TextUtils.isEmpty(phone)) {
+            NToast.shortToast(this, "联系方式不能为空");
+            return;
+        }
+
+        String fee = feeEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(fee)) {
+            NToast.shortToast(this, "课时费不能为空");
+            return;
+        }
+
+        LoadDialog.show(this, "正在上传请稍后...");
+
+        OkHttpUtils.getInstance(this).publish(CacheTask.getInstance().getUserId(), publishMediaList, className, introduceEditText.getText().toString(), fee, ageString, personsString, time, addressString, phone, new OkHttpUtils.UploadImageListener() {
             @Override
             public void onSuccess(String result) {
+                App.applicationHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        NToast.shortToast(PublishActivity.this, "发布成功");
+                        LoadDialog.dismiss(PublishActivity.this);
+                        finish();
+                    }
+                });
 
             }
 
             @Override
             public void onFailure(IOException e) {
-
+                App.applicationHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoadDialog.dismiss(PublishActivity.this);
+                        NToast.shortToast(PublishActivity.this, "发布成功");
+                    }
+                });
             }
         });
+
     }
 
-    public void record(View view) {
+    private void record() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
@@ -200,6 +290,92 @@ public class PublishActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.publish_age:
+                List<String> ageList = Arrays.asList(ageArray);
+                final View mainClassView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
+                WheelView mainWheelView = (WheelView) mainClassView.findViewById(R.id.wheel_view_wv);
+                mainWheelView.setOffset(2);
+                mainWheelView.setItems(ageList);
+                mainWheelView.setSeletion(0);
+                mainWheelView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+                    @Override
+                    public void onSelected(int selectedIndex, String item) {
+                        ageString = item;
+                    }
+                });
+
+                new AlertDialog.Builder(this)
+                        .setTitle("适学年龄")
+                        .setView(mainClassView)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ageTextView.setDetail(TextUtils.isEmpty(ageString) ? ageArray[0] : ageString);
+                            }
+                        })
+                        .show();
+                break;
+            case R.id.publish_class_type:
+                List<String> classTypeList = Arrays.asList(classTypeArray);
+                final View classTypeView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
+                WheelView classTypeWheelView = (WheelView) classTypeView.findViewById(R.id.wheel_view_wv);
+                classTypeWheelView.setOffset(2);
+                classTypeWheelView.setItems(classTypeList);
+                classTypeWheelView.setSeletion(0);
+                classTypeWheelView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+                    @Override
+                    public void onSelected(int selectedIndex, String item) {
+                        classTypeString = item;
+                    }
+                });
+
+                new AlertDialog.Builder(this)
+                        .setTitle("班级选择")
+                        .setView(classTypeView)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                classTypeTextView.setDetail(TextUtils.isEmpty(classTypeString) ? classTypeArray[0] : classTypeString);
+                            }
+                        })
+                        .show();
+                break;
+            case R.id.publish_persons:
+                List<String> personsList = Arrays.asList(personsArray);
+                final View personsView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
+                WheelView personsWheelView = (WheelView) personsView.findViewById(R.id.wheel_view_wv);
+                personsWheelView.setOffset(2);
+                personsWheelView.setItems(personsList);
+                personsWheelView.setSeletion(0);
+                personsWheelView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+                    @Override
+                    public void onSelected(int selectedIndex, String item) {
+                        personsString = item;
+                    }
+                });
+
+                new AlertDialog.Builder(this)
+                        .setTitle("授课人数")
+                        .setView(personsView)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                personsTextView.setDetail(TextUtils.isEmpty(personsString) ? personsArray[0] : personsString);
+                            }
+                        })
+                        .show();
+                break;
+            case R.id.publish_address:
+                Intent intent = new Intent(this, ClassModeActivity.class);
+                startActivityForResult(intent, 98);
+                break;
+        }
+    }
+
+
     private class MediaGridAdapter extends BaseAdapter {
 
         private List<MediaModel> list;
@@ -256,11 +432,7 @@ public class PublishActivity extends BaseActivity {
                             }
 
                         }
-
-                        Intent intent = new Intent();
-                        intent.setType("video/*"); //选择视频 （mp4 3gp 是android支持的视频格式）
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(intent, VIDEO_REQUEST_CODE);
+                        record();
                     }
                 });
                 holder.deleteImage.setVisibility(View.GONE);

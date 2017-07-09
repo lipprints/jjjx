@@ -1,9 +1,12 @@
 package com.jjjx.data.okhttp;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
 
+import com.jjjx.App;
 import com.jjjx.Constants;
 import com.jjjx.model.MediaModel;
 import com.jjjx.utils.NLog;
@@ -187,18 +190,46 @@ public class OkHttpUtils {
 
     }
 
-
-    public void uploadImages(String user_id, List<MediaModel> mediaModels, final UploadImageListener uploadImageListener) {
+    /**
+     * 业务发布 包含一个视频上传、多图上传和其他发布信息上传
+     *
+     * @param user_id             当前用户 id
+     * @param mediaModels         视频、图片文件
+     * @param courseName          课程名
+     * @param synopsis            课程简介
+     * @param classFee            课时费
+     * @param rightAge            适学年龄
+     * @param teachingNumber      授课人数
+     * @param teachingDate        上课时间
+     * @param teachingAddress     上课地址
+     * @param contactNumber       联系方式
+     * @param uploadImageListener 回调
+     */
+    public void publish(String user_id, List<MediaModel> mediaModels, String courseName, @Nullable String synopsis, String classFee, String rightAge, String teachingNumber, String teachingDate, String teachingAddress, String contactNumber, final UploadImageListener uploadImageListener) {
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder();
         multipartBodyBuilder.setType(MultipartBody.FORM);
         multipartBodyBuilder.addFormDataPart("user_id", user_id);
+        multipartBodyBuilder.addFormDataPart("courseName", courseName);
+        if (!TextUtils.isEmpty(synopsis)) {
+            multipartBodyBuilder.addFormDataPart("synopsis", synopsis);
+        }
+        multipartBodyBuilder.addFormDataPart("classFee", classFee);
+        multipartBodyBuilder.addFormDataPart("rightAge", rightAge);
+        multipartBodyBuilder.addFormDataPart("teachingNumber", teachingNumber);
+        multipartBodyBuilder.addFormDataPart("teachingDate", teachingDate);
+        multipartBodyBuilder.addFormDataPart("teachingAddress", teachingAddress);
+        multipartBodyBuilder.addFormDataPart("contactNumber", contactNumber);
+
         for (int i = 0; i < mediaModels.size(); i++) {
             File file = mediaModels.get(i).getMediaFile();
             if (mediaModels.get(i).getType() == MediaModel.MediaType.IMAGE) {
                 multipartBodyBuilder.addFormDataPart("files", file.getName(), RequestBody.create(MEDIA_TYPE_PNG, file));
             } else {
-                //TODO 视频
                 multipartBodyBuilder.addFormDataPart("files", file.getName(), RequestBody.create(MEDIA_TYPE_MP4, file));
+                File videoImageFile = new File(mediaModels.get(i).getDisplayPicturePath());
+                if (videoImageFile.exists()) {
+                    multipartBodyBuilder.addFormDataPart("files", "videoImageFile", RequestBody.create(MEDIA_TYPE_PNG, videoImageFile));
+                }
             }
         }
         final RequestBody requestBody = multipartBodyBuilder.build();
@@ -208,7 +239,7 @@ public class OkHttpUtils {
         Request request = RequestBuilder.build();
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(Call call, final IOException e) {
                 Log.e(TAG, e.getMessage());
                 if (uploadImageListener != null) {
                     uploadImageListener.onFailure(e);
@@ -217,10 +248,11 @@ public class OkHttpUtils {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, final Response response) throws IOException {
                 if (response.isSuccessful()) {
                     if (uploadImageListener != null) {
                         uploadImageListener.onSuccess(response.body().string());
+
                     }
                 }
             }
@@ -228,30 +260,6 @@ public class OkHttpUtils {
 
     }
 
-
-    public void uploadFile(String user_id, File file, final UploadImageListener uploadImageListener) {
-        //创建RequestBody
-        RequestBody body = RequestBody.create(MediaType.parse("application/octet-stream"), file);
-        final Request request = new Request.Builder().url(Constants.DOMAIN + Constants.ADD_PIC + "?user_id=" + user_id).post(body).build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG, e.getMessage());
-                if (uploadImageListener != null) {
-                    uploadImageListener.onFailure(e);
-                }
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    if (uploadImageListener != null) {
-                        uploadImageListener.onSuccess(response.body().string());
-                    }
-                }
-            }
-        });
-    }
 
     public interface UploadImageListener {
         void onSuccess(String result);

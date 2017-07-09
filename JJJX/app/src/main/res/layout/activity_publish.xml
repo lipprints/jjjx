@@ -1,31 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <com.jjjx.widget.MediaGridView
-        android:id="@+id/media_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:gravity="start"
-        android:listSelector="@android:color/transparent"
-        android:numColumns="4"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp" />
-
-    <Button
-        android:onClick="upload"
-        android:text="upload"
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="50dp" />
-    <Button
-        android:onClick="record"
-        android:text="record"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/publish_class_name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_list_item_bg"
+                android:hint="课程名称 -  如芭蕾舞-小天鹅"
+                android:lines="1"
+                android:maxLength="16"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+            <EditText
+                android:id="@+id/publish_class_introduce"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@drawable/btn_list_item_bg"
+                android:hint="课程简介"
+                android:lines="1"
+                android:maxLength="16"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:textColor="#dadada"
+                android:textSize="14sp" />
+
+
+            <com.jjjx.widget.MediaGridView
+                android:id="@+id/media_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:gravity="start"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:text="课时费"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/publish_fee"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/btn_list_item_bg"
+                    android:hint="输入金额、单位:人民币"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="16"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/publish_age"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="适学年龄" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/publish_class_type"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="班级选择" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/publish_persons"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="授课人数" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:text="上课时间"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/publish_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/btn_list_item_bg"
+                    android:hint="输入时间"
+                    android:lines="1"
+                    android:maxLength="16"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/publish_address"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="上课地址" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:text="联系方式"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/publish_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/btn_list_item_bg"
+                    android:hint="输入手机号"
+                    android:inputType="phone"
+                    android:lines="1"
+                    android:maxLength="16"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:onClick="upload"
+                android:text="upload" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>
