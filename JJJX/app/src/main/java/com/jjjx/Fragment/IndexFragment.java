@@ -7,8 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.jjjx.App;
@@ -16,13 +17,14 @@ import com.jjjx.OnBDLocationListener;
 import com.jjjx.R;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.banner.GlideImageLoader;
+import com.jjjx.widget.popwinpicker.PopupAdapter;
+import com.jjjx.widget.popwinpicker.PopupButton;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.baidu.location.h.j.p;
 
 /**
  * Created by AMing on 17/5/8.
@@ -37,6 +39,8 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_index, container, false);
         Banner banner = (Banner) v.findViewById(R.id.banner);
+        initPopwinPicker(v);
+
         locationTextView = (TextView) v.findViewById(R.id.titleBar_city_name);
         locationTextView.setText("定位中...");
         locationTextView.setOnClickListener(this);
@@ -70,6 +74,7 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
         return v;
     }
 
+
     private BDLocation bdLocation;
 
     @Override
@@ -100,4 +105,65 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
                 break;
         }
     }
+
+    private PopupButton mPopupButton1;
+    private PopupButton mPopupButton2;
+    private PopupButton mPopupButton3;
+
+    private void initPopwinPicker(View v) {
+        mPopupButton1 = (PopupButton) v.findViewById(R.id.popup_button1);
+        mPopupButton2 = (PopupButton) v.findViewById(R.id.popup_button2);
+        mPopupButton3 = (PopupButton) v.findViewById(R.id.popup_button3);
+        final String[] array1 = new String[]{"不限", "舞蹈", "声乐", "美术", "乐器"};
+        final String[] array2 = new String[]{"不限", "教龄/建校时间最长", "订单最多", "课次单价最低", "课次单价最高"};
+        final String[] array3 = new String[]{"不限", "私教", "机构/学校", "大学生", "离我最近"};
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        View view = inflater.inflate(R.layout.popup, null);
+        View view2 = inflater.inflate(R.layout.popup2, null);
+        View view3 = inflater.inflate(R.layout.popup3, null);
+        final PopupAdapter adapter1 = new PopupAdapter(getActivity(), R.layout.popup_item, array1, R.drawable.normal, R.drawable.press);
+        final PopupAdapter adapter2 = new PopupAdapter(getActivity(), R.layout.popup_item, array2, R.drawable.normal, R.drawable.press);
+        final PopupAdapter adapter3 = new PopupAdapter(getActivity(), R.layout.popup_item, array3, R.drawable.normal, R.drawable.press);
+        ListView lv1 = (ListView) view.findViewById(R.id.lv);
+        lv1.setAdapter(adapter1);
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                adapter1.setPressPostion(i);
+                adapter1.notifyDataSetChanged();
+                mPopupButton1.setText(array1[i]);
+                mPopupButton1.hidePopup();
+            }
+        });
+        mPopupButton1.setPopupView(view);
+
+        ListView lv2 = (ListView) view2.findViewById(R.id.lv);
+        lv2.setAdapter(adapter2);
+        lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                adapter2.setPressPostion(i);
+                adapter2.notifyDataSetChanged();
+                mPopupButton2.setText(array2[i]);
+                mPopupButton2.hidePopup();
+            }
+        });
+        mPopupButton2.setPopupView(view2);
+
+        ListView lv3 = (ListView) view3.findViewById(R.id.lv);
+        lv3.setAdapter(adapter3);
+        lv3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                adapter3.setPressPostion(i);
+                adapter3.notifyDataSetChanged();
+                mPopupButton3.setText(array3[i]);
+                mPopupButton3.hidePopup();
+            }
+        });
+        mPopupButton3.setPopupView(view3);
+
+    }
+
+
 }

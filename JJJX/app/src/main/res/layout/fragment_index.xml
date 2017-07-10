@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:popupbtn="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,6 +8,52 @@
     <include
         android:id="@+id/home_titlebar"
         layout="@layout/home_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.jjjx.widget.popwinpicker.PopupButton
+            android:id="@+id/popup_button1"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:text="分类"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14dp"
+            popupbtn:normalBg="@drawable/tab_bkg_line"
+            popupbtn:normalIcon="@drawable/arrow_down_shop"
+            popupbtn:pressBg="@drawable/tab_bkg_selected"
+            popupbtn:pressIcon="@drawable/arrow_up_shop" />
+
+        <com.jjjx.widget.popwinpicker.PopupButton
+            android:id="@+id/popup_button2"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:text="排序"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14dp"
+            popupbtn:normalBg="@drawable/tab_bkg_line"
+            popupbtn:normalIcon="@drawable/arrow_down_shop"
+            popupbtn:pressBg="@drawable/tab_bkg_selected"
+            popupbtn:pressIcon="@drawable/arrow_up_shop" />
+
+        <com.jjjx.widget.popwinpicker.PopupButton
+            android:id="@+id/popup_button3"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:text="筛选"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14dp"
+            popupbtn:normalBg="@drawable/tab_bkg_line"
+            popupbtn:normalIcon="@drawable/arrow_down_shop"
+            popupbtn:pressBg="@drawable/tab_bkg_selected"
+            popupbtn:pressIcon="@drawable/arrow_up_shop" />
+
+    </LinearLayout>
 
     <com.youth.banner.Banner
         android:id="@+id/banner"
