@@ -8,6 +8,10 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import com.jjjx.R;
+import com.jjjx.data.response.IndexDataResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,6 +21,8 @@ import com.jjjx.R;
 
 public class SplashActivity extends BaseActivity {
 
+
+    private static final int GET_INDEX_DATA = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,9 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         setHeadVisibility(View.GONE);
+
+        request(GET_INDEX_DATA);
+
         ImageView imageView = (ImageView) findViewById(R.id.image_logo);
         // 渐变展示启动屏
         AlphaAnimation aa = new AlphaAnimation(0.1f, 1.0f);
@@ -36,7 +45,9 @@ public class SplashActivity extends BaseActivity {
         aa.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//                intent.putParcelableArrayListExtra("indexData", arrayList);
+                startActivity(intent);
                 finish();
             }
 
@@ -53,4 +64,27 @@ public class SplashActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public Object doInBackground(int requestCode) throws Exception {
+        if (requestCode == GET_INDEX_DATA) {
+            return action.requestIndexData();
+        }
+        return null;
+    }
+
+    @Override
+    public void onSuccess(int requestCode, Object result) {
+        super.onSuccess(requestCode, result);
+        if (requestCode == GET_INDEX_DATA && result != null) {
+            IndexDataResponse response = (IndexDataResponse) result;
+            if (response.getHead().getCode().equals("10000")) {
+//                List<IndexDataResponse.ParaEntity.ComplaintsEntity> indexData = response.getPara().getComplaints();
+//                ArrayList<IndexDataResponse.ParaEntity.ComplaintsEntity> arrayList = (ArrayList<IndexDataResponse.ParaEntity.ComplaintsEntity>) indexData;
+//                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//                intent.putParcelableArrayListExtra("indexData", arrayList);
+//                startActivity(intent);
+//                finish();
+            }
+        }
+    }
 }

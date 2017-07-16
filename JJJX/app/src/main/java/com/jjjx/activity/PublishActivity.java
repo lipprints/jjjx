@@ -419,7 +419,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
             }
             //添加视频按钮
             if (position == getCount() - 1) {
-                holder.imageView.setImageResource(R.drawable.add_video);
+                holder.imageView.setImageResource(R.drawable.rc_voip_icon_input_video);
                 holder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -437,7 +437,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                 });
                 holder.deleteImage.setVisibility(View.GONE);
             } else if (position == getCount() - 2) {
-                holder.imageView.setImageResource(R.drawable.add_image);
+                holder.imageView.setImageResource(R.drawable.rc_plugin_default);
                 holder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

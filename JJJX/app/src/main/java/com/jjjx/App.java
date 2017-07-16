@@ -16,6 +16,7 @@ import com.jjjx.utils.SystemUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import io.rong.imkit.RongIM;
 
 /**

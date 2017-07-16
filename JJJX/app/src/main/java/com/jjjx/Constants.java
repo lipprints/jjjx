@@ -10,28 +10,24 @@ public class Constants {
     public static final String DOMAIN = "http://47.93.217.163:8080/";
 
     /**
-     *
      * 参数:
-     *
+     * <p>
      * name : mobile or email
-     *
+     * <p>
      * pwd
      */
     public static final String LOGIN_URL = "app/login";
     /**
-     *
      * 参数:
-     *
+     * <p>
      * flag : 0 注册 1 找回密码
-     *
+     * <p>
      * mobile or email
-     *
+     * <p>
      * pwd
-     *
      */
     public static final String REGIST_URL = "app/regist";
     /**
-     *
      * mobile or email
      */
     public static final String SEND_CODE = "app/checkCaptcha";
@@ -44,7 +40,8 @@ public class Constants {
 
     public static final String UPDATEINFORMATION = "app/updateInformation";
 
-    public static final String ISSUE = "app/issue";
+    public static final String ISSUE = "app/issue"; //发布
+    public static final String INDEX_ALL = "app/queryAllCourseRelease"; //首页数据
 
 //    http://47.93.217.163:8080/app/issue 
 

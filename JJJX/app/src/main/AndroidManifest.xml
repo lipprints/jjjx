@@ -96,6 +96,11 @@
         <activity
             android:name=".activity.ClassModeActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.IndexItemDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

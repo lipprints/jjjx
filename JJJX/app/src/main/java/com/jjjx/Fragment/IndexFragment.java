@@ -15,6 +15,8 @@ import com.baidu.location.BDLocation;
 import com.jjjx.App;
 import com.jjjx.OnBDLocationListener;
 import com.jjjx.R;
+import com.jjjx.adapter.IndexAdapter;
+import com.jjjx.model.IndexItemModel;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.banner.GlideImageLoader;
 import com.jjjx.widget.popwinpicker.PopupAdapter;
@@ -30,15 +32,22 @@ import java.util.List;
  * Created by AMing on 17/5/8.
  * Company RongCloud
  */
-public class IndexFragment extends Fragment implements OnBDLocationListener, View.OnClickListener {
+public class IndexFragment extends Fragment implements OnBDLocationListener, View.OnClickListener, AdapterView.OnItemClickListener {
     private List<String> images;
     private TextView locationTextView;
+    private ListView indexListView;
+    private IndexAdapter adapter;
+    private List<IndexItemModel> data = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_index, container, false);
         Banner banner = (Banner) v.findViewById(R.id.banner);
+        indexListView = (ListView) v.findViewById(R.id.index_list);
+        adapter = new IndexAdapter(getActivity(),data);
+        indexListView.setAdapter(adapter);
+        indexListView.setOnItemClickListener(this);
         initPopwinPicker(v);
 
         locationTextView = (TextView) v.findViewById(R.id.titleBar_city_name);
@@ -106,14 +115,18 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
         }
     }
 
-    private PopupButton mPopupButton1;
-    private PopupButton mPopupButton2;
-    private PopupButton mPopupButton3;
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
 
     private void initPopwinPicker(View v) {
-        mPopupButton1 = (PopupButton) v.findViewById(R.id.popup_button1);
-        mPopupButton2 = (PopupButton) v.findViewById(R.id.popup_button2);
-        mPopupButton3 = (PopupButton) v.findViewById(R.id.popup_button3);
+        final PopupButton mPopupButton1 = (PopupButton) v.findViewById(R.id.popup_button1);
+        final PopupButton mPopupButton2 = (PopupButton) v.findViewById(R.id.popup_button2);
+        final PopupButton mPopupButton3 = (PopupButton) v.findViewById(R.id.popup_button3);
         final String[] array1 = new String[]{"不限", "舞蹈", "声乐", "美术", "乐器"};
         final String[] array2 = new String[]{"不限", "教龄/建校时间最长", "订单最多", "课次单价最低", "课次单价最高"};
         final String[] array3 = new String[]{"不限", "私教", "机构/学校", "大学生", "离我最近"};
@@ -164,6 +177,4 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
         mPopupButton3.setPopupView(view3);
 
     }
-
-
 }

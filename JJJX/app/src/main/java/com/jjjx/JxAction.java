@@ -2,11 +2,13 @@ package com.jjjx;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.jjjx.data.BaseAction;
 import com.jjjx.data.okhttp.RequestParams;
 import com.jjjx.data.response.GetRongCloudTokenResponse;
 import com.jjjx.data.response.GetVerifyCodeResponse;
+import com.jjjx.data.response.IndexDataResponse;
 import com.jjjx.data.response.LoginResponse;
 import com.jjjx.data.response.RegisterResponse;
 import com.jjjx.data.response.RequestRoleResponse;
@@ -14,6 +16,8 @@ import com.jjjx.data.response.UpdateInformationResponse;
 import com.jjjx.utils.AMUtils;
 
 import static android.R.attr.x;
+import static com.baidu.location.h.j.p;
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 /**
  * Created by AMing on 17/5/7.
@@ -125,6 +129,7 @@ public class JxAction extends BaseAction {
 
     /**
      * 申请教师 或者 机构认证
+     *
      * @param role
      * @return
      * @throws Exception
@@ -141,7 +146,23 @@ public class JxAction extends BaseAction {
         return response;
     }
 
-    public UpdateInformationResponse updateInformation() throws Exception{
+    /**
+     * 请求首页数据
+     *
+     * @return
+     * @throws Exception
+     */
+    public IndexDataResponse requestIndexData() throws Exception {
+        IndexDataResponse response = new IndexDataResponse();
+        String url = getURL(Constants.INDEX_ALL);
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result, IndexDataResponse.class);
+        }
+        return response;
+    }
+
+    public UpdateInformationResponse updateInformation() throws Exception {
         return null;
     }
 }

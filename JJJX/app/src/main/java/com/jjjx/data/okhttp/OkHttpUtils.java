@@ -228,15 +228,17 @@ public class OkHttpUtils {
                 multipartBodyBuilder.addFormDataPart("files", file.getName(), RequestBody.create(MEDIA_TYPE_MP4, file));
                 File videoImageFile = new File(mediaModels.get(i).getDisplayPicturePath());
                 if (videoImageFile.exists()) {
-                    multipartBodyBuilder.addFormDataPart("files", "videoImageFile", RequestBody.create(MEDIA_TYPE_PNG, videoImageFile));
+                    multipartBodyBuilder.addFormDataPart("files", "videoImageFile" + System.currentTimeMillis() + ".png", RequestBody.create(MEDIA_TYPE_PNG, videoImageFile));
                 }
             }
         }
         final RequestBody requestBody = multipartBodyBuilder.build();
-        Request.Builder RequestBuilder = new Request.Builder();
-        RequestBuilder.url(Constants.DOMAIN + Constants.ISSUE);// 添加URL地址
-        RequestBuilder.post(requestBody);
-        Request request = RequestBuilder.build();
+        Request.Builder requestBuilder = new Request.Builder();
+
+        requestBuilder.url(Constants.DOMAIN + Constants.ISSUE);// 添加URL地址
+        requestBuilder.post(requestBody);
+        Request request = requestBuilder.build();
+
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {

@@ -56,5 +56,5 @@ dependencies {
     compile project(':IMKit')
     //视频录制
     compile project(':RecordVideo')
-
+    compile project(':jcvideoplayer-lib')
 }
