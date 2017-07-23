@@ -20,6 +20,7 @@ import com.jjjx.fragment.IndexFragment;
 import com.jjjx.fragment.MineFragment;
 import com.jjjx.R;
 import com.jjjx.utils.CacheTask;
+import com.jjjx.utils.NToast;
 import com.jjjx.widget.DragPointView;
 import com.jjjx.widget.JxViewPager;
 
@@ -163,7 +164,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 mViewPager.setCurrentItem(0, false);
                 break;
             case R.id.jx_tab_find:
-                startActivity(new Intent(this,IndexItemDetailsActivity.class));
+                startActivity(new Intent(this, IndexItemDetailsActivity.class));
                 mViewPager.setCurrentItem(1, false);
                 break;
             case R.id.jx_tab_chats:
@@ -260,6 +261,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case GET_INDEX:
                 IndexDataResponse response = (IndexDataResponse) result;
                 if (response.getHead().getCode().equals("10000")) {
+                    NToast.shortToast(this, "刷新成功");
                 }
                 break;
         }

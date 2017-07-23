@@ -15,6 +15,7 @@ import com.baidu.location.BDLocation;
 import com.jjjx.App;
 import com.jjjx.OnBDLocationListener;
 import com.jjjx.R;
+import com.jjjx.activity.PublishActivity;
 import com.jjjx.adapter.IndexAdapter;
 import com.jjjx.model.IndexItemModel;
 import com.jjjx.utils.NToast;
@@ -32,7 +33,7 @@ import java.util.List;
  * Created by AMing on 17/5/8.
  * Company RongCloud
  */
-public class IndexFragment extends Fragment implements OnBDLocationListener, View.OnClickListener, AdapterView.OnItemClickListener {
+public class IndexFragment extends Fragment implements OnBDLocationListener, View.OnClickListener, AdapterView.OnItemClickListener, PublishActivity.RefreshDataListener {
     private List<String> images;
     private TextView locationTextView;
     private ListView indexListView;
@@ -80,6 +81,7 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
             }
         });
         App.getInstance().addOnBDLocationObserver(this);
+        PublishActivity.setRefreshDataListener(this);
         return v;
     }
 
@@ -176,5 +178,10 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
         });
         mPopupButton3.setPopupView(view3);
 
+    }
+
+    @Override
+    public void refresh() {
+        //TODO 发布成功后刷新最新数据
     }
 }

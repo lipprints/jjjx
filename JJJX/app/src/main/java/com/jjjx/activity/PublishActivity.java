@@ -203,6 +203,9 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                     public void run() {
                         NToast.shortToast(PublishActivity.this, "发布成功");
                         LoadDialog.dismiss(PublishActivity.this);
+                        if (mRefershDataListener != null) {
+                            mRefershDataListener.refresh();
+                        }
                         finish();
                     }
                 });
@@ -544,6 +547,16 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                 && grantResults[3] == PackageManager.PERMISSION_GRANTED) {
             startRecordVideo();
         }
+    }
+
+    private static RefreshDataListener mRefershDataListener;
+
+    public interface RefreshDataListener {
+        void refresh();
+    }
+
+    public static void setRefreshDataListener(RefreshDataListener refershDataListener) {
+        mRefershDataListener = refershDataListener;
     }
 
 }
