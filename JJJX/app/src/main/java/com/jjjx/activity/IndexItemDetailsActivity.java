@@ -5,12 +5,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ListView;
 
 
 import com.bumptech.glide.Glide;
 import com.jjjx.R;
+import com.jjjx.adapter.IndexItemAdapter;
 import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
@@ -25,19 +32,37 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 public class IndexItemDetailsActivity extends AppCompatActivity {
     JCVideoPlayerStandard mJcVideoPlayerStandard;
     private ComplaintsEntity entity;
+    private List<String> pictureList = new ArrayList<>();
+    private ListView itemListView;
+    private View headView;
+    private View footView;
+    private IndexItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_index);
-
+        itemListView = (ListView) findViewById(R.id.index_item_list);
+        headView = LayoutInflater.from(this).inflate(R.layout.index_item_head_view, itemListView, false);
+        footView = LayoutInflater.from(this).inflate(R.layout.index_item_foot_view, itemListView, false);
+        itemListView.addHeaderView(headView);
+        itemListView.addFooterView(footView);
+        adapter = new IndexItemAdapter(this, pictureList);
+        itemListView.setAdapter(adapter);
         entity = getIntent().getParcelableExtra("indexItemData");
         if (entity != null) {
             if (entity.getVideo() != null && !TextUtils.isEmpty(entity.getVideo())) {
-                mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
+                mJcVideoPlayerStandard = (JCVideoPlayerStandard) headView.findViewById(R.id.jc_video);
                 mJcVideoPlayerStandard.setVisibility(View.VISIBLE);
                 startVideo(entity.getVideo(), entity.getFirstFrame(), entity.getCourseName(), true);
             }
+            if (entity.getPicture().contains(",")) {
+                String[] arrays = entity.getPicture().split(",");
+                pictureList = Arrays.asList(arrays);
+            } else {
+                pictureList.add(entity.getPicture());
+            }
+            adapter.refreshAdapter(pictureList);
         }
     }
 
@@ -122,4 +147,5 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
     }
+
 }
