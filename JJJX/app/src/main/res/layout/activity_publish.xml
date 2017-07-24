@@ -35,8 +35,6 @@
                 android:layout_height="90dp"
                 android:background="@drawable/btn_list_item_bg"
                 android:hint="课程简介"
-                android:lines="1"
-                android:maxLength="16"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
                 android:textColor="#dadada"

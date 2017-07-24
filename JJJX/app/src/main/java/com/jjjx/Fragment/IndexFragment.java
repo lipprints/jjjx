@@ -1,9 +1,8 @@
 package com.jjjx.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,11 @@ import com.baidu.location.BDLocation;
 import com.jjjx.App;
 import com.jjjx.OnBDLocationListener;
 import com.jjjx.R;
+import com.jjjx.activity.IndexItemDetailsActivity;
 import com.jjjx.activity.PublishActivity;
+import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
 import com.jjjx.adapter.IndexAdapter;
-import com.jjjx.model.IndexItemModel;
+import com.jjjx.data.response.IndexDataResponse;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.banner.GlideImageLoader;
 import com.jjjx.widget.popwinpicker.PopupAdapter;
@@ -28,25 +29,46 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.baidu.location.h.a.i;
+
 
 /**
  * Created by AMing on 17/5/8.
  * Company RongCloud
  */
-public class IndexFragment extends Fragment implements OnBDLocationListener, View.OnClickListener, AdapterView.OnItemClickListener, PublishActivity.RefreshDataListener {
+public class IndexFragment extends BaseFragment implements OnBDLocationListener, View.OnClickListener, AdapterView.OnItemClickListener, PublishActivity.RefreshDataListener {
     private List<String> images;
     private TextView locationTextView;
     private ListView indexListView;
     private IndexAdapter adapter;
-    private List<IndexItemModel> data = new ArrayList<>();
+    private List<ComplaintsEntity> data = new ArrayList<>();
+    private BDLocation bdLocation;
+    private View headView;
+    private static final int GET_INDEX = 2;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onLocation(BDLocation bdLocation) {
+        this.bdLocation = bdLocation;
+        //TODO 切换线程
+        locationTextView.setText(bdLocation.getCity());
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        App.getInstance().removeOnBDLocationObserver(this);
+    }
+
+    @Override
+    public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_index, container, false);
-        Banner banner = (Banner) v.findViewById(R.id.banner);
         indexListView = (ListView) v.findViewById(R.id.index_list);
-        adapter = new IndexAdapter(getActivity(),data);
+        headView = LayoutInflater.from(getActivity()).inflate(R.layout.index_head_view, indexListView, false);
+        headView.setOnClickListener(this);
+        Banner banner = (Banner) headView.findViewById(R.id.banner);
+        indexListView.addHeaderView(headView);
+        adapter = new IndexAdapter(getActivity(), data);
         indexListView.setAdapter(adapter);
         indexListView.setOnItemClickListener(this);
         initPopwinPicker(v);
@@ -82,24 +104,8 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
         });
         App.getInstance().addOnBDLocationObserver(this);
         PublishActivity.setRefreshDataListener(this);
+        request(GET_INDEX);
         return v;
-    }
-
-
-    private BDLocation bdLocation;
-
-    @Override
-    public void onLocation(BDLocation bdLocation) {
-        this.bdLocation = bdLocation;
-        //TODO 切换线程
-        locationTextView.setText(bdLocation.getCity());
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        App.getInstance().removeOnBDLocationObserver(this);
     }
 
     @Override
@@ -118,10 +124,12 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
     }
 
 
-
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        ComplaintsEntity entity = (ComplaintsEntity) adapter.getItem(position - 1);// headview 计算一个 position
+        Intent intent = new Intent(getActivity(), IndexItemDetailsActivity.class);
+        intent.putExtra("indexItemData", entity);
+        startActivity(intent);
     }
 
 
@@ -183,5 +191,34 @@ public class IndexFragment extends Fragment implements OnBDLocationListener, Vie
     @Override
     public void refresh() {
         //TODO 发布成功后刷新最新数据
+        request(GET_INDEX);
     }
+
+
+    @Override
+    public Object doInBackground(int requestCode) throws Exception {
+        switch (requestCode) {
+            case GET_INDEX:
+                return action.requestIndexData();
+        }
+        return super.doInBackground(requestCode);
+    }
+
+    @Override
+    public void onSuccess(int requestCode, Object result) {
+        super.onSuccess(requestCode, result);
+        switch (requestCode) {
+            case GET_INDEX:
+                IndexDataResponse response = (IndexDataResponse) result;
+                if (response.getHead().getCode().equals("10000")) {
+                    NToast.shortToast(getActivity(), "刷新成功");
+                    List<ComplaintsEntity> complaintsEntities = response.getPara().getComplaints();
+                    if (complaintsEntities.size() > 0) {
+                        adapter.refreshAdapter(complaintsEntities);
+                    }
+                }
+                break;
+        }
+    }
+
 }

@@ -3,11 +3,14 @@ package com.jjjx.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.Window;
+import android.view.View;
+
 
 import com.bumptech.glide.Glide;
 import com.jjjx.R;
+import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
 
 import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
@@ -21,13 +24,21 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 public class IndexItemDetailsActivity extends AppCompatActivity {
     JCVideoPlayerStandard mJcVideoPlayerStandard;
+    private ComplaintsEntity entity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_index);
-        mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
-        startVideo("http://47.93.217.163:8080/geren/VID_20170713_140251.mp4", "http://47.93.217.163:8080/geren/videoImageFile1499925797514.png", "视频Title", true);
+
+        entity = getIntent().getParcelableExtra("indexItemData");
+        if (entity != null) {
+            if (entity.getVideo() != null && !TextUtils.isEmpty(entity.getVideo())) {
+                mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
+                mJcVideoPlayerStandard.setVisibility(View.VISIBLE);
+                startVideo(entity.getVideo(), entity.getFirstFrame(), entity.getCourseName(), true);
+            }
+        }
     }
 
 

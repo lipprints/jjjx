@@ -14,13 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jjjx.App;
-import com.jjjx.data.response.IndexDataResponse;
 import com.jjjx.fragment.FindFragment;
 import com.jjjx.fragment.IndexFragment;
 import com.jjjx.fragment.MineFragment;
 import com.jjjx.R;
 import com.jjjx.utils.CacheTask;
-import com.jjjx.utils.NToast;
 import com.jjjx.widget.DragPointView;
 import com.jjjx.widget.JxViewPager;
 
@@ -32,7 +30,7 @@ import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, DragPointView.OnDragListener, ViewPager.OnPageChangeListener {
 
-    private static final int GET_INDEX = 2;
+
     private JxViewPager mViewPager;
     private List<Fragment> mFragment = new ArrayList<>();
     private ImageView mainTabImg, findTabImg, messageTabImg, meTabImg;
@@ -63,7 +61,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mUnreadNumView = (DragPointView) findViewById(R.id.seal_num);
         mUnreadNumView.setOnClickListener(this);
         mUnreadNumView.setDragListener(this);
-
         mFragment.add(new IndexFragment());
         mFragment.add(new FindFragment());
         mFragment.add(conversationList);
@@ -160,7 +157,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.jx_tab_main:
-                request(GET_INDEX);
                 mViewPager.setCurrentItem(0, false);
                 break;
             case R.id.jx_tab_find:
@@ -245,25 +241,4 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    public Object doInBackground(int requestCode) throws Exception {
-        switch (requestCode) {
-            case GET_INDEX:
-                return action.requestIndexData();
-        }
-        return super.doInBackground(requestCode);
-    }
-
-    @Override
-    public void onSuccess(int requestCode, Object result) {
-        super.onSuccess(requestCode, result);
-        switch (requestCode) {
-            case GET_INDEX:
-                IndexDataResponse response = (IndexDataResponse) result;
-                if (response.getHead().getCode().equals("10000")) {
-                    NToast.shortToast(this, "刷新成功");
-                }
-                break;
-        }
-    }
 }
