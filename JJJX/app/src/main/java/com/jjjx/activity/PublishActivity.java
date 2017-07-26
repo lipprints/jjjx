@@ -193,6 +193,11 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
             return;
         }
 
+        if (publishMediaList.size() == 0) {
+            NToast.shortToast(this, "至少上传一张课程介绍图片或一段课程介绍视频");
+            return;
+        }
+
         LoadDialog.show(this, "正在上传请稍后...");
 
         OkHttpUtils.getInstance(this).publish(CacheTask.getInstance().getUserId(), publishMediaList, className, introduceEditText.getText().toString(), fee, ageString, personsString, time, addressString, phone, new OkHttpUtils.UploadImageListener() {

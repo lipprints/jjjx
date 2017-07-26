@@ -8,12 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
 import com.jjjx.R;
 import com.jjjx.adapter.IndexItemAdapter;
 import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
+import com.jjjx.widget.like.LikeButton;
+import com.jjjx.widget.like.OnLikeListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +26,7 @@ import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import io.rong.imkit.RongIM;
 
 /**
  * Created by AMing on 17/7/13.
@@ -37,12 +41,17 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
     private View headView;
     private View footView;
     private IndexItemAdapter adapter;
+    private LikeButton likeButton;
+    private TextView chatButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_index);
         itemListView = (ListView) findViewById(R.id.index_item_list);
+        likeButton = (LikeButton) findViewById(R.id.like_button);
+        chatButton = (TextView) findViewById(R.id.start_chat);
         headView = LayoutInflater.from(this).inflate(R.layout.index_item_head_view, itemListView, false);
         footView = LayoutInflater.from(this).inflate(R.layout.index_item_foot_view, itemListView, false);
         itemListView.addHeaderView(headView);
@@ -63,6 +72,24 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
                 pictureList.add(entity.getPicture());
             }
             adapter.refreshAdapter(pictureList);
+            likeButton.setOnLikeListener(new OnLikeListener() {
+                @Override
+                public void liked(LikeButton likeButton) {
+                    //TODO 收藏
+                    entity.getId();
+                }
+
+                @Override
+                public void unLiked(LikeButton likeButton) {
+                    //TODO 取消收藏
+                }
+            });
+            chatButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    RongIM.getInstance().startPrivateChat(IndexItemDetailsActivity.this, String.valueOf(entity.getUser_id()), entity.getName());
+                }
+            });
         }
     }
 
