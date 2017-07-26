@@ -12,7 +12,10 @@ import java.util.List;
  * Company RongCloud
  */
 public class IndexDataResponse {
-
+    /**
+     * head : {"msg":"查询成功！","code":"10000"}
+     * para : {"complaints":[{"role":"2","rightAge":"不限","synopsis":"明年你明明你跟你妈民工嗯呐呐喊，明年你门口你无语民工明年你五一呜呜呜呜哦口语呜呜呜T恤五XP一明明哦mins阴公公民numlock明明红米","video":"http://47.93.217.163:8080/geren/VID_20170724_113036.mp4","teachingNumber":"一对一","teachingPlace":"上门","picture":"http://47.93.217.163:8080/geren/dccee4b1-0bd2-48ab-9a6f-1f68d575b982.png,http://47.93.217.163:8080/geren/3ddb8c66-8854-46ed-ba07-32dcb3d6f170.png,http://47.93.217.163:8080/geren/4ed2f57f-6eb1-46cf-bcd4-1694e222a927.png","courseName":"牛逼的钢琴课","firstFrame":"http://47.93.217.163:8080/geren/videoImageFile1500867252802.png","user_id":100009,"teachingDate":"周六下午两点","contactNumber":"18618268584","teachingAddress":"哈哈biz","id":100036,"head_portrait":"http://47.93.217.163:8080/geren/myphoto.jpg"},{"role":"2","rightAge":"5~10","synopsis":"牛逼的钢琴","teachingNumber":"一对一","teachingPlace":"上门","picture":"http://47.93.217.163:8080/geren/42fd7362-bef7-4ec5-9661-387f73eedda6.png,http://47.93.217.163:8080/geren/53918a10-74da-456f-b5d3-dd2ec5f3fde9.png","courseName":"钢琴课","user_id":100009,"teachingDate":"周末下午","contactNumber":"18618268584","teachingAddress":"天通苑","id":100033,"head_portrait":"http://47.93.217.163:8080/geren/myphoto.jpg"}]}
+     */
 
     private HeadEntity head;
     private ParaEntity para;
@@ -70,54 +73,90 @@ public class IndexDataResponse {
             this.complaints = complaints;
         }
 
-        public static class ComplaintsEntity implements Parcelable {
+        public static class ComplaintsEntity implements Parcelable{
             /**
-             * courseName : 哈哈哈
-             * role : 1
-             * firstFrame : http://47.93.217.163:8080/geren/videoImageFile1500770992635.png
+             * role : 2
              * rightAge : 不限
-             * teachingDate : 周末早上八点半
-             * video : http://47.93.217.163:8080/geren/VID_20170723_084909.mp4
+             * synopsis : 明年你明明你跟你妈民工嗯呐呐喊，明年你门口你无语民工明年你五一呜呜呜呜哦口语呜呜呜T恤五XP一明明哦mins阴公公民numlock明明红米
+             * video : http://47.93.217.163:8080/geren/VID_20170724_113036.mp4
              * teachingNumber : 一对一
              * teachingPlace : 上门
-             * picture : http://47.93.217.163:8080/geren/e5832735-fbee-4d33-9347-4160738d6315.png
+             * picture : http://47.93.217.163:8080/geren/dccee4b1-0bd2-48ab-9a6f-1f68d575b982.png,http://47.93.217.163:8080/geren/3ddb8c66-8854-46ed-ba07-32dcb3d6f170.png,http://47.93.217.163:8080/geren/4ed2f57f-6eb1-46cf-bcd4-1694e222a927.png
+             * courseName : 牛逼的钢琴课
+             * firstFrame : http://47.93.217.163:8080/geren/videoImageFile1500867252802.png
+             * user_id : 100009
+             * teachingDate : 周六下午两点
+             * contactNumber : 18618268584
+             * teachingAddress : 哈哈biz
+             * id : 100036
              * head_portrait : http://47.93.217.163:8080/geren/myphoto.jpg
-             * name : 张三
-             * seniority : 1年
              */
 
-            private String courseName;
             private String role;
-            private String firstFrame;
             private String rightAge;
-            private String teachingDate;
+            private String synopsis;
             private String video;
             private String teachingNumber;
             private String teachingPlace;
             private String picture;
+            private String courseName;
+            private String firstFrame;
+            private int user_id;
+            private String teachingDate;
+            private String contactNumber;
+            private String teachingAddress;
+            /**
+             * 该详情 item id
+             */
+            private int id;
             private String head_portrait;
             private String name;
             private String seniority;
 
-
-            public ComplaintsEntity() {
-
-            }
-
-
             protected ComplaintsEntity(Parcel in) {
-                courseName = in.readString();
                 role = in.readString();
-                firstFrame = in.readString();
                 rightAge = in.readString();
-                teachingDate = in.readString();
+                synopsis = in.readString();
                 video = in.readString();
                 teachingNumber = in.readString();
                 teachingPlace = in.readString();
                 picture = in.readString();
+                courseName = in.readString();
+                firstFrame = in.readString();
+                user_id = in.readInt();
+                teachingDate = in.readString();
+                contactNumber = in.readString();
+                teachingAddress = in.readString();
+                id = in.readInt();
                 head_portrait = in.readString();
                 name = in.readString();
                 seniority = in.readString();
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(role);
+                dest.writeString(rightAge);
+                dest.writeString(synopsis);
+                dest.writeString(video);
+                dest.writeString(teachingNumber);
+                dest.writeString(teachingPlace);
+                dest.writeString(picture);
+                dest.writeString(courseName);
+                dest.writeString(firstFrame);
+                dest.writeInt(user_id);
+                dest.writeString(teachingDate);
+                dest.writeString(contactNumber);
+                dest.writeString(teachingAddress);
+                dest.writeInt(id);
+                dest.writeString(head_portrait);
+                dest.writeString(name);
+                dest.writeString(seniority);
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
             }
 
             public static final Creator<ComplaintsEntity> CREATOR = new Creator<ComplaintsEntity>() {
@@ -132,13 +171,23 @@ public class IndexDataResponse {
                 }
             };
 
-            public String getCourseName() {
-                return courseName;
+            public String getName() {
+                return name;
             }
 
-            public void setCourseName(String courseName) {
-                this.courseName = courseName;
+            public void setName(String name) {
+                this.name = name;
             }
+
+            public String getSeniority() {
+                return seniority;
+            }
+
+            public void setSeniority(String seniority) {
+                this.seniority = seniority;
+            }
+
+            public ComplaintsEntity(){}
 
             public String getRole() {
                 return role;
@@ -146,14 +195,6 @@ public class IndexDataResponse {
 
             public void setRole(String role) {
                 this.role = role;
-            }
-
-            public String getFirstFrame() {
-                return firstFrame;
-            }
-
-            public void setFirstFrame(String firstFrame) {
-                this.firstFrame = firstFrame;
             }
 
             public String getRightAge() {
@@ -164,12 +205,12 @@ public class IndexDataResponse {
                 this.rightAge = rightAge;
             }
 
-            public String getTeachingDate() {
-                return teachingDate;
+            public String getSynopsis() {
+                return synopsis;
             }
 
-            public void setTeachingDate(String teachingDate) {
-                this.teachingDate = teachingDate;
+            public void setSynopsis(String synopsis) {
+                this.synopsis = synopsis;
             }
 
             public String getVideo() {
@@ -204,6 +245,62 @@ public class IndexDataResponse {
                 this.picture = picture;
             }
 
+            public String getCourseName() {
+                return courseName;
+            }
+
+            public void setCourseName(String courseName) {
+                this.courseName = courseName;
+            }
+
+            public String getFirstFrame() {
+                return firstFrame;
+            }
+
+            public void setFirstFrame(String firstFrame) {
+                this.firstFrame = firstFrame;
+            }
+
+            public int getUser_id() {
+                return user_id;
+            }
+
+            public void setUser_id(int user_id) {
+                this.user_id = user_id;
+            }
+
+            public String getTeachingDate() {
+                return teachingDate;
+            }
+
+            public void setTeachingDate(String teachingDate) {
+                this.teachingDate = teachingDate;
+            }
+
+            public String getContactNumber() {
+                return contactNumber;
+            }
+
+            public void setContactNumber(String contactNumber) {
+                this.contactNumber = contactNumber;
+            }
+
+            public String getTeachingAddress() {
+                return teachingAddress;
+            }
+
+            public void setTeachingAddress(String teachingAddress) {
+                this.teachingAddress = teachingAddress;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
             public String getHead_portrait() {
                 return head_portrait;
             }
@@ -211,43 +308,7 @@ public class IndexDataResponse {
             public void setHead_portrait(String head_portrait) {
                 this.head_portrait = head_portrait;
             }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getSeniority() {
-                return seniority;
-            }
-
-            public void setSeniority(String seniority) {
-                this.seniority = seniority;
-            }
-
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(Parcel parcel, int i) {
-                parcel.writeString(courseName);
-                parcel.writeString(role);
-                parcel.writeString(firstFrame);
-                parcel.writeString(rightAge);
-                parcel.writeString(teachingDate);
-                parcel.writeString(video);
-                parcel.writeString(teachingNumber);
-                parcel.writeString(teachingPlace);
-                parcel.writeString(picture);
-                parcel.writeString(head_portrait);
-                parcel.writeString(name);
-                parcel.writeString(seniority);
-            }
         }
     }
+
 }
