@@ -88,6 +88,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     CacheTask.getInstance().cacheUserId(userId);
                     CacheTask.getInstance().cacheAccount(accountString);
                     CacheTask.getInstance().cachePwd(pwdString);
+                    CacheTask.getInstance().cacheRole(response.getPara().getRole());
                     request(GET_RONG_CLOUD_TOKEN);
                 } else if (response.getHead().getCode().equals("E0003")) {
                     NToast.shortToast(this, response.getHead().getMsg());

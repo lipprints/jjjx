@@ -160,7 +160,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 mViewPager.setCurrentItem(0, false);
                 break;
             case R.id.jx_tab_find:
-                startActivity(new Intent(this, IndexItemDetailsActivity.class));
                 mViewPager.setCurrentItem(1, false);
                 break;
             case R.id.jx_tab_chats:
@@ -179,7 +178,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.jx_tab_publish:
                 if (CacheTask.getInstance().isLogin()) {
-                    switch ("1") {
+                    switch ("0") {
                         case "0"://无身份
                             startActivity(new Intent(this, VerifyRoleActivity.class));
                             //TODO 选择验证教师 或者 机构

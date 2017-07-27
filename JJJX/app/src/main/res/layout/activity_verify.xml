@@ -9,6 +9,7 @@
 
 
     <LinearLayout
+        android:id="@+id/verify_teacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
@@ -31,6 +32,7 @@
 
 
     <LinearLayout
+        android:id="@+id/verify_organization"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
