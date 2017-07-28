@@ -23,13 +23,15 @@ import com.jjjx.utils.NToast;
 import com.jjjx.widget.banner.GlideImageLoader;
 import com.jjjx.widget.popwinpicker.PopupAdapter;
 import com.jjjx.widget.popwinpicker.PopupButton;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.baidu.location.h.a.i;
 
 
 /**
@@ -45,6 +47,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
     private BDLocation bdLocation;
     private View headView;
     private static final int GET_INDEX = 2;
+    private SmartRefreshLayout mSmartRefreshLayout;
 
     @Override
     public void onLocation(BDLocation bdLocation) {
@@ -63,6 +66,14 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
     @Override
     public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_index, container, false);
+        mSmartRefreshLayout = (SmartRefreshLayout)v.findViewById(R.id.index_srl);
+        mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refresh();
+            }
+        });
+
         indexListView = (ListView) v.findViewById(R.id.index_list);
         headView = LayoutInflater.from(getActivity()).inflate(R.layout.index_head_view, indexListView, false);
         headView.setOnClickListener(this);
@@ -209,6 +220,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
         super.onSuccess(requestCode, result);
         switch (requestCode) {
             case GET_INDEX:
+                mSmartRefreshLayout.finishRefresh();
                 IndexDataResponse response = (IndexDataResponse) result;
                 if (response.getHead().getCode().equals("10000")) {
                     NToast.shortToast(getActivity(), "刷新成功");
