@@ -96,6 +96,10 @@
         <activity
             android:name=".activity.ClassModeActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.IndexItemDetailsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
