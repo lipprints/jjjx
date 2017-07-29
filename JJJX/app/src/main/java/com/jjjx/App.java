@@ -2,6 +2,7 @@ package com.jjjx;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 
 import com.baidu.location.BDLocation;
@@ -11,12 +12,18 @@ import com.baidu.location.service.LocationService;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.SystemUtils;
-
+import com.jjjx.utils.refreshload.MaterialHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import io.rong.imkit.RongIM;
 
 /**
@@ -44,7 +51,27 @@ public class App extends MultiDexApplication implements BDLocationListener {
             CacheTask.getInstance().init(this);
             Fresco.initialize(this);
             initBDLocationObserver();
+            initRefresh();
         }
+    }
+
+    private void initRefresh() {
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
+            @NonNull
+            @Override
+            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                layout.setPrimaryColors(R.color.colorAccent, R.color.colorPrimary);
+                return new MaterialHeader(context);
+            }
+        });
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
+            @Override
+            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
+                return new ClassicsFooter(context);//指定为经典Footer，默认是 BallPulseFooter
+            }
+        });
     }
 
 

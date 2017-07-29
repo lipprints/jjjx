@@ -57,4 +57,15 @@ dependencies {
     //视频录制
     compile project(':RecordVideo')
     compile project(':jcvideoplayer-lib')
+
+    //刷新加载(https://github.com/scwang90/SmartRefreshLayout)
+    compile ('com.scwang.smartrefresh:SmartRefreshLayout:1.0.3-alpha-2') {
+        exclude group: 'com.android.support'
+    }
+
+
+    // 推荐用这个 轮播图 （https://github.com/youth5201314/banner）
+//    compile('com.youth.banner:banner:1.4.9') {
+//        exclude group: 'com.android.support'
+//    }
 }

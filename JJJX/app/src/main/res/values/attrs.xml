@@ -45,4 +45,12 @@
         <attr name="anim_scale_factor" format="float"/>
     </declare-styleable>
 
+
+    <!--刷新加载 -->
+    <declare-styleable name="MaterialHeader">
+        <attr name="mhPrimaryColor" format="color" />
+        <attr name="mhShadowColor" format="color" />
+        <attr name="mhShadowRadius" format="dimension" />
+        <attr name="mhShowBezierWave" format="boolean" />
+    </declare-styleable>
 </resources>
