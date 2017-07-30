@@ -12,9 +12,14 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.jjjx.JxAction;
 import com.jjjx.R;
 import com.jjjx.adapter.IndexItemAdapter;
+import com.jjjx.data.async.AsyncTaskManager;
+import com.jjjx.data.async.OnDataListener;
 import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
+import com.jjjx.utils.CacheTask;
+import com.jjjx.utils.NToast;
 import com.jjjx.widget.like.LikeButton;
 import com.jjjx.widget.like.OnLikeListener;
 
@@ -34,6 +39,10 @@ import io.rong.imkit.RongIM;
  */
 
 public class IndexItemDetailsActivity extends AppCompatActivity {
+
+    public static final int ADD_CLASS = 801;
+    public static final int CANCEL_CLASS = 802;
+
     JCVideoPlayerStandard mJcVideoPlayerStandard;
     private ComplaintsEntity entity;
     private List<String> pictureList = new ArrayList<>();
@@ -76,17 +85,66 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
                 @Override
                 public void liked(LikeButton likeButton) {
                     //TODO 收藏
-                    entity.getId();
+                    AsyncTaskManager.getInstance(IndexItemDetailsActivity.this).request(ADD_CLASS, new OnDataListener() {
+                        @Override
+                        public Object doInBackground(int requestCode) throws Exception {
+                            return new JxAction(IndexItemDetailsActivity.this).addAttentionInfo(CacheTask.getInstance().getUserId(), String.valueOf(entity.getId()));
+
+                        }
+
+                        @Override
+                        public boolean onIntercept(int requestCode, Object result) {
+                            return false;
+                        }
+
+                        @Override
+                        public void onSuccess(int requestCode, Object result) {
+                            NToast.shortToast(IndexItemDetailsActivity.this, "收藏成功");
+                        }
+
+                        @Override
+                        public void onFailure(int requestCode, int state, Object result) {
+
+                        }
+                    });
+
                 }
 
                 @Override
                 public void unLiked(LikeButton likeButton) {
-                    //TODO 取消收藏
+                    AsyncTaskManager.getInstance(IndexItemDetailsActivity.this).request(CANCEL_CLASS, new OnDataListener() {
+                        @Override
+                        public Object doInBackground(int requestCode) throws Exception {
+                            return new JxAction(IndexItemDetailsActivity.this).deleteAttentionInfo(CacheTask.getInstance().getUserId(), String.valueOf(entity.getId()));
+                        }
+
+                        @Override
+                        public boolean onIntercept(int requestCode, Object result) {
+                            return false;
+                        }
+
+                        @Override
+                        public void onSuccess(int requestCode, Object result) {
+                            NToast.shortToast(IndexItemDetailsActivity.this, "已取消收藏");
+                        }
+
+                        @Override
+                        public void onFailure(int requestCode, int state, Object result) {
+
+                        }
+                    });
                 }
             });
+            if (!CacheTask.getInstance().isLogin()) {
+                likeButton.setVisibility(View.GONE);
+            }
             chatButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (!CacheTask.getInstance().isLogin()) {
+                        NToast.shortToast(IndexItemDetailsActivity.this, "请登录才能做后续操作");
+                        return;
+                    }
                     RongIM.getInstance().startPrivateChat(IndexItemDetailsActivity.this, String.valueOf(entity.getUser_id()), entity.getName());
                 }
             });

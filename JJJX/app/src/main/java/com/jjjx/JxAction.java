@@ -257,6 +257,50 @@ public class JxAction extends BaseAction {
     }
 
     /**
+     * 添加收藏
+     *
+     * @param user_id
+     * @param byuser_id
+     * @return
+     * @throws Exception
+     */
+    public InformationResponse addAttentionInfo(String user_id, String byuser_id) throws Exception {
+        InformationResponse response = new InformationResponse();
+        String url = getURL(Constants.ADD_ATTENTION_INFO);
+        RequestParams params = getRequestParams();
+        params.put("user_id", user_id);
+        params.put("byuser_id", byuser_id);
+        String result = httpManager.post(url, params);
+        NLog.e(TAG, result);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result, InformationResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 取消收藏
+     *
+     * @param user_id
+     * @param byuser_id
+     * @return
+     * @throws Exception
+     */
+    public InformationResponse deleteAttentionInfo(String user_id, String byuser_id) throws Exception {
+        InformationResponse response = new InformationResponse();
+        String url = getURL(Constants.DELETE_ATTENTION_INFO);
+        RequestParams params = getRequestParams();
+        params.put("user_id", user_id);
+        params.put("byuser_id", byuser_id);
+        String result = httpManager.post(url, params);
+        NLog.e(TAG, result);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result, InformationResponse.class);
+        }
+        return response;
+    }
+
+    /**
      * 无身份游客有的字段为
      * userid
      * name

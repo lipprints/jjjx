@@ -88,7 +88,7 @@ public class ProfileSettingActivity extends BaseActivity implements View.OnClick
         btn_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (3) {
+                switch (Integer.parseInt(CacheTask.getInstance().getUserRole())) {
                     case 1:
                     case 4:
                         request(SAVE_INFO_PERSON);
@@ -112,7 +112,7 @@ public class ProfileSettingActivity extends BaseActivity implements View.OnClick
                 }
             });
         }
-        switch (3) {
+        switch (Integer.parseInt(CacheTask.getInstance().getUserRole())) {
             case 1://个人
             case 4:
                 personLinearLayout = (LinearLayout) findViewById(R.id.profile_person);
