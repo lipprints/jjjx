@@ -7,6 +7,9 @@ import android.text.TextUtils;
 
 import java.util.regex.Pattern;
 
+import static com.baidu.location.h.j.p;
+import static io.rong.imlib.statistics.UserData.name;
+
 /**
  * Created by AMing on 17/5/12.
  * Company RongCloud
@@ -66,6 +69,79 @@ public class CacheTask {
         editor.putString("token", token);
         editor.apply();
     }
+
+
+    public void cacheName(String name) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("name", name);
+        editor.apply();
+    }
+
+    public String getName() {
+        return preferences.getString("name", null);
+    }
+
+    public void cacheSex(String sex) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("sex", sex);
+        editor.apply();
+    }
+
+    public String getSex() {
+        return preferences.getString("sex", null);
+    }
+
+    public void cachePortrait(String portrait) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("portrait", portrait);
+        editor.apply();
+    }
+
+    public String getPortrait() {
+        return preferences.getString("portrait", null);
+    }
+
+
+    public void cacheLearnYear(String learnYear) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("learnYear", learnYear);
+        editor.apply();
+    }
+
+    public String getLearnYear() {
+        return preferences.getString("learnYear", null);
+    }
+
+    public void cacheMainClass(String mainClass) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("mainClass", mainClass);
+        editor.apply();
+    }
+
+    public String getMainClass() {
+        return preferences.getString("mainClass", null);
+    }
+
+    public void cacheTeacherAmount(String teacherAmount) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("teacherAmount", teacherAmount);
+        editor.apply();
+    }
+
+    public String getAeacherAmount() {
+        return preferences.getString("teacherAmount", null);
+    }
+
+    public void cacheAverageAge(String averageAge) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("averageAge", averageAge);
+        editor.apply();
+    }
+
+    public String getAverageAge() {
+        return preferences.getString("averageAge", null);
+    }
+
 
     public void cacheUserId(@NonNull String userId) {
         SharedPreferences.Editor editor = preferences.edit();
@@ -144,5 +220,10 @@ public class CacheTask {
         preferences.edit().remove("account").apply();
         preferences.edit().remove("password").apply();
         preferences.edit().remove("userRole").apply();
+        preferences.edit().remove("name").apply();
+        preferences.edit().remove("sex").apply();
+        preferences.edit().remove("portrait").apply();
+        preferences.edit().remove("averageAge").apply();
+        preferences.edit().remove("teacherAmount").apply();
     }
 }

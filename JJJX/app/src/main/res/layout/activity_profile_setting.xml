@@ -21,67 +21,154 @@
             app:civ_border_color="#999"
             app:civ_border_width="2dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="张三"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Id:xxxx" />
-
-
     </LinearLayout>
 
     <include layout="@layout/rce_item_divider_20" />
 
-
-    <com.jjjx.widget.ListItemTextView
-        android:id="@+id/profile_name"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_title="姓名" />
+        android:layout_height="wrap_content">
 
-    <View style="@style/rce_horizontal_light_thin_divider" />
+        <LinearLayout
+            android:id="@+id/profile_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_name_p"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_title="姓名" />
 
-    <com.jjjx.widget.ListItemTextView
-        android:id="@+id/profile_sex"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_allow_arrow="true"
-        app:tv_list_item_title="性别" />
-
-    <View style="@style/rce_horizontal_light_thin_divider" />
-
-
-    <com.jjjx.widget.ListItemTextView
-        android:id="@+id/profile_learn_year"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_allow_arrow="true"
-        app:tv_list_item_title="教龄" />
-
-    <View style="@style/rce_horizontal_light_thin_divider" />
-
-    <com.jjjx.widget.ListItemTextView
-        android:id="@+id/profile_job"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_title="职业" />
-
-    <View style="@style/rce_horizontal_light_thin_divider" />
+            <View style="@style/rce_horizontal_light_thin_divider" />
 
 
-    <com.jjjx.widget.ListItemTextView
-        android:id="@+id/profile_main_class"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:tv_list_item_allow_arrow="true"
-        app:tv_list_item_title="主要课程" />
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_sex_p"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="性别" />
 
-    <include layout="@layout/rce_item_divider_20" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/profile_teacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_name_t"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_title="姓名" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_sex_t"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="性别" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_learn_year_t"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="教龄" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_job_t"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="职业" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_main_class_t"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="主要课程" />
+
+            <include layout="@layout/rce_item_divider_20" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/profile_organization"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_name_o"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_title="机构名" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_learn_year_o"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="办学时长" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_teacher_amount_o"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="教师人数" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_average_age_o"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="平均教龄" />
+
+            <View style="@style/rce_horizontal_light_thin_divider" />
+
+
+            <com.jjjx.widget.ListItemTextView
+                android:id="@+id/profile_main_class_o"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:tv_list_item_allow_arrow="true"
+                app:tv_list_item_title="主要课程" />
+
+            <include layout="@layout/rce_item_divider_20" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
 
 </LinearLayout>

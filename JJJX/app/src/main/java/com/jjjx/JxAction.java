@@ -206,19 +206,17 @@ public class JxAction extends BaseAction {
      * @param user_id
      * @param name
      * @param gender
-     * @param age
      * @param occupation 职业
      * @param seniority  教龄
      * @param courses    主要课程
      */
-    public InformationResponse setTeacherInfo(String user_id, String name, String gender, String age, String occupation, String seniority, String courses) throws Exception {
+    public InformationResponse setTeacherInfo(String user_id, String name, String gender, String occupation, String seniority, String courses) throws Exception {
         InformationResponse response = new InformationResponse();
         String url = getURL(Constants.UPDATEINFORMATION);
         RequestParams params = getRequestParams();
         params.put("user_id", user_id);
         params.put("name", name);
         params.put("gender", gender);
-        params.put("age", age);
         params.put("occupation", occupation);
         params.put("seniority", seniority);
         params.put("courses", courses);

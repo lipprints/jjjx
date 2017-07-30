@@ -2,6 +2,7 @@ package com.jjjx.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -9,9 +10,13 @@ import android.widget.ImageView;
 
 import com.jjjx.R;
 import com.jjjx.data.response.IndexDataResponse;
+import com.jjjx.utils.CacheTask;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 
 /**
@@ -45,6 +50,9 @@ public class SplashActivity extends BaseActivity {
         aa.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
+                if (RongIM.getInstance().getCurrentConnectionStatus() != RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED && !TextUtils.isEmpty(CacheTask.getInstance().getToken())) {
+                    RongIM.connect(CacheTask.getInstance().getToken(), null);
+                }
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 //                intent.putParcelableArrayListExtra("indexData", arrayList);
                 startActivity(intent);

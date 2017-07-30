@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jjjx.Constants;
 import com.jjjx.R;
 import com.jjjx.data.response.GetRongCloudTokenResponse;
 import com.jjjx.data.response.LoginResponse;
@@ -89,6 +90,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     CacheTask.getInstance().cacheAccount(accountString);
                     CacheTask.getInstance().cachePwd(pwdString);
                     CacheTask.getInstance().cacheRole(response.getPara().getRole());
+                    CacheTask.getInstance().cacheName(response.getPara().getName());
+                    CacheTask.getInstance().cacheSex(response.getPara().getGender());
+                    CacheTask.getInstance().cachePortrait(Constants.DOMAIN + response.getPara().getHead_portrait());
+
                     request(GET_RONG_CLOUD_TOKEN);
                 } else if (response.getHead().getCode().equals("E0003")) {
                     NToast.shortToast(this, response.getHead().getMsg());
@@ -109,6 +114,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         public void onSuccess(String s) {
                             LoadDialog.dismiss(LoginActivity.this);
                             NToast.shortToast(LoginActivity.this, "登录成功");
+                            if (mLoginDoneListener != null) {
+                                mLoginDoneListener.done();
+                            }
                             finish();
                             Log.e(TAG, s + "----onSuccess");
                         }
@@ -148,5 +156,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             accountET.setText(data.getStringExtra("account"));
             pwdET.setText(data.getStringExtra("pwd"));
         }
+    }
+
+    private static LoginDoneListener mLoginDoneListener;
+
+    public interface LoginDoneListener {
+        void done();
+    }
+
+    public static void setOnLoginDoneListener(LoginDoneListener loginDoneListener) {
+        mLoginDoneListener = loginDoneListener;
     }
 }
