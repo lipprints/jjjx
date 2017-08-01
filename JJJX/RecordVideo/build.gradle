@@ -8,17 +8,22 @@ ext {
     SUPPORT_LIB_VERSION = '24.0.1'
     VIDEO_PLAYER_VERSION = '0.3.0'
     MD_VERSION = '0.9.1.0'
-    TARGET_SDK = 24
-    BUILD_TOOLS = "24.0.1"
+//    TARGET_SDK = 24
+//    BUILD_TOOLS = "24.0.1"
 }
 
 android {
-    compileSdkVersion TARGET_SDK
-    buildToolsVersion BUILD_TOOLS
+//    compileSdkVersion TARGET_SDK
+//    buildToolsVersion BUILD_TOOLS
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion TARGET_SDK
+//        minSdkVersion 14
+//        targetSdkVersion TARGET_SDK
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
         versionCode PUBLISH_VERSION_CODE
         versionName PUBLISH_VERSION
         vectorDrawables.useSupportLibrary = true
@@ -33,7 +38,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '25.0.0'
+//    buildToolsVersion '25.0.0'
 }
 
 repositories {
@@ -42,7 +47,11 @@ repositories {
 }
 
 dependencies {
-    compile "com.afollestad.material-dialogs:core:$MD_VERSION"
+    compile ("com.afollestad.material-dialogs:core:$MD_VERSION") {
+        exclude group: 'com.android.support'
+    }
+    compile "com.android.support:appcompat-v7:${supportVersion}"
+    compile "com.android.support:recyclerview-v7:${supportVersion}"
 }
 
 //apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/android-lib-release.gradle'
