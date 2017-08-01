@@ -20,6 +20,7 @@ import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
 import com.jjjx.adapter.IndexAdapter;
 import com.jjjx.data.response.IndexDataResponse;
 import com.jjjx.utils.NToast;
+import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.jjjx.widget.banner.GlideImageLoader;
 import com.jjjx.widget.popwinpicker.PopupAdapter;
 import com.jjjx.widget.popwinpicker.PopupButton;
@@ -48,6 +49,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
     private View headView;
     private static final int GET_INDEX = 2;
     private SmartRefreshLayout mSmartRefreshLayout;
+    private SmartRefreshUtil mSmartRefreshUtil;
 
     @Override
     public void onLocation(BDLocation bdLocation) {
@@ -113,6 +115,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
                 }
             }
         });
+        mSmartRefreshUtil = new SmartRefreshUtil(mSmartRefreshLayout).addReboundFooter(getContext());
         App.getInstance().addOnBDLocationObserver(this);
         PublishActivity.setRefreshDataListener(this);
         request(GET_INDEX);
@@ -220,7 +223,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
         super.onSuccess(requestCode, result);
         switch (requestCode) {
             case GET_INDEX:
-                mSmartRefreshLayout.finishRefresh();
+                mSmartRefreshUtil.stopRefrshLoad();
                 IndexDataResponse response = (IndexDataResponse) result;
                 if (response.getHead().getCode().equals("10000")) {
                     NToast.shortToast(getActivity(), "刷新成功");
