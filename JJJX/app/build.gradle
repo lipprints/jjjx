@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.jjjx"
         minSdkVersion 14
@@ -59,7 +59,7 @@ dependencies {
     compile project(':jcvideoplayer-lib')
 
     //刷新加载(https://github.com/scwang90/SmartRefreshLayout)
-    compile ('com.scwang.smartrefresh:SmartRefreshLayout:1.0.3-alpha-2') {
+    compile ('com.scwang.smartrefresh:SmartRefreshLayout:1.0.3-alpha-5') {
         exclude group: 'com.android.support'
     }
 
