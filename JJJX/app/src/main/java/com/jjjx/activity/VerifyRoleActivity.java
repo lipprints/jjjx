@@ -48,7 +48,7 @@ public class VerifyRoleActivity extends BaseActivity {
             RequestRoleResponse response = (RequestRoleResponse) result;
             if (response.getHead().getCode().equals("S0000")) {
                 NToast.longToast(mContext, "申请成功,我们工作人员将在 1 个工作日内对您的申请进行审核~");
-                CacheTask.getInstance().cacheRole(response.getRole());
+                CacheTask.getInstance().cacheRole("4");
                 finish();
             } else if (response.getHead().getCode().equals("S0002")) {
                 NToast.shortToast(mContext, "申请已提交，正在审核。请勿重复申请~");
@@ -61,9 +61,9 @@ public class VerifyRoleActivity extends BaseActivity {
     public Object doInBackground(int requestCode) throws Exception {
         switch (requestCode) {
             case ROLE_ORGANIZATION:
-                return action.requestRole("2");
+                return action.requestRole("3");
             case ROLE_TEACHER:
-                return action.requestRole("1");
+                return action.requestRole("2");
         }
         return null;
     }

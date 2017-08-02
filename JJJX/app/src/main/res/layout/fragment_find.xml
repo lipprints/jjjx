@@ -1,13 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="发现" />
+    <LinearLayout style="@style/home_title_bar_style">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/ico_menu" />
+
+
+        <com.flyco.tablayout.CommonTabLayout
+            android:id="@+id/ff_stl"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginRight="40dp"
+            android:background="@color/transparent"
+            app:tl_iconVisible="false"
+            app:tl_indicator_color="@color/title_color"
+            app:tl_indicator_corner_radius="1.5dp"
+            app:tl_indicator_height="2dp"
+            app:tl_textSelectColor="@color/color_normal_text"
+            app:tl_indicator_width="45dp"
+            app:tl_textUnselectColor="@color/color_normal_text"
+            app:tl_textsize="16sp" />
+
+    </LinearLayout>
+
+    <!--app:tl_indicator_width_equal_title="true"-->
+    <!--app:tl_tab_space_equal="true"-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/ff_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

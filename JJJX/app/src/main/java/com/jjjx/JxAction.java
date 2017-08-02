@@ -206,19 +206,17 @@ public class JxAction extends BaseAction {
      * @param user_id
      * @param name
      * @param gender
-     * @param age
      * @param occupation 职业
      * @param seniority  教龄
      * @param courses    主要课程
      */
-    public InformationResponse setTeacherInfo(String user_id, String name, String gender, String age, String occupation, String seniority, String courses) throws Exception {
+    public InformationResponse setTeacherInfo(String user_id, String name, String gender, String occupation, String seniority, String courses) throws Exception {
         InformationResponse response = new InformationResponse();
         String url = getURL(Constants.UPDATEINFORMATION);
         RequestParams params = getRequestParams();
         params.put("user_id", user_id);
         params.put("name", name);
         params.put("gender", gender);
-        params.put("age", age);
         params.put("occupation", occupation);
         params.put("seniority", seniority);
         params.put("courses", courses);
@@ -250,6 +248,50 @@ public class JxAction extends BaseAction {
         params.put("courses", courses);
         params.put("teacher_amount", teacher_amount);
         params.put("average_age", average_age);
+        String result = httpManager.post(url, params);
+        NLog.e(TAG, result);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result, InformationResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 添加收藏
+     *
+     * @param user_id
+     * @param byuser_id
+     * @return
+     * @throws Exception
+     */
+    public InformationResponse addAttentionInfo(String user_id, String byuser_id) throws Exception {
+        InformationResponse response = new InformationResponse();
+        String url = getURL(Constants.ADD_ATTENTION_INFO);
+        RequestParams params = getRequestParams();
+        params.put("user_id", user_id);
+        params.put("byuser_id", byuser_id);
+        String result = httpManager.post(url, params);
+        NLog.e(TAG, result);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result, InformationResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 取消收藏
+     *
+     * @param user_id
+     * @param byuser_id
+     * @return
+     * @throws Exception
+     */
+    public InformationResponse deleteAttentionInfo(String user_id, String byuser_id) throws Exception {
+        InformationResponse response = new InformationResponse();
+        String url = getURL(Constants.DELETE_ATTENTION_INFO);
+        RequestParams params = getRequestParams();
+        params.put("user_id", user_id);
+        params.put("byuser_id", byuser_id);
         String result = httpManager.post(url, params);
         NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {

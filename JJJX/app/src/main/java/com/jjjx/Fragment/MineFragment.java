@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
@@ -16,8 +17,10 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.jjjx.App;
 import com.jjjx.Constants;
 import com.jjjx.R;
+import com.jjjx.activity.LoginActivity;
 import com.jjjx.activity.ProfileSettingActivity;
 import com.jjjx.activity.VerifyRoleActivity;
+import com.jjjx.activity.WaitingVerifyActivity;
 import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.model.UploadImageModel;
 import com.jjjx.utils.CacheTask;
@@ -43,6 +46,7 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
     ListItemTextView quitTextView;
     ListItemTextView verifyTextView;
     ListItemTextView profileSettingTextView;
+    TextView userName;
 
     @Nullable
     @Override
@@ -52,10 +56,36 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
         quitTextView = (ListItemTextView) v.findViewById(R.id.mine_quit);
         verifyTextView = (ListItemTextView) v.findViewById(R.id.mine_i_want_verify);
         profileSettingTextView = (ListItemTextView) v.findViewById(R.id.mine_profile_setting);
+        userName = (TextView) v.findViewById(R.id.jx_user_name);
         circleImageView.setOnClickListener(this);
         verifyTextView.setOnClickListener(this);
         profileSettingTextView.setOnClickListener(this);
         quitTextView.setOnClickListener(this);
+        Glide.with(getActivity()).load(CacheTask.getInstance().getPortrait()).into(new SimpleTarget<GlideDrawable>() {
+            @Override
+            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                circleImageView.setImageDrawable(resource);
+            }
+        });
+        userName.setText(CacheTask.getInstance().getName());
+        LoginActivity.setOnLoginDoneListener(new LoginActivity.LoginDoneListener() {
+            @Override
+            public void done() {
+                Glide.with(getActivity()).load(CacheTask.getInstance().getPortrait()).into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        circleImageView.setImageDrawable(resource);
+                    }
+                });
+                userName.setText(CacheTask.getInstance().getName());
+            }
+        });
+        ProfileSettingActivity.setProfileChangeListener(new ProfileSettingActivity.ProfileChangeListener() {
+            @Override
+            public void change() {
+                userName.setText(CacheTask.getInstance().getName());
+            }
+        });
         return v;
     }
 
@@ -81,6 +111,7 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
                                         circleImageView.setImageDrawable(resource);
                                     }
                                 });
+                                CacheTask.getInstance().cachePortrait(Constants.DOMAIN + model.getUrl());
                             }
                         });
                     }
@@ -103,7 +134,21 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mine_i_want_verify:
-                startActivity(new Intent(getActivity(), VerifyRoleActivity.class));
+                switch (Integer.parseInt(CacheTask.getInstance().getUserRole())) {
+                    case 1:
+                        startActivity(new Intent(getActivity(), VerifyRoleActivity.class));
+                        break;
+                    case 2:
+                        NToast.shortToast(getActivity(), "当前已经成功审核为教师身份");
+                        break;
+                    case 3:
+                        NToast.shortToast(getActivity(), "当前已经成功审核为机构身份");
+                        break;
+                    case 4:
+                        startActivity(new Intent(getActivity(), WaitingVerifyActivity.class));
+                        break;
+                }
+
                 break;
             case R.id.mine_profile_setting:
                 startActivity(new Intent(getActivity(), ProfileSettingActivity.class));

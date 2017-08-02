@@ -176,21 +176,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     startActivity(new Intent(this, LoginActivity.class));
                 }
                 break;
-            case R.id.jx_tab_publish:
+            case R.id.jx_tab_publish: //1是个人 2是老师 3是机构 4审核中
                 if (CacheTask.getInstance().isLogin()) {
-                    switch ("0") {
-                        case "0"://无身份
+                    switch (CacheTask.getInstance().getUserRole()) {
+                        case "1"://无身份
                             startActivity(new Intent(this, VerifyRoleActivity.class));
                             //TODO 选择验证教师 或者 机构
                             break;
-                        case "1"://教师
+                        case "2"://教师
                             startActivity(new Intent(this, PublishActivity.class));
                             break;
-                        case "2"://机构
+                        case "3"://机构
                             startActivity(new Intent(this, PublishActivity.class));
                             break;
-                        case "3"://审核中
+                        case "4"://审核中
                             //TODO 告知在审核中 可以询问客服进度
+                            startActivity(new Intent(this, WaitingVerifyActivity.class));
                             break;
                     }
 
