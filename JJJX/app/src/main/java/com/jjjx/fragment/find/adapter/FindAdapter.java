@@ -43,9 +43,10 @@ public class FindAdapter extends FragmentStatePagerAdapter {
                 mCityFragment = new CityFragment();
             return mCityFragment;
         } else {
-            if (mHotFragment == null)
-                mHotFragment = new HotFragment();
-            return mHotFragment;
+//            if (mHotFragment == null)
+//                mHotFragment = new HotFragment();
+//            return mHotFragment;
+            return null;
         }
     }
 

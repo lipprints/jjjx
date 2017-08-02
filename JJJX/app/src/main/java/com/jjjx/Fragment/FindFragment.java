@@ -37,6 +37,7 @@ public class FindFragment extends BaseFragment {
         mViewPager = (ViewPager) view.findViewById(R.id.ff_viewpager);
         //
         mViewPager.setAdapter(new FindAdapter(getChildFragmentManager(), "热门", "关注", "同城"));
+        mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

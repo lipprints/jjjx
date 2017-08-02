@@ -21,4 +21,7 @@
     <color name="color_gray_text">#939393</color>
     <color name="color_divider_line">#E5E5E5</color>
     <color name="color_divider_thick_line">#F2F2F3</color>
+
+    <!--app灰色-->
+    <color name="app_gray_color">#999999</color>
 </resources>

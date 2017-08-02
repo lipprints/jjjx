@@ -95,8 +95,9 @@ public abstract class XBaseLazyFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         isNoCloseFragment = false;
+        String closeStr = closeFragment();
         //关闭Okhttp的网络请求
-     //   OkHttpUtils.getInstance().cancelTag(closeFragment());
+     //   OkHttpUtils.getInstance().cancelTag(closeStr);
         ActivityPageManager.unbindReferences(mContentView);
         mContentView = null;
     }
