@@ -13,10 +13,13 @@ import com.jjjx.data.response.InformationResponse;
 import com.jjjx.data.response.LoginResponse;
 import com.jjjx.data.response.RegisterResponse;
 import com.jjjx.data.response.RequestRoleResponse;
+import com.jjjx.data.response.SearchResponse;
 import com.jjjx.data.response.UpdateInformationResponse;
 import com.jjjx.utils.AMUtils;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NLog;
+
+import java.net.URL;
 
 import static android.R.attr.x;
 import static com.baidu.location.h.j.p;
@@ -305,7 +308,7 @@ public class JxAction extends BaseAction {
      * userid
      * name
      * gender
-     *
+     * <p>
      * 教师有的字段为
      * userid
      * name
@@ -314,7 +317,7 @@ public class JxAction extends BaseAction {
      * occupation
      * seniority 教龄
      * courses
-     *
+     * <p>
      * 机构
      * userid
      * name
@@ -323,4 +326,15 @@ public class JxAction extends BaseAction {
      * teacher_amount
      * average_age
      */
+
+//    URL：http://47.93.217.163:8080/app/queryCourseReleaseByWhere 	输入参数：condition
+    public IndexDataResponse search(String condition) throws Exception {
+        IndexDataResponse response = new IndexDataResponse();
+        String url = getURL(Constants.SEARCH + "?condition=" + condition);
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result, IndexDataResponse.class);
+        }
+        return response;
+    }
 }

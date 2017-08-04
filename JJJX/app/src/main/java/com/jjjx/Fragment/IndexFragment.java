@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.jjjx.OnBDLocationListener;
 import com.jjjx.R;
 import com.jjjx.activity.IndexItemDetailsActivity;
 import com.jjjx.activity.PublishActivity;
+import com.jjjx.activity.SearchActivity;
 import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
 import com.jjjx.adapter.IndexAdapter;
 import com.jjjx.data.response.IndexDataResponse;
@@ -33,6 +35,7 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.jjjx.R.id.titleBar_search_ll;
 
 
 /**
@@ -50,6 +53,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
     private static final int GET_INDEX = 2;
     private SmartRefreshLayout mSmartRefreshLayout;
     private SmartRefreshUtil mSmartRefreshUtil;
+    private LinearLayout mSearchLayout;
 
     @Override
     public void onLocation(BDLocation bdLocation) {
@@ -68,7 +72,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
     @Override
     public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_index, container, false);
-        mSmartRefreshLayout = (SmartRefreshLayout)v.findViewById(R.id.index_srl);
+        mSmartRefreshLayout = (SmartRefreshLayout) v.findViewById(R.id.index_srl);
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -85,6 +89,14 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
         indexListView.setAdapter(adapter);
         indexListView.setOnItemClickListener(this);
         initPopwinPicker(v);
+
+        mSearchLayout = (LinearLayout) v.findViewById(R.id.titleBar_search_ll);
+        mSearchLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+            }
+        });
 
         locationTextView = (TextView) v.findViewById(R.id.titleBar_city_name);
         locationTextView.setText("定位中...");

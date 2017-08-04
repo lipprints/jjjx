@@ -51,4 +51,6 @@ public class Constants {
 
     public static final String DELETE_ATTENTION_INFO = "add/deleteAttentionInfo";
 
+    public static final String SEARCH = "app/queryCourseReleaseByWhere";
+
 }
