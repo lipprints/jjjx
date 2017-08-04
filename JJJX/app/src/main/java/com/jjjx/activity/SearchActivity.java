@@ -1,8 +1,10 @@
 package com.jjjx.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +24,7 @@ import java.util.List;
  * Company RongCloud
  */
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     private EditText mSearchEdit;
     private TextView mSearchText;
     public static final int SEARCH = 301;
@@ -47,6 +49,7 @@ public class SearchActivity extends BaseActivity {
             }
         });
         ListView searchListView = (ListView) findViewById(R.id.search_list);
+        searchListView.setOnItemClickListener(this);
         adapter = new IndexAdapter(mContext, data);
         searchListView.setAdapter(adapter);
     }
@@ -69,5 +72,13 @@ public class SearchActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        IndexDataResponse.ParaEntity.ComplaintsEntity entity = (IndexDataResponse.ParaEntity.ComplaintsEntity) adapter.getItem(i);
+        Intent intent = new Intent(mContext, IndexItemDetailsActivity.class);
+        intent.putExtra("indexItemData", entity);
+        startActivity(intent);
     }
 }
