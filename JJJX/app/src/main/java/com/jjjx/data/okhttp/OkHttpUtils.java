@@ -262,6 +262,54 @@ public class OkHttpUtils {
 
     }
 
+    public void findPublish(String user_id, List<MediaModel> mediaModels, String content, final UploadImageListener uploadImageListener) {
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder();
+        multipartBodyBuilder.setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("user_id", user_id);
+        multipartBodyBuilder.addFormDataPart("content", content);
+
+        for (int i = 0; i < mediaModels.size(); i++) {
+            File file = mediaModels.get(i).getMediaFile();
+            if (mediaModels.get(i).getType() == MediaModel.MediaType.IMAGE) {
+                multipartBodyBuilder.addFormDataPart("files", file.getName(), RequestBody.create(MEDIA_TYPE_PNG, file));
+            } else {
+                multipartBodyBuilder.addFormDataPart("files", file.getName(), RequestBody.create(MEDIA_TYPE_MP4, file));
+                File videoImageFile = new File(mediaModels.get(i).getDisplayPicturePath());
+                if (videoImageFile.exists()) {
+                    multipartBodyBuilder.addFormDataPart("files", "videoImageFile" + System.currentTimeMillis() + ".png", RequestBody.create(MEDIA_TYPE_PNG, videoImageFile));
+                }
+            }
+        }
+        final RequestBody requestBody = multipartBodyBuilder.build();
+        Request.Builder requestBuilder = new Request.Builder();
+
+        requestBuilder.url(Constants.DOMAIN + Constants.FIND_PUBLISH);// 添加URL地址
+        requestBuilder.post(requestBody);
+        Request request = requestBuilder.build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, final IOException e) {
+                Log.e(TAG, e.getMessage());
+                if (uploadImageListener != null) {
+                    uploadImageListener.onFailure(e);
+                }
+
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    if (uploadImageListener != null) {
+                        uploadImageListener.onSuccess(response.body().string());
+
+                    }
+                }
+            }
+        });
+
+    }
+
 
     public interface UploadImageListener {
         void onSuccess(String result);

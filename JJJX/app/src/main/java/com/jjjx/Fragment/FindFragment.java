@@ -1,17 +1,21 @@
 package com.jjjx.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.jjjx.R;
+import com.jjjx.activity.FindPublishActivity;
 import com.jjjx.fragment.find.adapter.FindAdapter;
 import com.jjjx.model.TabEntity;
+import com.jjjx.utils.CacheTask;
 
 import java.util.ArrayList;
 
@@ -24,6 +28,7 @@ public class FindFragment extends BaseFragment {
 
     private ViewPager mViewPager;
     private CommonTabLayout mTabLayout;
+    private ImageView findPublish;
 
     @Override
     public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +73,16 @@ public class FindFragment extends BaseFragment {
             @Override
             public void onTabReselect(int position) {
 
+            }
+        });
+
+        findPublish = (ImageView) view.findViewById(R.id.jx_find_publish);
+        findPublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (CacheTask.getInstance().isLogin()) {
+                    startActivity(new Intent(getActivity(),FindPublishActivity.class));
+                }
             }
         });
 

@@ -45,6 +45,8 @@ public class Constants {
 
     public static final String ISSUE = "app/issue"; //发布
 
+    public static final String FIND_PUBLISH = "app/publish";
+
     public static final String INDEX_ALL = "app/queryAllCourseRelease"; //首页数据
 
     public static final String ADD_ATTENTION_INFO = "add/addAttentionInfo";

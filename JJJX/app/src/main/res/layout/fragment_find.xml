@@ -8,6 +8,7 @@
     <LinearLayout style="@style/home_title_bar_style">
 
         <ImageView
+            android:id="@+id/jx_find_publish"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="15dp"

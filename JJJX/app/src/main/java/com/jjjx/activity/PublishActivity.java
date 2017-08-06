@@ -223,7 +223,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void run() {
                         LoadDialog.dismiss(PublishActivity.this);
-                        NToast.shortToast(PublishActivity.this, "发布成功");
+                        NToast.shortToast(PublishActivity.this, "发布失败");
                     }
                 });
             }
