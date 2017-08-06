@@ -18,9 +18,9 @@ import com.jjjx.R;
 import com.jjjx.activity.IndexItemDetailsActivity;
 import com.jjjx.activity.PublishActivity;
 import com.jjjx.activity.SearchActivity;
-import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
 import com.jjjx.adapter.IndexAdapter;
 import com.jjjx.data.response.IndexDataResponse;
+import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
 import com.jjjx.utils.NToast;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.jjjx.widget.banner.GlideImageLoader;
@@ -28,14 +28,12 @@ import com.jjjx.widget.popwinpicker.PopupAdapter;
 import com.jjjx.widget.popwinpicker.PopupButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.jjjx.R.id.titleBar_search_ll;
 
 
 /**
@@ -73,10 +71,16 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
     public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_index, container, false);
         mSmartRefreshLayout = (SmartRefreshLayout) v.findViewById(R.id.index_srl);
-        mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        mSmartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refresh();
+            }
+
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                mSmartRefreshUtil.stopRefrshLoad();
+                    NToast.shortToast(mContext,"加载了咯");
             }
         });
 
@@ -127,7 +131,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
                 }
             }
         });
-        mSmartRefreshUtil = new SmartRefreshUtil(mSmartRefreshLayout).addReboundFooter(getContext());
+        mSmartRefreshUtil = new SmartRefreshUtil(mSmartRefreshLayout);
         App.getInstance().addOnBDLocationObserver(this);
         PublishActivity.setRefreshDataListener(this);
         request(GET_INDEX);

@@ -24,4 +24,7 @@
 
     <!--app灰色-->
     <color name="app_gray_color">#999999</color>
+
+    <!-- 背景色-->
+    <color name="basecolor">#f5f5f5</color>
 </resources>

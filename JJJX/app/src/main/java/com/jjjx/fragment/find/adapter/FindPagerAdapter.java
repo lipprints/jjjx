@@ -13,14 +13,14 @@ import com.jjjx.fragment.find.HotFragment;
  * 发现的fragment适配器
  */
 
-public class FindAdapter extends FragmentStatePagerAdapter {
+public class FindPagerAdapter extends FragmentStatePagerAdapter {
     private String[] mTitles;
     private HotFragment mHotFragment;
     private FollowFragment mFollowFragment;
     private CityFragment mCityFragment;
 
 
-    public FindAdapter(FragmentManager fm, String... titles) {
+    public FindPagerAdapter(FragmentManager fm, String... titles) {
         super(fm);
         this.mTitles = titles;
     }

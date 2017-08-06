@@ -12,7 +12,7 @@ import com.baidu.location.service.LocationService;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.SystemUtils;
-import com.jjjx.utils.refreshload.MaterialHeader;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;

@@ -13,7 +13,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.jjjx.R;
 import com.jjjx.activity.FindPublishActivity;
-import com.jjjx.fragment.find.adapter.FindAdapter;
+import com.jjjx.fragment.find.adapter.FindPagerAdapter;
 import com.jjjx.model.TabEntity;
 import com.jjjx.utils.CacheTask;
 
@@ -41,7 +41,7 @@ public class FindFragment extends BaseFragment {
         mTabLayout = (CommonTabLayout) view.findViewById(R.id.ff_stl);
         mViewPager = (ViewPager) view.findViewById(R.id.ff_viewpager);
         //
-        mViewPager.setAdapter(new FindAdapter(getChildFragmentManager(), "热门", "关注", "同城"));
+        mViewPager.setAdapter(new FindPagerAdapter(getChildFragmentManager(), "热门", "关注", "同城"));
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

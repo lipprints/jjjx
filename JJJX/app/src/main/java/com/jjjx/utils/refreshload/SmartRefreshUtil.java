@@ -92,8 +92,11 @@ public class SmartRefreshUtil {
      * 立即停止刷新加载
      */
     public void stopRefrshLoad(int refrshDelayed, int loadDelayed) {
-        mSmartRefreshLayout.finishRefresh(refrshDelayed);
-        mSmartRefreshLayout.finishLoadmore(loadDelayed);
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isRefreshing())
+            mSmartRefreshLayout.finishRefresh(refrshDelayed);
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isLoading())
+            mSmartRefreshLayout.finishLoadmore(loadDelayed);
+
     }
 
 }

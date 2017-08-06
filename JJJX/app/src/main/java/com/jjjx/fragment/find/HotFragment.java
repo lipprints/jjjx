@@ -1,7 +1,7 @@
 package com.jjjx.fragment.find;
 
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -12,6 +12,7 @@ import com.jjjx.app.base.XBaseLazyFragment;
 import com.jjjx.data.GlideManage;
 import com.jjjx.fragment.find.adapter.HotAdapter;
 import com.jjjx.model.HotEntity;
+import com.jjjx.utils.ToastUtil;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -28,9 +29,9 @@ import java.util.List;
 public class HotFragment extends XBaseLazyFragment {
 
     private SmartRefreshLayout mSmartRefreshLayout;
-    private boolean isRefresh=false;
-    private int mPageIndex=0;//页码
-    private int mTotalPages=1;//总页数
+    private boolean isRefresh = false;
+    private int mPageIndex = 0;//页码
+    private int mTotalPages = 1;//总页数
     private RecyclerView mRecyclerView;
     private SmartRefreshUtil mRefreshUtil;
     private GlideManage mGlideManage;
@@ -66,7 +67,7 @@ public class HotFragment extends XBaseLazyFragment {
         LinearLayout parentlayout = (LinearLayout) view.findViewById(R.id.fih_parentlayout);
         mSmartRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id.fih_srl);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.fih_rv);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         //
         mSmartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
@@ -98,9 +99,6 @@ public class HotFragment extends XBaseLazyFragment {
     protected void lazyLoad() {
         //懒加载会在fragment显示的时候被触发，导致数据多次加载，要判断是否有数据，如果有，不触发数据加载
         try {
-            if (getContext() != null && mGlideManage != null)
-                mGlideManage.getRequestManager().resumeRequests();
-
             if (mAdapter == null) {
                 mGlideManage = new GlideManage(getContext());
                 mAdapter = new HotAdapter(mGlideManage, getContext());
@@ -108,14 +106,17 @@ public class HotFragment extends XBaseLazyFragment {
                 mAdapter.setOnItemClickListener(new RvPureAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-
+                        ToastUtil.showToast("你点击了咯");
                     }
                 });
                 mRecyclerView.setAdapter(mAdapter);
             }
+            //如果数据为0，开启自动刷新
             if (mAdapter.getDatas().size() == 0)
                 mSmartRefreshLayout.autoRefresh();
-
+            //每次在这里需要允许glide加载图片
+            if (getContext() != null && mGlideManage != null)
+                mGlideManage.getRequestManager().resumeRequests();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -124,33 +125,30 @@ public class HotFragment extends XBaseLazyFragment {
     /**
      * 这里请求网络等...
      */
-    private void initData(){
-        List<HotEntity> listH=new ArrayList<>();
-        for (int i=0;i<30;i++){
-            HotEntity hotEntity=new HotEntity();
-            hotEntity.setId(i+1);
+    private void initData() {
+        List<HotEntity> listH = new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            HotEntity hotEntity = new HotEntity();
+            hotEntity.setId(i + 1);
             if (i % 3 == 0) {
                 hotEntity.setImgUrl("http://img01.e23.cn/2014/0823/20140823070324537.jpg");
                 hotEntity.setUserImg("http://img01.e23.cn/2014/0823/20140823070324537.jpg");
-            }
-            else if (i % 5 == 0) {
+            } else if (i % 5 == 0) {
                 hotEntity.setImgUrl("http://upload.northnews.cn/2013/0114/1358095079926.jpg");
                 hotEntity.setUserImg("http://upload.northnews.cn/2013/0114/1358095079926.jpg");
-            }
-            else if (i % 7 == 0) {
+            } else if (i % 7 == 0) {
                 hotEntity.setImgUrl("http://www.bz55.com/uploads/allimg/150414/139-150414093956-50.jpg");
                 hotEntity.setUserImg("http://www.bz55.com/uploads/allimg/150414/139-150414093956-50.jpg");
-            }
-            else {
+            } else {
                 hotEntity.setImgUrl("http://www.sznews.com/photo/images/attachement/jpg/site3/20160205/6c0b840b6799181e94795c.jpg");
                 hotEntity.setUserImg("http://www.sznews.com/photo/images/attachement/jpg/site3/20160205/6c0b840b6799181e94795c.jpg");
             }
 
             hotEntity.setUserName("美女");
-            hotEntity.setNumber(i%2==0?100:200);
+            hotEntity.setNumber(i % 2 == 0 ? 100 : 200);
             listH.add(hotEntity);
         }
-        mAdapter.setDatas(listH,true);
+        mAdapter.setDatas(listH, true);
         mRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_SUCCESS);
     }
 
