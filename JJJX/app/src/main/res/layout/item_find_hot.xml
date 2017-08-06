@@ -2,12 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
     android:background="@drawable/background_card"
     android:orientation="vertical"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:layout_margin="5dp"
-    android:paddingTop="5dp">
+    android:padding="3dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
