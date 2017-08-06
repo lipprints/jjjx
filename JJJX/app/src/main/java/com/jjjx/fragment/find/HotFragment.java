@@ -1,7 +1,7 @@
 package com.jjjx.fragment.find;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -11,7 +11,7 @@ import com.jjjx.app.adapter.RvPureAdapter;
 import com.jjjx.app.base.XBaseLazyFragment;
 import com.jjjx.data.GlideManage;
 import com.jjjx.data.response.FindDataResponse;
-import com.jjjx.fragment.find.adapter.HotAdapter;
+import com.jjjx.fragment.find.adapter.FindPureAdapter;
 import com.jjjx.utils.ToastUtil;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -32,9 +32,7 @@ public class HotFragment extends XBaseLazyFragment {
     private RecyclerView mRecyclerView;
     private SmartRefreshUtil mRefreshUtil;
     private GlideManage mGlideManage;
-    private HotAdapter mAdapter;
-    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
-    private RecyclerView.OnScrollListener rvScroll;
+    private FindPureAdapter mAdapter;
 
     @Override
     protected int getContentView() {
@@ -59,23 +57,12 @@ public class HotFragment extends XBaseLazyFragment {
         }
     }
 
-
     @Override
     protected void initView(View view) {
         LinearLayout parentlayout = (LinearLayout) view.findViewById(R.id.fih_parentlayout);
         mSmartRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id.fih_srl);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.fih_rv);
-        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mStaggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
-        mRecyclerView.addOnScrollListener(rvScroll= new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                //防止第一行到顶部有空白区域
-                mStaggeredGridLayoutManager.invalidateSpanAssignments();
-            }
-        });
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         //
         mSmartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
@@ -104,7 +91,7 @@ public class HotFragment extends XBaseLazyFragment {
         try {
             if (mAdapter == null) {
                 mGlideManage = new GlideManage(getContext());
-                mAdapter = new HotAdapter(mGlideManage, getContext());
+                mAdapter = new FindPureAdapter(mGlideManage, getContext());
                 //这里处理点击事件
                 mAdapter.setOnItemClickListener(new RvPureAdapter.OnItemClickListener() {
                     @Override
@@ -131,7 +118,6 @@ public class HotFragment extends XBaseLazyFragment {
         if (mAdapter != null)
             mAdapter.removeDataAll();
         if (mRecyclerView != null) {
-            mRecyclerView.removeOnScrollListener(rvScroll);
             mRecyclerView.removeAllViews();
         }
         mAdapter = null;

@@ -34,12 +34,8 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
     public FindPureAdapter(GlideManage mGlideManage, Context context) {
         this.mGlideManage = mGlideManage;
         this.mContext = context;
-        //计算屏幕的宽度，设置图片大小的
-        int phoneWidth = Utils.getPhoneWidth(mContext);
-        int marginWidth = Utils.dpToPx(mContext, 30);
-        mImageWidth = phoneWidth / 2 - marginWidth;
         //计算头像的px大小
-        mHeadImageWidth = Utils.dpToPx(mContext, 35);
+        mHeadImageWidth = Utils.dpToPx(mContext, 30);
         //图像圆角
         mTransformation = new RoundedCornersTransformation(mContext, 20, 0);
     }
@@ -56,7 +52,7 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
         SquareImageView imageView = holder.getView(R.id.ifh_iv);
         final CircleImageView headImageView = holder.getView(R.id.ifh_head);
         holder.setText(R.id.ifh_name, die.getName());
-        holder.setText(R.id.ifh_number, "服务器没给点赞数");
+        holder.setText(R.id.ifh_number, "service is null");
 
         //大图使用处理
         final WeakReference<SquareImageView> imageViewWeakReference = new WeakReference<>(imageView);
@@ -70,7 +66,7 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
             }
             mGlideManage.getRequestManager().load(imageUrl).error(R.color.app_gray_color)
                     .bitmapTransform(mTransformation).crossFade()
-                    .placeholder(R.color.app_gray_color).override(mImageWidth, mImageWidth)
+                    .placeholder(R.color.app_gray_color)
                     .into(imageViewWeak);
         }
 
