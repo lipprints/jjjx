@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jjjx.data.ActivityPageManager;
+import com.jjjx.fragment.BaseFragment;
 
 /**
  * Created by xz on 2017/6/30 0030.
@@ -24,7 +25,7 @@ import com.jjjx.data.ActivityPageManager;
  *
  */
 
-public abstract class XBaseLazyFragment extends Fragment {
+public abstract class XBaseLazyFragment extends BaseFragment {
     protected boolean isVisible = false;//fragment是否是显示状态
     protected boolean isPrepared = false;//fragment的视图是否加载完毕
     private View mContentView;

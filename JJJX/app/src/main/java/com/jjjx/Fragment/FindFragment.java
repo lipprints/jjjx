@@ -13,6 +13,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.jjjx.R;
 import com.jjjx.activity.FindPublishActivity;
+import com.jjjx.data.response.FindDataResponse;
 import com.jjjx.fragment.find.adapter.FindPagerAdapter;
 import com.jjjx.model.TabEntity;
 import com.jjjx.utils.CacheTask;
@@ -26,9 +27,11 @@ import java.util.ArrayList;
 public class FindFragment extends BaseFragment {
 
 
+
     private ViewPager mViewPager;
     private CommonTabLayout mTabLayout;
     private ImageView findPublish;
+
 
     @Override
     public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -81,10 +84,13 @@ public class FindFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (CacheTask.getInstance().isLogin()) {
-                    startActivity(new Intent(getActivity(),FindPublishActivity.class));
+                    startActivity(new Intent(getActivity(), FindPublishActivity.class));
                 }
             }
         });
 
+
     }
+
+
 }

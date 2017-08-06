@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.jjjx.data.BaseAction;
 import com.jjjx.data.okhttp.RequestParams;
+import com.jjjx.data.response.FindDataResponse;
 import com.jjjx.data.response.GetRongCloudTokenResponse;
 import com.jjjx.data.response.GetVerifyCodeResponse;
 import com.jjjx.data.response.IndexDataResponse;
@@ -334,6 +335,16 @@ public class JxAction extends BaseAction {
         String result = httpManager.get(url);
         if (!TextUtils.isEmpty(result)) {
             response = jsonToBean(result, IndexDataResponse.class);
+        }
+        return response;
+    }
+
+    public FindDataResponse getFindData(int page) throws Exception {
+        FindDataResponse response = new FindDataResponse();
+        String url = getURL(Constants.FIND_DATA + "?page=" + page);
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result, FindDataResponse.class);
         }
         return response;
     }

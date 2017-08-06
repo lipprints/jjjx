@@ -1,6 +1,9 @@
 package com.jjjx.fragment.find;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.jjjx.R;
 import com.jjjx.app.base.XBaseLazyFragment;
@@ -29,5 +32,10 @@ public class FollowFragment extends XBaseLazyFragment {
     @Override
     public String closeFragment() {
         return "FollowFragment";
+    }
+
+    @Override
+    public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return null;
     }
 }

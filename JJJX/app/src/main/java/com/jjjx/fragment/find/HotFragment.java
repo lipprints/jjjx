@@ -1,8 +1,11 @@
 package com.jjjx.fragment.find;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
@@ -10,6 +13,7 @@ import com.jjjx.R;
 import com.jjjx.app.adapter.RvPureAdapter;
 import com.jjjx.app.base.XBaseLazyFragment;
 import com.jjjx.data.GlideManage;
+import com.jjjx.data.response.FindDataResponse;
 import com.jjjx.fragment.find.adapter.HotAdapter;
 import com.jjjx.model.HotEntity;
 import com.jjjx.utils.ToastUtil;
@@ -28,6 +32,7 @@ import java.util.List;
 
 public class HotFragment extends XBaseLazyFragment {
 
+    private static final int GET_FIND = 3;
     private SmartRefreshLayout mSmartRefreshLayout;
     private boolean isRefresh = false;
     private int mPageIndex = 0;//页码
@@ -89,10 +94,14 @@ public class HotFragment extends XBaseLazyFragment {
                 isRefresh = true;
                 mPageIndex = 1;
                 initData();
+                request(GET_FIND);
             }
         });
         //刷新加载
         mRefreshUtil = new SmartRefreshUtil(mSmartRefreshLayout, mRecyclerView);
+
+
+        request(GET_FIND);
     }
 
     @Override
@@ -163,5 +172,31 @@ public class HotFragment extends XBaseLazyFragment {
         mGlideManage = null;
         mRefreshUtil = null;
         return "HotFragment";
+    }
+
+
+    @Override
+    public Object doInBackground(int requestCode) throws Exception {
+        return action.getFindData(mPageIndex);
+    }
+
+    @Override
+    public void onSuccess(int requestCode, Object result) {
+        if (result != null) {
+            FindDataResponse response = (FindDataResponse) result;
+            if (response.getHead().getCode().equals("10000")) {
+                if (response.getPara().getDiscoverInfo().size() > 0) {
+                    //TODO 有数据
+                } else {
+                    //TODO 没数据
+                    cancelRequest();//取消请求
+                }
+            }
+        }
+    }
+
+    @Override
+    public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return null;
     }
 }

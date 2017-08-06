@@ -55,4 +55,6 @@ public class Constants {
 
     public static final String SEARCH = "app/queryCourseReleaseByWhere";
 
+    public static final String FIND_DATA = "app/queryDiscoverAll";
+
 }
