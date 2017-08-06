@@ -11,10 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.jjjx.widget.SquareImageView
+        <ImageView
             android:id="@+id/ifh_iv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
             android:src="@color/app_gray_color" />
 
         <ImageView
@@ -35,8 +36,8 @@
 
         <com.jjjx.widget.CircleImageView
             android:id="@+id/ifh_head"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ico_head" />
 
@@ -45,11 +46,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="3dp"
             android:layout_toRightOf="@id/ifh_head"
             android:text="name"
+            android:maxLength="10"
+            android:ellipsize="end"
             android:textColor="@color/color_gray_text"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/ifh_number"
@@ -60,13 +63,12 @@
             android:layout_marginRight="10dp"
             android:text="1000"
             android:textColor="@color/color_gray_text"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
 
         <ImageView
             android:layout_width="27dp"
             android:layout_height="27dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/ifh_number"
             android:paddingTop="5dp"
             android:src="@drawable/ico_xin" />

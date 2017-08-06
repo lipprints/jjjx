@@ -39,7 +39,7 @@ public class HotAdapter extends RvPureDataAdapter<FindDataResponse.ParaEntity.Di
         int marginWidth = Utils.dpToPx(mContext, 30);
         mImageWidth = phoneWidth / 2 - marginWidth;
         //计算头像的px大小
-        mHeadImageWidth = Utils.dpToPx(mContext, 35);
+        mHeadImageWidth = Utils.dpToPx(mContext, 30);
         //图像圆角
         mTransformation = new RoundedCornersTransformation(mContext, 20, 0);
     }
@@ -56,7 +56,7 @@ public class HotAdapter extends RvPureDataAdapter<FindDataResponse.ParaEntity.Di
         ImageView imageView = holder.getView(R.id.ifh_iv);
         final CircleImageView headImageView = holder.getView(R.id.ifh_head);
         holder.setText(R.id.ifh_name, die.getName());
-        holder.setText(R.id.ifh_number,"服务器没给点赞数");
+        holder.setText(R.id.ifh_number,"没有");
 
         //大图使用处理
         final WeakReference<ImageView> imageViewWeakReference = new WeakReference<>(imageView);
@@ -70,7 +70,7 @@ public class HotAdapter extends RvPureDataAdapter<FindDataResponse.ParaEntity.Di
             }
             mGlideManage.getRequestManager().load(imageUrl).error(R.color.app_gray_color)
                     .bitmapTransform(mTransformation).crossFade()
-                    .placeholder(R.color.app_gray_color).override(mImageWidth, mImageWidth)
+                    .placeholder(R.color.app_gray_color)
                     .into(imageViewWeak);
         }
 

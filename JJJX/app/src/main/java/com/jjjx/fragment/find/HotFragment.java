@@ -33,6 +33,8 @@ public class HotFragment extends XBaseLazyFragment {
     private SmartRefreshUtil mRefreshUtil;
     private GlideManage mGlideManage;
     private HotAdapter mAdapter;
+    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
+    private RecyclerView.OnScrollListener rvScroll;
 
     @Override
     protected int getContentView() {
@@ -63,7 +65,17 @@ public class HotFragment extends XBaseLazyFragment {
         LinearLayout parentlayout = (LinearLayout) view.findViewById(R.id.fih_parentlayout);
         mSmartRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id.fih_srl);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.fih_rv);
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mStaggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
+        mRecyclerView.addOnScrollListener(rvScroll= new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //防止第一行到顶部有空白区域
+                mStaggeredGridLayoutManager.invalidateSpanAssignments();
+            }
+        });
         //
         mSmartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
@@ -118,8 +130,10 @@ public class HotFragment extends XBaseLazyFragment {
         cancelRequest();//取消请求
         if (mAdapter != null)
             mAdapter.removeDataAll();
-        if (mRecyclerView != null)
+        if (mRecyclerView != null) {
+            mRecyclerView.removeOnScrollListener(rvScroll);
             mRecyclerView.removeAllViews();
+        }
         mAdapter = null;
         mGlideManage = null;
         mRefreshUtil = null;
