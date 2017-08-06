@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +57,12 @@ public abstract class XBaseLazyFragment extends BaseFragment {
         isPrepared = true;
         initView(mContentView);
         return mContentView;
+    }
+
+    @Override
+    public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //被重写了
+        return null;
     }
 
     @Override

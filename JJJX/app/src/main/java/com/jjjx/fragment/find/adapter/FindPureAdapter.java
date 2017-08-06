@@ -14,24 +14,24 @@ import com.jjjx.data.GlideManage;
 import com.jjjx.data.response.FindDataResponse;
 import com.jjjx.utils.Utils;
 import com.jjjx.widget.CircleImageView;
+import com.jjjx.widget.SquareImageView;
 
 import java.lang.ref.WeakReference;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
- * Created by xz on 2017/8/2 0002.
+ * Created by Administrator on 2017/8/6 0006.
  */
 
-public class HotAdapter extends RvPureDataAdapter<FindDataResponse.ParaEntity.DiscoverInfoEntity> {
+public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEntity.DiscoverInfoEntity> {
     private GlideManage mGlideManage;
     private Context mContext;
     private int mImageWidth;
     private int mHeadImageWidth;
     private RoundedCornersTransformation mTransformation;
 
-
-    public HotAdapter(GlideManage mGlideManage, Context context) {
+    public FindPureAdapter(GlideManage mGlideManage, Context context) {
         this.mGlideManage = mGlideManage;
         this.mContext = context;
         //计算屏幕的宽度，设置图片大小的
@@ -46,27 +46,27 @@ public class HotAdapter extends RvPureDataAdapter<FindDataResponse.ParaEntity.Di
 
     @Override
     public int getItemLayout(int viewType) {
-        return R.layout.item_find_hot;
+        return R.layout.item_find_pure;
     }
 
     @Override
     public void onBindViewHolder(RvViewHolder holder, int position) {
         FindDataResponse.ParaEntity.DiscoverInfoEntity die = mDatas.get(position);
 
-        ImageView imageView = holder.getView(R.id.ifh_iv);
+        SquareImageView imageView = holder.getView(R.id.ifh_iv);
         final CircleImageView headImageView = holder.getView(R.id.ifh_head);
         holder.setText(R.id.ifh_name, die.getName());
-        holder.setText(R.id.ifh_number,"服务器没给点赞数");
+        holder.setText(R.id.ifh_number, "服务器没给点赞数");
 
         //大图使用处理
-        final WeakReference<ImageView> imageViewWeakReference = new WeakReference<>(imageView);
+        final WeakReference<SquareImageView> imageViewWeakReference = new WeakReference<>(imageView);
         ImageView imageViewWeak = imageViewWeakReference.get();
         if (imageViewWeak != null) {
             String imageUrl;
-            if(!TextUtils.isEmpty(die.getFirstFrame())){
-                imageUrl=die.getFirstFrame();
-            }else{
-                imageUrl=die.getPicture();
+            if (!TextUtils.isEmpty(die.getFirstFrame())) {
+                imageUrl = die.getFirstFrame();
+            } else {
+                imageUrl = die.getPicture();
             }
             mGlideManage.getRequestManager().load(imageUrl).error(R.color.app_gray_color)
                     .bitmapTransform(mTransformation).crossFade()

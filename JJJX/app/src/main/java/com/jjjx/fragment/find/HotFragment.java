@@ -1,11 +1,8 @@
 package com.jjjx.fragment.find;
 
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
@@ -15,15 +12,11 @@ import com.jjjx.app.base.XBaseLazyFragment;
 import com.jjjx.data.GlideManage;
 import com.jjjx.data.response.FindDataResponse;
 import com.jjjx.fragment.find.adapter.HotAdapter;
-import com.jjjx.model.HotEntity;
 import com.jjjx.utils.ToastUtil;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by xz on 2017/8/1 0001.
@@ -36,12 +29,10 @@ public class HotFragment extends XBaseLazyFragment {
     private SmartRefreshLayout mSmartRefreshLayout;
     private boolean isRefresh = false;
     private int mPageIndex = 0;//页码
-    private int mTotalPages = 1;//总页数
     private RecyclerView mRecyclerView;
     private SmartRefreshUtil mRefreshUtil;
     private GlideManage mGlideManage;
     private HotAdapter mAdapter;
-
 
     @Override
     protected int getContentView() {
@@ -78,13 +69,8 @@ public class HotFragment extends XBaseLazyFragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 isRefresh = false;
-                if (mPageIndex < mTotalPages) {
-                    mPageIndex++;
-                    initData();
-                } else {
-                    //停止加载，并在加载栏显示，暂无更多数据加载
-                    mRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_NO);
-                }
+                mPageIndex++;
+                request(GET_FIND);
             }
 
             @Override
@@ -92,16 +78,12 @@ public class HotFragment extends XBaseLazyFragment {
                 //刷新后，要设置可以触发加载功能
                 refreshlayout.setLoadmoreFinished(false);
                 isRefresh = true;
-                mPageIndex = 1;
-                initData();
+                mPageIndex = 0;
                 request(GET_FIND);
             }
         });
         //刷新加载
         mRefreshUtil = new SmartRefreshUtil(mSmartRefreshLayout, mRecyclerView);
-
-
-        request(GET_FIND);
     }
 
     @Override
@@ -131,39 +113,9 @@ public class HotFragment extends XBaseLazyFragment {
         }
     }
 
-    /**
-     * 这里请求网络等...
-     */
-    private void initData() {
-        List<HotEntity> listH = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            HotEntity hotEntity = new HotEntity();
-            hotEntity.setId(i + 1);
-            if (i % 3 == 0) {
-                hotEntity.setImgUrl("http://img01.e23.cn/2014/0823/20140823070324537.jpg");
-                hotEntity.setUserImg("http://img01.e23.cn/2014/0823/20140823070324537.jpg");
-            } else if (i % 5 == 0) {
-                hotEntity.setImgUrl("http://upload.northnews.cn/2013/0114/1358095079926.jpg");
-                hotEntity.setUserImg("http://upload.northnews.cn/2013/0114/1358095079926.jpg");
-            } else if (i % 7 == 0) {
-                hotEntity.setImgUrl("http://www.bz55.com/uploads/allimg/150414/139-150414093956-50.jpg");
-                hotEntity.setUserImg("http://www.bz55.com/uploads/allimg/150414/139-150414093956-50.jpg");
-            } else {
-                hotEntity.setImgUrl("http://www.sznews.com/photo/images/attachement/jpg/site3/20160205/6c0b840b6799181e94795c.jpg");
-                hotEntity.setUserImg("http://www.sznews.com/photo/images/attachement/jpg/site3/20160205/6c0b840b6799181e94795c.jpg");
-            }
-
-            hotEntity.setUserName("美女");
-            hotEntity.setNumber(i % 2 == 0 ? 100 : 200);
-            listH.add(hotEntity);
-        }
-        mAdapter.setDatas(listH, true);
-        mRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_SUCCESS);
-    }
-
-
     @Override
     public String closeFragment() {
+        cancelRequest();//取消请求
         if (mAdapter != null)
             mAdapter.removeDataAll();
         if (mRecyclerView != null)
@@ -174,7 +126,6 @@ public class HotFragment extends XBaseLazyFragment {
         return "HotFragment";
     }
 
-
     @Override
     public Object doInBackground(int requestCode) throws Exception {
         return action.getFindData(mPageIndex);
@@ -184,19 +135,31 @@ public class HotFragment extends XBaseLazyFragment {
     public void onSuccess(int requestCode, Object result) {
         if (result != null) {
             FindDataResponse response = (FindDataResponse) result;
-            if (response.getHead().getCode().equals("10000")) {
+            if (response.getHead().getCode().equals("10000") && isNoCloseFragment) {
+                //TODO fragment没有被销毁
                 if (response.getPara().getDiscoverInfo().size() > 0) {
                     //TODO 有数据
+                    if (isRefresh) {
+                        mAdapter.setDatas(response.getPara().getDiscoverInfo(), true);
+                    } else {
+                        mAdapter.addDatas(response.getPara().getDiscoverInfo(), true);
+                    }
+                    mRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_SUCCESS);
                 } else {
+                    mRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_NO);
                     //TODO 没数据
                     cancelRequest();//取消请求
                 }
+                return;
             }
         }
+        mRefreshUtil.stopRefrshLoad();
     }
 
     @Override
-    public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return null;
+    public void onFailure(int requestCode, int state, Object result) {
+        super.onFailure(requestCode, state, result);
+        if (isNoCloseFragment)
+            mRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_ERROR);
     }
 }
