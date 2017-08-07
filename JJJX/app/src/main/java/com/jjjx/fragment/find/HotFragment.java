@@ -62,7 +62,7 @@ public class HotFragment extends XBaseLazyFragment {
         LinearLayout parentlayout = (LinearLayout) view.findViewById(R.id.fih_parentlayout);
         mSmartRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id.fih_srl);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.fih_rv);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         //
         mSmartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
@@ -114,7 +114,6 @@ public class HotFragment extends XBaseLazyFragment {
 
     @Override
     public String closeFragment() {
-        cancelRequest();//取消请求
         if (mAdapter != null)
             mAdapter.removeDataAll();
         if (mRecyclerView != null) {
@@ -138,7 +137,6 @@ public class HotFragment extends XBaseLazyFragment {
             if (response.getHead().getCode().equals("10000") && isNoCloseFragment) {
                 //TODO fragment没有被销毁
                 if (response.getPara().getDiscoverInfo().size() > 0) {
-                    //TODO 有数据
                     if (isRefresh) {
                         mAdapter.setDatas(response.getPara().getDiscoverInfo(), true);
                     } else {
@@ -147,8 +145,6 @@ public class HotFragment extends XBaseLazyFragment {
                     mRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_SUCCESS);
                 } else {
                     mRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_NO);
-                    //TODO 没数据
-                    cancelRequest();//取消请求
                 }
                 return;
             }
