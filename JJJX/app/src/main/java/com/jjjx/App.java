@@ -20,6 +20,7 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class App extends MultiDexApplication implements BDLocationListener {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
         applicationContext = getApplicationContext();
         applicationHandler = new Handler(applicationContext.getMainLooper());
         if (getApplicationInfo().packageName.equals(SystemUtils.getCurProcessName(this))) {
