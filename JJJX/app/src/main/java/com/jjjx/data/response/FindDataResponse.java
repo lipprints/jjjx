@@ -116,6 +116,10 @@ public class FindDataResponse {
                 dest.writeString(picture);
             }
 
+            public DiscoverInfoEntity(){
+
+            }
+
             @Override
             public int describeContents() {
                 return 0;
