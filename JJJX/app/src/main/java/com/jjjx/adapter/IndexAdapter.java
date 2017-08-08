@@ -65,7 +65,6 @@ public class IndexAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        //TODO show data
         ComplaintsEntity positionData = data.get(position);
         if (TextUtils.isEmpty(positionData.getVideo())) {
         }
@@ -86,7 +85,7 @@ public class IndexAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         /**
          * 授课时间
          */
