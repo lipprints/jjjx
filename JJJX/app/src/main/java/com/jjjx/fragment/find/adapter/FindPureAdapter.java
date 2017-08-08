@@ -2,6 +2,7 @@ package com.jjjx.fragment.find.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -51,6 +52,7 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
 
         SquareImageView imageView = holder.getView(R.id.ifh_iv);
         final CircleImageView headImageView = holder.getView(R.id.ifh_head);
+        ImageView videoIcon = holder.getView(R.id.find_video_icon);
         holder.setText(R.id.ifh_name, die.getName());
         holder.setText(R.id.ifh_number, "service is null");
 
@@ -63,6 +65,7 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
                 imageUrl = die.getFirstFrame();
             } else {
                 imageUrl = die.getPicture();
+                videoIcon.setVisibility(View.GONE);
             }
             mGlideManage.getRequestManager().load(imageUrl).error(R.color.app_gray_color)
                     .bitmapTransform(mTransformation).crossFade()

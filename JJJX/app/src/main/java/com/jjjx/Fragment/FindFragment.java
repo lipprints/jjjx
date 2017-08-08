@@ -17,6 +17,7 @@ import com.jjjx.data.response.FindDataResponse;
 import com.jjjx.fragment.find.adapter.FindPagerAdapter;
 import com.jjjx.model.TabEntity;
 import com.jjjx.utils.CacheTask;
+import com.jjjx.utils.NToast;
 
 import java.util.ArrayList;
 
@@ -85,6 +86,8 @@ public class FindFragment extends BaseFragment {
             public void onClick(View view) {
                 if (CacheTask.getInstance().isLogin()) {
                     startActivity(new Intent(getActivity(), FindPublishActivity.class));
+                }else {
+                    NToast.shortToast(getActivity(),"请登录后操作");
                 }
             }
         });
