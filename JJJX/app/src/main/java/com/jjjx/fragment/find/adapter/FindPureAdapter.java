@@ -62,6 +62,7 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
         if (imageViewWeak != null) {
             String imageUrl;
             if (!TextUtils.isEmpty(die.getFirstFrame())) {
+                videoIcon.setVisibility(View.VISIBLE);
                 imageUrl = die.getFirstFrame();
             } else {
                 imageUrl = die.getPicture();
