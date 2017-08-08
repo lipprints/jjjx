@@ -1,5 +1,8 @@
 package com.jjjx.data.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -69,7 +72,7 @@ public class FindDataResponse {
             this.discoverInfo = discoverInfo;
         }
 
-        public static class DiscoverInfoEntity {
+        public static class DiscoverInfoEntity implements Parcelable{
             /**
              * firstFrame : http://47.93.217.163:8080/faxian/videoImageFile1501997222539.png
              * user_id : 100012
@@ -89,6 +92,46 @@ public class FindDataResponse {
             private String content;
             private String head_portrait;
             private String picture;
+
+            protected DiscoverInfoEntity(Parcel in) {
+                firstFrame = in.readString();
+                user_id = in.readInt();
+                name = in.readString();
+                pid = in.readInt();
+                video = in.readString();
+                content = in.readString();
+                head_portrait = in.readString();
+                picture = in.readString();
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(firstFrame);
+                dest.writeInt(user_id);
+                dest.writeString(name);
+                dest.writeInt(pid);
+                dest.writeString(video);
+                dest.writeString(content);
+                dest.writeString(head_portrait);
+                dest.writeString(picture);
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            public static final Creator<DiscoverInfoEntity> CREATOR = new Creator<DiscoverInfoEntity>() {
+                @Override
+                public DiscoverInfoEntity createFromParcel(Parcel in) {
+                    return new DiscoverInfoEntity(in);
+                }
+
+                @Override
+                public DiscoverInfoEntity[] newArray(int size) {
+                    return new DiscoverInfoEntity[size];
+                }
+            };
 
             public String getFirstFrame() {
                 return firstFrame;

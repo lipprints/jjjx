@@ -107,8 +107,9 @@
         <activity
             android:name=".activity.IndexItemDetailsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.FindImageActivity" />
+        <activity android:name=".activity.FindVideoActivity" />
 
         <activity
             android:name=".activity.FindPublishActivity"

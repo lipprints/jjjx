@@ -1,12 +1,16 @@
 package com.jjjx.fragment.find;
 
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.jjjx.R;
+import com.jjjx.activity.FindImageActivity;
+import com.jjjx.activity.FindVideoActivity;
 import com.jjjx.app.adapter.RvPureAdapter;
 import com.jjjx.app.base.XBaseLazyFragment;
 import com.jjjx.data.GlideManage;
@@ -96,7 +100,16 @@ public class HotFragment extends XBaseLazyFragment {
                 mAdapter.setOnItemClickListener(new RvPureAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                        ToastUtil.showToast("你点击了咯");
+                        FindDataResponse.ParaEntity.DiscoverInfoEntity entity = mAdapter.getItem(position);
+                        if (TextUtils.isEmpty(entity.getFirstFrame())) {
+                            Intent imageIntent = new Intent(getActivity(),FindImageActivity.class);
+                            imageIntent.putExtra("FindImageEntity",entity);
+                            startActivity(imageIntent);
+                        } else {
+                            Intent videoIntent = new Intent(getActivity(),FindVideoActivity.class);
+                            videoIntent.putExtra("FindVideoEntity",entity);
+                            startActivity(videoIntent);
+                        }
                     }
                 });
                 mRecyclerView.setAdapter(mAdapter);
