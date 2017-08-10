@@ -248,7 +248,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
                 mSmartRefreshUtil.stopRefrshLoad();
                 IndexDataResponse response = (IndexDataResponse) result;
                 if (response.getHead().getCode().equals("10000")) {
-                    NToast.shortToast(getActivity(), "刷新成功");
+                    //  NToast.shortToast(getActivity(), "刷新成功");
                     List<ComplaintsEntity> complaintsEntities = response.getPara().getComplaints();
                     if (complaintsEntities.size() > 0) {
                         if (isRefresh) { //是下拉刷新

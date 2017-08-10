@@ -3,96 +3,97 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="@drawable/background_card"
-    android:orientation="vertical"
-    android:padding="3dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="15dp">
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/index_user_head"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            fresco:actualImageScaleType="centerInside"
-            fresco:roundAsCircle="true"
-            fresco:roundingBorderColor="@color/theme_color"
-            fresco:roundingBorderWidth="1dp" />
-
-        <TextView
-            android:id="@+id/index_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:padding="8dp"
-            android:text="李明"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="8dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/background_card"
+        android:orientation="vertical"
+        android:padding="3dp">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/index_user_head"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                fresco:actualImageScaleType="centerInside"
+                fresco:roundAsCircle="true"
+                fresco:roundingBorderColor="@color/theme_color"
+                fresco:roundingBorderWidth="1dp" />
 
             <TextView
-                android:id="@+id/index_class_time"
+                android:id="@+id/index_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="授课时间: 8:00~11:00" />
-
-            <TextView
-                android:id="@+id/index_class_age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="适学年龄: 3~5岁" />
-
-            <TextView
-                android:id="@+id/index_class_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="课     程: 芭蕾舞" />
-
-            <TextView
-                android:id="@+id/index_learn_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="教     龄: 1年" />
-
-
-            <TextView
-                android:id="@+id/index_class_mode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="授课方式: 上门" />
-
+                android:layout_gravity="center_vertical"
+                android:padding="8dp"
+                android:text="李明"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/index_class_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="授课时间: 8:00~11:00" />
+
+                <TextView
+                    android:id="@+id/index_class_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="适学年龄: 3~5岁" />
+
+                <TextView
+                    android:id="@+id/index_class_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="课     程: 芭蕾舞" />
+
+                <TextView
+                    android:id="@+id/index_learn_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="教     龄: 1年" />
+
+
+                <TextView
+                    android:id="@+id/index_class_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="授课方式: 上门" />
+
+
+            </LinearLayout>
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/index_class_image"
@@ -100,8 +101,6 @@
                 android:layout_height="120dp"
                 fresco:actualImageScaleType="centerInside" />
         </LinearLayout>
-
-
     </LinearLayout>
 
 </LinearLayout>
