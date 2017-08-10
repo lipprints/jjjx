@@ -52,6 +52,8 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
     private SmartRefreshLayout mSmartRefreshLayout;
     private SmartRefreshUtil mSmartRefreshUtil;
     private LinearLayout mSearchLayout;
+    private int mPageIndex = 0;//页码
+    private boolean isRefresh = false;
 
     @Override
     public void onLocation(BDLocation bdLocation) {
@@ -74,13 +76,17 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
         mSmartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                //刷新后，要设置可以触发加载功能
+                refreshlayout.setLoadmoreFinished(false);
+                isRefresh = true;
                 refresh();
             }
 
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                mSmartRefreshUtil.stopRefrshLoad();
-                    NToast.shortToast(mContext,"加载了咯");
+                isRefresh = false;
+                mPageIndex++;
+                request(GET_INDEX);
             }
         });
 
@@ -220,7 +226,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
 
     @Override
     public void refresh() {
-        //TODO 发布成功后刷新最新数据
+        mPageIndex = 0;
         request(GET_INDEX);
     }
 
@@ -229,7 +235,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
     public Object doInBackground(int requestCode) throws Exception {
         switch (requestCode) {
             case GET_INDEX:
-                return action.requestIndexData();
+                return action.requestIndexData(mPageIndex);
         }
         return super.doInBackground(requestCode);
     }
@@ -245,7 +251,15 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
                     NToast.shortToast(getActivity(), "刷新成功");
                     List<ComplaintsEntity> complaintsEntities = response.getPara().getComplaints();
                     if (complaintsEntities.size() > 0) {
-                        adapter.refreshAdapter(complaintsEntities);
+                        if (isRefresh) { //是下拉刷新
+                            adapter.refreshAdapter(complaintsEntities);
+                        } else {
+                            //增量刷新
+                            adapter.addDataAdapter(complaintsEntities);
+                        }
+                        mSmartRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_SUCCESS);
+                    } else { //没有更多数据
+                        mSmartRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_NO);
                     }
                 }
                 break;

@@ -85,6 +85,11 @@ public class IndexAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void addDataAdapter(List<ComplaintsEntity> data) {
+        this.data.addAll(data);
+        notifyDataSetChanged();
+    }
+
     private static class ViewHolder {
         /**
          * 授课时间

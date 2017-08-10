@@ -40,7 +40,7 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         setHeadVisibility(View.GONE);
 
-        request(GET_INDEX_DATA);
+//        request(GET_INDEX_DATA);
 
         ImageView imageView = (ImageView) findViewById(R.id.image_logo);
         // 渐变展示启动屏
@@ -75,7 +75,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     public Object doInBackground(int requestCode) throws Exception {
         if (requestCode == GET_INDEX_DATA) {
-            return action.requestIndexData();
+//            return action.requestIndexData();
         }
         return null;
     }

@@ -168,9 +168,9 @@ public class JxAction extends BaseAction {
      * @return
      * @throws Exception
      */
-    public IndexDataResponse requestIndexData() throws Exception {
+    public IndexDataResponse requestIndexData(int page) throws Exception {
         IndexDataResponse response = new IndexDataResponse();
-        String url = getURL(Constants.INDEX_ALL);
+        String url = getURL(Constants.INDEX_ALL + "?page=" + page);
         String result = httpManager.get(url);
         NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
