@@ -24,6 +24,7 @@ import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
 import com.jjjx.utils.NToast;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.jjjx.widget.banner.GlideImageLoader;
+import com.jjjx.widget.dialog.AppProgressDialog;
 import com.jjjx.widget.popwinpicker.PopupAdapter;
 import com.jjjx.widget.popwinpicker.PopupButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -71,6 +72,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
 
     @Override
     public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_index, container, false);
         mSmartRefreshLayout = (SmartRefreshLayout) v.findViewById(R.id.index_srl);
         mSmartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
@@ -141,6 +143,8 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
         App.getInstance().addOnBDLocationObserver(this);
         PublishActivity.setRefreshDataListener(this);
         request(GET_INDEX);
+
+        AppProgressDialog.show(getContext());
         return v;
     }
 
@@ -162,6 +166,8 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
         ComplaintsEntity entity = (ComplaintsEntity) adapter.getItem(position - 1);// headview 计算一个 position
         Intent intent = new Intent(getActivity(), IndexItemDetailsActivity.class);
         intent.putExtra("indexItemData", entity);
