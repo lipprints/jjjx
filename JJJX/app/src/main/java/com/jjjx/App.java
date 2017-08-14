@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -86,6 +87,9 @@ public class App extends MultiDexApplication implements BDLocationListener {
 
     @Override
     public void onReceiveLocation(final BDLocation bdLocation) {
+        Log.e("App", "BDLocation");
+        CacheTask.getInstance().cacheLoginLng(String.valueOf(bdLocation.getLongitude()));
+        CacheTask.getInstance().cacheLoginLat(String.valueOf(bdLocation.getLatitude()));
         App.applicationHandler.post(new Runnable() {
             @Override
             public void run() {

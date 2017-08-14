@@ -29,6 +29,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.Buffer;
+import okio.BufferedSink;
+import okio.Okio;
+import okio.Source;
 
 import static com.baidu.location.h.j.F;
 import static com.baidu.location.h.j.e;
@@ -203,9 +206,11 @@ public class OkHttpUtils {
      * @param teachingDate        上课时间
      * @param teachingAddress     上课地址
      * @param contactNumber       联系方式
+     *                            lng 经度
+     *                            lat 纬度
      * @param uploadImageListener 回调
      */
-    public void publish(String user_id, List<MediaModel> mediaModels, String courseName, @Nullable String synopsis, String classFee, String rightAge, String teachingNumber, String teachingDate, String teachingAddress, String contactNumber, final UploadImageListener uploadImageListener) {
+    public void publish(String user_id, List<MediaModel> mediaModels, String courseName, @Nullable String synopsis, String classFee, String rightAge, String teachingNumber, String teachingDate, String teachingAddress, String contactNumber, String lng, String lat, final UploadImageListener uploadImageListener) {
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder();
         multipartBodyBuilder.setType(MultipartBody.FORM);
         multipartBodyBuilder.addFormDataPart("user_id", user_id);
@@ -219,6 +224,8 @@ public class OkHttpUtils {
         multipartBodyBuilder.addFormDataPart("teachingDate", teachingDate);
         multipartBodyBuilder.addFormDataPart("teachingAddress", teachingAddress);
         multipartBodyBuilder.addFormDataPart("contactNumber", contactNumber);
+        multipartBodyBuilder.addFormDataPart("lng", lng);
+        multipartBodyBuilder.addFormDataPart("lat", lat);
 
         for (int i = 0; i < mediaModels.size(); i++) {
             File file = mediaModels.get(i).getMediaFile();
@@ -308,6 +315,51 @@ public class OkHttpUtils {
             }
         });
 
+    }
+
+    /**
+     * 单文件上传进度  RequestBody 自定义
+     *
+     * @param contentType
+     * @param file
+     * @param listener
+     * @return
+     * @link: http://blog.csdn.net/djk_dong/article/details/48179315
+     */
+    public static RequestBody createCustomRequestBody(final MediaType contentType, final File file, final ProgressListener listener) {
+        return new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return contentType;
+            }
+
+            @Override
+            public long contentLength() {
+                return file.length();
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                Source source;
+                try {
+                    source = Okio.source(file);
+                    //sink.writeAll(source);
+                    Buffer buf = new Buffer();
+                    Long remaining = contentLength();
+                    for (long readCount; (readCount = source.read(buf, 2048)) != -1; ) {
+                        sink.write(buf, readCount);
+                        listener.onProgress(contentLength(), remaining -= readCount, remaining == 0);
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
+    interface ProgressListener {
+        void onProgress(long totalBytes, long remainingBytes, boolean done);
     }
 
 

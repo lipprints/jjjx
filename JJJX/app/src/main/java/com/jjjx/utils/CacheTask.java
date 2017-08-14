@@ -77,6 +77,26 @@ public class CacheTask {
         editor.apply();
     }
 
+    public void cacheLoginLng(String lng) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("lng", lng);
+        editor.apply();
+    }
+
+    public void cacheLoginLat(String lat) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("lat", lat);
+        editor.apply();
+    }
+
+    public String getLoginLng() {
+        return preferences.getString("lng", null);
+    }
+
+    public String getLoginLat() {
+        return preferences.getString("lat", null);
+    }
+
     public String getName() {
         return preferences.getString("name", null);
     }

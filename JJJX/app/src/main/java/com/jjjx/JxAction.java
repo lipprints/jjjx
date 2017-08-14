@@ -170,7 +170,7 @@ public class JxAction extends BaseAction {
      */
     public IndexDataResponse requestIndexData(int page) throws Exception {
         IndexDataResponse response = new IndexDataResponse();
-        String url = getURL(Constants.INDEX_ALL + "?page=" + page);
+        String url = getURL(Constants.INDEX_ALL + "?page=" + page + "&lng2=" + CacheTask.getInstance().getLoginLng() + "&lat2=" + CacheTask.getInstance().getLoginLat());
         String result = httpManager.get(url);
         NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {

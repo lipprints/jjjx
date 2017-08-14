@@ -24,8 +24,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.afollestad.materialcamera.MaterialCamera;
+import com.baidu.location.BDLocation;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jjjx.App;
+import com.jjjx.OnBDLocationListener;
 import com.jjjx.R;
 import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.model.MediaModel;
@@ -47,7 +49,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class PublishActivity extends BaseActivity implements View.OnClickListener {
+public class PublishActivity extends BaseActivity implements View.OnClickListener, OnBDLocationListener {
 
     private static final int VIDEO_REQUEST_CODE = 22;
     private MediaGridView mGridView;
@@ -76,6 +78,9 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
     String personsString;
     String classTypeString;
     String addressString;
+
+    private String lng;
+    private String lat;
 
 
     @Override
@@ -115,6 +120,9 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
         classTypeTextView.setOnClickListener(this);
         personsTextView.setOnClickListener(this);
         addressTextView.setOnClickListener(this);
+        App.getInstance().addOnBDLocationObserver(this);
+        App.getInstance().startLocationObserver();
+        Log.e("App","BDLocation2");
     }
 
     private void image() {
@@ -200,7 +208,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
 
         LoadDialog.show(this, "正在上传请稍后...");
 
-        OkHttpUtils.getInstance(this).publish(CacheTask.getInstance().getUserId(), publishMediaList, className, introduceEditText.getText().toString(), fee, ageString, personsString, time, addressString, phone, new OkHttpUtils.UploadImageListener() {
+        OkHttpUtils.getInstance(this).publish(CacheTask.getInstance().getUserId(), publishMediaList, className, introduceEditText.getText().toString(), fee, ageString, personsString, time, addressString, phone, lng, lat, new OkHttpUtils.UploadImageListener() {
             @Override
             public void onSuccess(String result) {
                 App.applicationHandler.post(new Runnable() {
@@ -380,6 +388,15 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                 Intent intent = new Intent(this, ClassModeActivity.class);
                 startActivityForResult(intent, 98);
                 break;
+        }
+    }
+
+    @Override
+    public void onLocation(BDLocation bdLocation) {
+        Log.e("App","BDLocation2");
+        if (bdLocation != null) {
+            lng = String.valueOf(bdLocation.getLongitude());
+            lat = String.valueOf(bdLocation.getLatitude());
         }
     }
 
@@ -564,4 +581,9 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
         mRefershDataListener = refershDataListener;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.getInstance().removeOnBDLocationObserver(this);
+    }
 }
