@@ -59,6 +59,7 @@ public class IndexAdapter extends BaseAdapter {
             holder.classMode = (TextView) convertView.findViewById(R.id.index_class_mode);
             holder.userName = (TextView) convertView.findViewById(R.id.index_user_name);
             holder.userHead = (SimpleDraweeView) convertView.findViewById(R.id.index_user_head);
+            holder.distance = (TextView) convertView.findViewById(R.id.index_distance);
             holder.classFirstImage = (SimpleDraweeView) convertView.findViewById(R.id.index_class_image);
             convertView.setTag(holder);
         } else {
@@ -76,6 +77,7 @@ public class IndexAdapter extends BaseAdapter {
         holder.userName.setText(positionData.getName());
         holder.learnYear.setText(positionData.getRightAge());
         holder.classTime.setText(positionData.getTeachingDate());
+        holder.distance.setText(positionData.getDistance());
         return convertView;
     }
 
@@ -123,6 +125,8 @@ public class IndexAdapter extends BaseAdapter {
          * 课程图片第一张
          */
         SimpleDraweeView classFirstImage;
+
+        TextView distance;
 
     }
 

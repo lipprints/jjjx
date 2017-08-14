@@ -2,9 +2,11 @@ package com.jjjx.data.response;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.util.List;
 
+import static java.lang.Integer.parseInt;
 
 
 /**
@@ -73,7 +75,7 @@ public class IndexDataResponse {
             this.complaints = complaints;
         }
 
-        public static class ComplaintsEntity implements Parcelable{
+        public static class ComplaintsEntity implements Parcelable {
             /**
              * role : 2
              * rightAge : 不限
@@ -112,6 +114,7 @@ public class IndexDataResponse {
             private String head_portrait;
             private String name;
             private String seniority;
+            private String distance;
 
             protected ComplaintsEntity(Parcel in) {
                 role = in.readString();
@@ -131,6 +134,7 @@ public class IndexDataResponse {
                 head_portrait = in.readString();
                 name = in.readString();
                 seniority = in.readString();
+                distance = in.readString();
             }
 
             @Override
@@ -152,6 +156,7 @@ public class IndexDataResponse {
                 dest.writeString(head_portrait);
                 dest.writeString(name);
                 dest.writeString(seniority);
+                dest.writeString(distance);
             }
 
             @Override
@@ -187,7 +192,8 @@ public class IndexDataResponse {
                 this.seniority = seniority;
             }
 
-            public ComplaintsEntity(){}
+            public ComplaintsEntity() {
+            }
 
             public String getRole() {
                 return role;
@@ -307,6 +313,23 @@ public class IndexDataResponse {
 
             public void setHead_portrait(String head_portrait) {
                 this.head_portrait = head_portrait;
+            }
+
+            public String getDistance() {
+                if (TextUtils.isEmpty(distance)) {
+                    return null;
+                }
+                double intDistance = Double.parseDouble(distance);
+                if (intDistance < 1000) {
+                    return "附近 1 千米内";
+                } else if (intDistance > 1000) {
+                    return "距你 " + (intDistance / 1000) + " km";
+                }
+                return distance;
+            }
+
+            public void setDistance(String distance) {
+                this.distance = distance;
             }
         }
     }

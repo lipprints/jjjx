@@ -92,6 +92,12 @@
                     android:lines="1"
                     android:text="授课方式: 上门" />
 
+                <TextView
+                    android:id="@+id/index_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="附近 1 千米内" />
+
 
             </LinearLayout>
 

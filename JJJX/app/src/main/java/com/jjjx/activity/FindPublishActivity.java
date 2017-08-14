@@ -31,6 +31,7 @@ import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.LoadDialog;
 import com.jjjx.widget.MediaGridView;
+import com.jjjx.widget.dialog.AppProgressDialog;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
 
@@ -84,7 +85,7 @@ public class FindPublishActivity extends BaseActivity {
                     return;
                 }
 
-                LoadDialog.show(FindPublishActivity.this, "正在上传请稍后...");
+                AppProgressDialog.show(mContext, "发布中,请稍后...");
 
 
                 OkHttpUtils.getInstance(mContext).findPublish(CacheTask.getInstance().getUserId(), publishMediaList, publishTextView.getText().toString().trim(), new OkHttpUtils.UploadImageListener() {
@@ -93,7 +94,7 @@ public class FindPublishActivity extends BaseActivity {
                         App.applicationHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                NToast.shortToast(mContext, "发布成功");
+                                AppProgressDialog.onDismiss();
                                 LoadDialog.dismiss(mContext);
 //                                if (mRefershDataListener != null) {
 //                                    mRefershDataListener.refresh();
