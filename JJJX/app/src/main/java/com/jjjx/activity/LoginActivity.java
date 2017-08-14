@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jjjx.App;
 import com.jjjx.Constants;
 import com.jjjx.R;
 import com.jjjx.data.response.GetRongCloudTokenResponse;
@@ -17,6 +18,7 @@ import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NLog;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.LoadDialog;
+import com.jjjx.widget.dialog.AppProgressDialog;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -61,7 +63,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
 
         if (AMUtils.isEmail(accountString) || AMUtils.isMobile(accountString)) {
-            LoadDialog.show(this);
+            AppProgressDialog.show(mContext, "登录中...");
             request(JX_LOGIN);
         } else {
             NToast.shortToast(this, "非法手机或邮箱");
@@ -112,7 +114,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         @Override
                         public void onSuccess(String s) {
-                            LoadDialog.dismiss(LoginActivity.this);
+                            AppProgressDialog.onDismiss();
                             NToast.shortToast(LoginActivity.this, "登录成功");
                             if (mLoginDoneListener != null) {
                                 mLoginDoneListener.done();

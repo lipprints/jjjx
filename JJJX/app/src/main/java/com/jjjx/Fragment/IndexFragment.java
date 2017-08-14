@@ -268,6 +268,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
                         mSmartRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_NO);
                     }
                 }
+                AppProgressDialog.onDismiss();
                 break;
         }
     }

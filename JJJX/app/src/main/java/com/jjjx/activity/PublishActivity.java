@@ -37,6 +37,7 @@ import com.jjjx.widget.ListItemTextView;
 import com.jjjx.widget.LoadDialog;
 import com.jjjx.widget.MediaGridView;
 import com.jjjx.widget.WheelView;
+import com.jjjx.widget.dialog.AppProgressDialog;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
 
@@ -122,7 +123,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
         addressTextView.setOnClickListener(this);
         App.getInstance().addOnBDLocationObserver(this);
         App.getInstance().startLocationObserver();
-        Log.e("App","BDLocation2");
+        Log.e("App", "BDLocation2");
     }
 
     private void image() {
@@ -206,8 +207,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
             return;
         }
 
-        LoadDialog.show(this, "正在上传请稍后...");
-
+        AppProgressDialog.show(mContext, "正在上传请稍后...");
         OkHttpUtils.getInstance(this).publish(CacheTask.getInstance().getUserId(), publishMediaList, className, introduceEditText.getText().toString(), fee, ageString, personsString, time, addressString, phone, lng, lat, new OkHttpUtils.UploadImageListener() {
             @Override
             public void onSuccess(String result) {
@@ -215,7 +215,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void run() {
                         NToast.shortToast(PublishActivity.this, "发布成功");
-                        LoadDialog.dismiss(PublishActivity.this);
+                        AppProgressDialog.onDismiss();
                         if (mRefershDataListener != null) {
                             mRefershDataListener.refresh();
                         }
@@ -393,7 +393,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onLocation(BDLocation bdLocation) {
-        Log.e("App","BDLocation2");
+        Log.e("App", "BDLocation2");
         if (bdLocation != null) {
             lng = String.valueOf(bdLocation.getLongitude());
             lat = String.valueOf(bdLocation.getLatitude());

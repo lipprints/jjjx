@@ -45,7 +45,7 @@ public class AppProgressDialog extends ProgressDialog {
         if (mListDialog == null)
             mListDialog = new ArrayList<>();
         else
-            onDissmiss();
+            onDismiss();
         mListDialog.add(progressDialog);
         return progressDialog;
     }
@@ -80,7 +80,7 @@ public class AppProgressDialog extends ProgressDialog {
         return dialog;
     }
 
-    public static void onDissmiss() {
+    public static void onDismiss() {
         if (mListDialog != null) {
             for (AppProgressDialog progressDialog : mListDialog) {
                 if (progressDialog != null)
