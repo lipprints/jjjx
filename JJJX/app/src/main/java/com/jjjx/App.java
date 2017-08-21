@@ -13,6 +13,8 @@ import com.baidu.location.service.LocationService;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.SystemUtils;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
@@ -45,6 +47,7 @@ public class App extends MultiDexApplication implements BDLocationListener {
     public void onCreate() {
         super.onCreate();
         LeakCanary.install(this);
+        Logger.addLogAdapter(new AndroidLogAdapter());
         applicationContext = getApplicationContext();
         applicationHandler = new Handler(applicationContext.getMainLooper());
         if (getApplicationInfo().packageName.equals(SystemUtils.getCurProcessName(this))) {

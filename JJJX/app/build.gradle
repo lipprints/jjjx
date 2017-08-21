@@ -43,7 +43,7 @@ dependencies {
 
     compile "com.android.support:design:${supportVersion}"
 
-
+    compile 'com.orhanobut:logger:2.1.1' //日志框架
 
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.alibaba:fastjson:1.2.8'

@@ -2,7 +2,6 @@ package com.jjjx;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.jjjx.data.BaseAction;
 import com.jjjx.data.okhttp.RequestParams;
@@ -14,18 +13,9 @@ import com.jjjx.data.response.InformationResponse;
 import com.jjjx.data.response.LoginResponse;
 import com.jjjx.data.response.RegisterResponse;
 import com.jjjx.data.response.RequestRoleResponse;
-import com.jjjx.data.response.SearchResponse;
-import com.jjjx.data.response.UpdateInformationResponse;
 import com.jjjx.utils.AMUtils;
 import com.jjjx.utils.CacheTask;
-import com.jjjx.utils.NLog;
-
-import java.net.URL;
-
-import static android.R.attr.x;
-import static com.baidu.location.h.j.p;
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
-import static io.rong.imlib.statistics.UserData.gender;
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by AMing on 17/5/7.
@@ -59,8 +49,8 @@ public class JxAction extends BaseAction {
         params.put("name", account);
         params.put("pwd", pwd);
         String result = httpManager.post(url, params);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, LoginResponse.class);
         }
         return response;
@@ -90,8 +80,8 @@ public class JxAction extends BaseAction {
         params.put("repass", pwd);
         params.put("sms_captcha", sms_captcha);
         String result = httpManager.post(url, params);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, RegisterResponse.class);
         }
         return response;
@@ -114,8 +104,8 @@ public class JxAction extends BaseAction {
             params.put("email", account);
         }
         String result = httpManager.post(url, params);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, GetVerifyCodeResponse.class);
         }
         return response;
@@ -134,8 +124,8 @@ public class JxAction extends BaseAction {
         RequestParams params = getContainsUserIdRequestParams();
         params.put("uname", uname);
         String result = httpManager.get(url, params);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, GetRongCloudTokenResponse.class);
         }
         return response;
@@ -155,8 +145,8 @@ public class JxAction extends BaseAction {
         params.put("role", role);
         params.put("user_id", CacheTask.getInstance().getUserId());
         String result = httpManager.get(url, params);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, RequestRoleResponse.class);
         }
         return response;
@@ -172,8 +162,8 @@ public class JxAction extends BaseAction {
         IndexDataResponse response = new IndexDataResponse();
         String url = getURL(Constants.INDEX_ALL + "?page=" + page + "&lng2=" + CacheTask.getInstance().getLoginLng() + "&lat2=" + CacheTask.getInstance().getLoginLat());
         String result = httpManager.get(url);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, IndexDataResponse.class);
         }
         return response;
@@ -197,8 +187,8 @@ public class JxAction extends BaseAction {
         params.put("name", name);
         params.put("gender", gender);
         String result = httpManager.post(url, params);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, InformationResponse.class);
         }
         return response;
@@ -225,8 +215,8 @@ public class JxAction extends BaseAction {
         params.put("seniority", seniority);
         params.put("courses", courses);
         String result = httpManager.post(url, params);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, InformationResponse.class);
         }
         return response;
@@ -253,8 +243,8 @@ public class JxAction extends BaseAction {
         params.put("teacher_amount", teacher_amount);
         params.put("average_age", average_age);
         String result = httpManager.post(url, params);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, InformationResponse.class);
         }
         return response;
@@ -275,8 +265,8 @@ public class JxAction extends BaseAction {
         params.put("user_id", user_id);
         params.put("byuser_id", byuser_id);
         String result = httpManager.post(url, params);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, InformationResponse.class);
         }
         return response;
@@ -297,8 +287,8 @@ public class JxAction extends BaseAction {
         params.put("user_id", user_id);
         params.put("byuser_id", byuser_id);
         String result = httpManager.post(url, params);
-        NLog.e(TAG, result);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, InformationResponse.class);
         }
         return response;
@@ -334,6 +324,7 @@ public class JxAction extends BaseAction {
         String url = getURL(Constants.SEARCH + "?condition=" + condition);
         String result = httpManager.get(url);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, IndexDataResponse.class);
         }
         return response;
@@ -344,6 +335,7 @@ public class JxAction extends BaseAction {
         String url = getURL(Constants.FIND_DATA + "?page=" + page);
         String result = httpManager.get(url);
         if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
             response = jsonToBean(result, FindDataResponse.class);
         }
         return response;
