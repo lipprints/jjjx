@@ -197,6 +197,8 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
                 adapter1.setPressPostion(i);
                 adapter1.notifyDataSetChanged();
                 mPopupButton1.setText(array1[i]);
+                mPopupButton2.setText("排序");
+                mPopupButton3.setText("筛选");
                 mPopupButton1.hidePopup();
             }
         });
@@ -210,6 +212,8 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
                 adapter2.setPressPostion(i);
                 adapter2.notifyDataSetChanged();
                 mPopupButton2.setText(array2[i]);
+                mPopupButton1.setText("分类");
+                mPopupButton3.setText("筛选");
                 mPopupButton2.hidePopup();
             }
         });
@@ -223,6 +227,8 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
                 adapter3.setPressPostion(i);
                 adapter3.notifyDataSetChanged();
                 mPopupButton3.setText(array3[i]);
+                mPopupButton1.setText("分类");
+                mPopupButton2.setText("排序");
                 mPopupButton3.hidePopup();
             }
         });
