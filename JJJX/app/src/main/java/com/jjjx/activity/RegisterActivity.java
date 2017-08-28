@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
-import com.jjjx.Constants;
 import com.jjjx.R;
 import com.jjjx.data.response.GetVerifyCodeResponse;
 import com.jjjx.data.response.RegisterResponse;
@@ -30,7 +29,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private Button registerBtn;
     private Button getCodeBtn;
     private String account;
-    private String verflyCode;
+    private String verifyCode;
     private String pwd;
 
     @Override
@@ -58,7 +57,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case GET_VERIFY_CODE:
                 return action.getVerifyCode(account);
             case REGISTER:
-                return action.register("0", account, pwd, verflyCode);
+                return action.register("0", account, pwd, verifyCode);
         }
         return super.doInBackground(requestCode);
     }
@@ -114,13 +113,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 request(GET_VERIFY_CODE);
                 break;
             case R.id.jx_reg_btn:
-                verflyCode = codeET.getText().toString().trim();
+                verifyCode = codeET.getText().toString().trim();
                 pwd = pwdET.getText().toString().trim();
                 if (TextUtils.isEmpty(account)) {
                     NToast.shortToast(this, "账号不能为空");
                     return;
                 }
-                if (TextUtils.isEmpty(verflyCode)) {
+                if (TextUtils.isEmpty(verifyCode)) {
                     NToast.shortToast(this, "验证码不能为空");
                     return;
                 }

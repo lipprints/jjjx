@@ -104,6 +104,10 @@
         <activity
             android:name=".activity.WaitingVerifyActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.UploadExamineActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.IndexItemDetailsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -113,6 +117,11 @@
 
         <activity
             android:name=".activity.FindPublishActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".activity.ResetPasswordActivity"
             android:screenOrientation="portrait" />
 
         <activity

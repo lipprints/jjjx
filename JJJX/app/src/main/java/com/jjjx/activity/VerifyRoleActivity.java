@@ -1,6 +1,7 @@
 package com.jjjx.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -31,13 +32,21 @@ public class VerifyRoleActivity extends BaseActivity {
         teacherBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                request(ROLE_TEACHER);
+                Intent intent = new Intent(mContext, UploadExamineActivity.class);
+                intent.putExtra("Role", 2);
+                startActivity(intent);
+                finish();
+//                request(ROLE_TEACHER);
             }
         });
         organizationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                request(ROLE_ORGANIZATION);
+                Intent intent = new Intent(mContext, UploadExamineActivity.class);
+                intent.putExtra("Role", 3);
+                startActivity(intent);
+                finish();
+//                request(ROLE_ORGANIZATION);
             }
         });
     }

@@ -8,8 +8,11 @@ import android.util.Log;
 
 import com.jjjx.App;
 import com.jjjx.Constants;
+import com.jjjx.data.response.RequestRoleResponse;
 import com.jjjx.model.MediaModel;
+import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NLog;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +38,7 @@ import okio.Source;
 
 import static com.baidu.location.h.j.F;
 import static com.baidu.location.h.j.e;
+import static com.jjjx.data.json.JsonMananger.jsonToBean;
 
 
 /**
@@ -315,6 +319,50 @@ public class OkHttpUtils {
             }
         });
 
+    }
+
+    /**
+     * 申请教师 或者 机构认证
+     *
+     * @param role
+     * @return
+     * @throws Exception
+     */
+    public void requestRole(String role, List<MediaModel> mediaModels, final UploadImageListener uploadImageListener) {
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder();
+        multipartBodyBuilder.setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("user_id", CacheTask.getInstance().getUserId());
+        multipartBodyBuilder.addFormDataPart("role", role);
+
+        for (int i = 0; i < mediaModels.size(); i++) {
+            File file = mediaModels.get(i).getMediaFile();
+            multipartBodyBuilder.addFormDataPart("files", file.getName(), RequestBody.create(MEDIA_TYPE_PNG, file));
+
+        }
+        final RequestBody requestBody = multipartBodyBuilder.build();
+        Request.Builder RequestBuilder = new Request.Builder();
+        RequestBuilder.url(Constants.DOMAIN + Constants.AUTH_ROLE);// 添加URL地址
+        RequestBuilder.post(requestBody);
+        Request request = RequestBuilder.build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, e.getMessage());
+                if (uploadImageListener != null) {
+                    uploadImageListener.onFailure(e);
+                }
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    if (uploadImageListener != null) {
+                        uploadImageListener.onSuccess(response.body().string());
+                    }
+                }
+            }
+        });
     }
 
     /**
