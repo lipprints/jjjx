@@ -69,14 +69,14 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
                 @Override
                 public void liked(LikeButton likeButton) {
                     if (mOnLikeButtonClickListener != null) {
-                        mOnLikeButtonClickListener.select(likeButton, true, position);
+                        mOnLikeButtonClickListener.select(true, position);
                     }
                 }
 
                 @Override
                 public void unLiked(LikeButton likeButton) {
                     if (mOnLikeButtonClickListener != null) {
-                        mOnLikeButtonClickListener.select(likeButton, false,  position);
+                        mOnLikeButtonClickListener.select(false, position);
                     }
                 }
             });
@@ -121,7 +121,7 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
     private OnLikeButtonClickListener mOnLikeButtonClickListener;
 
     public interface OnLikeButtonClickListener {
-        void select(LikeButton likeButton, boolean isCheck, int position);
+        void select(boolean isCheck, int position);
     }
 
     public void setOnLikeButtonClickListener(OnLikeButtonClickListener onLikeButtonClickListener) {

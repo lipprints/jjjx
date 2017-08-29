@@ -80,8 +80,11 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
             public void onLoadmore(RefreshLayout refreshlayout) {
                 isRefresh = false;
                 mPageIndex++;
-
-
+                if (TextUtils.isEmpty(CacheTask.getInstance().getUserId())) {
+                    request(GET_FIND);
+                } else {
+                    request(GET_FIND_LOGIN);
+                }
             }
 
             @Override
@@ -127,7 +130,7 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
                 });
                 mAdapter.setOnLikeButtonClickListener(new FindPureAdapter.OnLikeButtonClickListener() {
                     @Override
-                    public void select(LikeButton likeButton, boolean isCheck, int position) {
+                    public void select(boolean isCheck, int position) {
                         tempPosition = position;
                         if (isCheck) {
                             request(ADD_LIKE);
