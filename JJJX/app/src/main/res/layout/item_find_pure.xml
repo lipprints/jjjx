@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -48,29 +49,37 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="3dp"
             android:layout_toRightOf="@id/ifh_head"
-            android:text="name"
-            android:maxLength="10"
             android:ellipsize="end"
+            android:maxLength="10"
+            android:text="name"
             android:textColor="@color/color_gray_text"
             android:textSize="10sp" />
 
+
         <TextView
-            android:id="@+id/ifh_number"
+            android:id="@+id/find_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:text="1000"
+            android:text="100"
             android:textColor="@color/color_gray_text"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            android:visibility="gone" />
 
-        <ImageView
-            android:layout_width="27dp"
-            android:layout_height="27dp"
+        <com.jjjx.widget.like.LikeButton
+            android:id="@+id/find_heart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/ifh_number"
-            android:paddingTop="5dp"
-            android:src="@drawable/ico_xin" />
+            android:layout_toLeftOf="@id/find_number"
+            android:visibility="gone"
+            app:anim_scale_factor="3"
+            app:icon_size="16dp"
+            app:icon_type="heart" />
+
+
     </RelativeLayout>
 </LinearLayout>

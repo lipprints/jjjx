@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -13,9 +14,12 @@ import com.jjjx.app.adapter.RvPureDataAdapter;
 import com.jjjx.app.adapter.util.RvViewHolder;
 import com.jjjx.data.GlideManage;
 import com.jjjx.data.response.FindDataResponse;
+import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.Utils;
 import com.jjjx.widget.CircleImageView;
 import com.jjjx.widget.SquareImageView;
+import com.jjjx.widget.like.LikeButton;
+import com.jjjx.widget.like.OnLikeListener;
 
 import java.lang.ref.WeakReference;
 
@@ -47,14 +51,36 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
     }
 
     @Override
-    public void onBindViewHolder(RvViewHolder holder, int position) {
-        FindDataResponse.ParaEntity.DiscoverInfoEntity die = mDatas.get(position);
+    public void onBindViewHolder(RvViewHolder holder, final int position) {
+        final FindDataResponse.ParaEntity.DiscoverInfoEntity die = mDatas.get(position);
 
         SquareImageView imageView = holder.getView(R.id.ifh_iv);
         final CircleImageView headImageView = holder.getView(R.id.ifh_head);
+        LikeButton likeButton = holder.getView(R.id.find_heart);
         ImageView videoIcon = holder.getView(R.id.find_video_icon);
+        TextView findNumber = holder.getView(R.id.find_number);
         holder.setText(R.id.ifh_name, die.getName());
-        holder.setText(R.id.ifh_number, "service is null");
+        if (!TextUtils.isEmpty(CacheTask.getInstance().getUserId())) {
+            likeButton.setVisibility(View.VISIBLE);
+            findNumber.setVisibility(View.VISIBLE);
+            findNumber.setText(die.getThumbNo());
+            likeButton.setLiked(die.getTab().equals("1"));
+            likeButton.setOnLikeListener(new OnLikeListener() {
+                @Override
+                public void liked(LikeButton likeButton) {
+                    if (mOnLikeButtonClickListener != null) {
+                        mOnLikeButtonClickListener.select(likeButton, true, die, position);
+                    }
+                }
+
+                @Override
+                public void unLiked(LikeButton likeButton) {
+                    if (mOnLikeButtonClickListener != null) {
+                        mOnLikeButtonClickListener.select(likeButton, false, die, position);
+                    }
+                }
+            });
+        }
 
         //大图使用处理
         final WeakReference<SquareImageView> imageViewWeakReference = new WeakReference<>(imageView);
@@ -90,5 +116,15 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
                     .placeholder(R.color.app_gray_color).override(mHeadImageWidth, mHeadImageWidth)
                     .into(simpleTargetWeak);
         }
+    }
+
+    private OnLikeButtonClickListener mOnLikeButtonClickListener;
+
+    public interface OnLikeButtonClickListener {
+        void select(LikeButton likeButton, boolean isCheck, FindDataResponse.ParaEntity.DiscoverInfoEntity die, int position);
+    }
+
+    public void setOnLikeButtonClickListener(OnLikeButtonClickListener onLikeButtonClickListener) {
+        mOnLikeButtonClickListener = onLikeButtonClickListener;
     }
 }

@@ -6,18 +6,21 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jjjx.R;
 import com.jjjx.activity.FindImageActivity;
 import com.jjjx.activity.FindVideoActivity;
+import com.jjjx.activity.LoginActivity;
 import com.jjjx.app.adapter.RvPureAdapter;
 import com.jjjx.app.base.XBaseLazyFragment;
 import com.jjjx.data.GlideManage;
 import com.jjjx.data.response.FindDataResponse;
 import com.jjjx.fragment.find.adapter.FindPureAdapter;
-import com.jjjx.utils.ToastUtil;
+import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
+import com.jjjx.widget.like.LikeButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -27,9 +30,12 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
  * 热门
  */
 
-public class HotFragment extends XBaseLazyFragment {
+public class HotFragment extends XBaseLazyFragment implements LoginActivity.LoginDoneListener {
 
     private static final int GET_FIND = 3;
+    private static final int GET_FIND_LOGIN = 4;
+    private static final int ADD_LIKE = 5;
+    private static final int CANCEL_LIKE = 6;
     private SmartRefreshLayout mSmartRefreshLayout;
     private boolean isRefresh = false;
     private int mPageIndex = 0;//页码
@@ -37,6 +43,8 @@ public class HotFragment extends XBaseLazyFragment {
     private SmartRefreshUtil mRefreshUtil;
     private GlideManage mGlideManage;
     private FindPureAdapter mAdapter;
+    private FindDataResponse.ParaEntity.DiscoverInfoEntity tempDie;
+    private int tempPosition;
 
     @Override
     protected int getContentView() {
@@ -73,7 +81,8 @@ public class HotFragment extends XBaseLazyFragment {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 isRefresh = false;
                 mPageIndex++;
-                request(GET_FIND);
+
+
             }
 
             @Override
@@ -82,11 +91,16 @@ public class HotFragment extends XBaseLazyFragment {
                 refreshlayout.setLoadmoreFinished(false);
                 isRefresh = true;
                 mPageIndex = 0;
-                request(GET_FIND);
+                if (TextUtils.isEmpty(CacheTask.getInstance().getUserId())) {
+                    request(GET_FIND);
+                } else {
+                    request(GET_FIND_LOGIN);
+                }
             }
         });
         //刷新加载
         mRefreshUtil = new SmartRefreshUtil(mSmartRefreshLayout, mRecyclerView);
+        LoginActivity.setOnLoginDoneListener(this);
     }
 
     @Override
@@ -102,13 +116,25 @@ public class HotFragment extends XBaseLazyFragment {
                     public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                         FindDataResponse.ParaEntity.DiscoverInfoEntity entity = mAdapter.getItem(position);
                         if (TextUtils.isEmpty(entity.getFirstFrame())) {
-                            Intent imageIntent = new Intent(getActivity(),FindImageActivity.class);
-                            imageIntent.putExtra("FindImageEntity",entity);
+                            Intent imageIntent = new Intent(getActivity(), FindImageActivity.class);
+                            imageIntent.putExtra("FindImageEntity", entity);
                             startActivity(imageIntent);
                         } else {
-                            Intent videoIntent = new Intent(getActivity(),FindVideoActivity.class);
-                            videoIntent.putExtra("FindVideoEntity",entity);
+                            Intent videoIntent = new Intent(getActivity(), FindVideoActivity.class);
+                            videoIntent.putExtra("FindVideoEntity", entity);
                             startActivity(videoIntent);
+                        }
+                    }
+                });
+                mAdapter.setOnLikeButtonClickListener(new FindPureAdapter.OnLikeButtonClickListener() {
+                    @Override
+                    public void select(LikeButton likeButton, boolean isCheck, FindDataResponse.ParaEntity.DiscoverInfoEntity die, int position) {
+                        tempDie = die;
+                        tempPosition = position;
+                        if (isCheck) {
+                            request(ADD_LIKE);
+                        } else {
+                            request(CANCEL_LIKE);
                         }
                     }
                 });
@@ -140,12 +166,21 @@ public class HotFragment extends XBaseLazyFragment {
 
     @Override
     public Object doInBackground(int requestCode) throws Exception {
-        return action.getFindData(mPageIndex);
+        if (requestCode == GET_FIND) {
+            return action.getFindData(mPageIndex);
+        } else if (requestCode == GET_FIND_LOGIN) {
+            return action.getFindDataByUserId(mPageIndex, CacheTask.getInstance().getUserId());
+        } else if (requestCode == ADD_LIKE) {
+            return action.addLike(CacheTask.getInstance().getUserId(), String.valueOf(tempDie.getPid()));
+        } else if (requestCode == CANCEL_LIKE) {
+            return action.cancelLike(CacheTask.getInstance().getUserId(), String.valueOf(tempDie.getPid()));
+        }
+        return null;
     }
 
     @Override
     public void onSuccess(int requestCode, Object result) {
-        if (result != null) {
+        if (result != null && (requestCode == GET_FIND_LOGIN || requestCode == GET_FIND)) {
             FindDataResponse response = (FindDataResponse) result;
             if (response.getHead().getCode().equals("10000") && isNoCloseFragment) {
                 //TODO fragment没有被销毁
@@ -161,6 +196,16 @@ public class HotFragment extends XBaseLazyFragment {
                 }
                 return;
             }
+        } else if (requestCode == ADD_LIKE) {
+            tempDie.setThumbNo(String.valueOf(Integer.parseInt(tempDie.getThumbNo()) + 1));
+            tempDie.setTab("1");
+            mAdapter.notifyItemChanged(tempPosition, tempDie);
+            Toast.makeText(getActivity(), "点赞成功", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == CANCEL_LIKE) {
+            tempDie.setThumbNo(String.valueOf(Integer.parseInt(tempDie.getThumbNo()) - 1));
+            tempDie.setTab("2");
+            mAdapter.notifyItemChanged(tempPosition, tempDie);
+            Toast.makeText(getActivity(), "取消点赞", Toast.LENGTH_SHORT).show();
         }
         mRefreshUtil.stopRefrshLoad();
     }
@@ -170,5 +215,10 @@ public class HotFragment extends XBaseLazyFragment {
         super.onFailure(requestCode, state, result);
         if (isNoCloseFragment)
             mRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_ERROR);
+    }
+
+    @Override
+    public void done() {
+        request(GET_FIND_LOGIN);
     }
 }

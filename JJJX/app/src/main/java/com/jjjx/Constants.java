@@ -1,6 +1,8 @@
 package com.jjjx;
 
 
+import static com.baidu.location.h.j.p;
+
 /**
  * Created by AMing on 17/5/7.
  * Company RongCloud
@@ -55,6 +57,10 @@ public class Constants {
 
     public static final String SEARCH = "app/queryCourseReleaseByWhere";
 
-    public static final String FIND_DATA = "app/queryDiscoverAll";
+    public static final String FIND_DATA = "app/queryDiscoverAllUnload"; //未登录的发现热门数据
+    public static final String FIND_DATA_LOGIN = "app/queryDiscoverAll"; //登录后的
+
+    public static final String ADD_LIKE = "app/thumbUp";//点赞
+    public static final String CANCEL_LIKE = "app/thumbUpCancel";//取消点赞
 
 }

@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import java.util.List;
 
+import static com.baidu.location.h.j.p;
+
 /**
  * Created by AMing on 17/8/6.
  * Company RongCloud
@@ -72,7 +74,7 @@ public class FindDataResponse {
             this.discoverInfo = discoverInfo;
         }
 
-        public static class DiscoverInfoEntity implements Parcelable{
+        public static class DiscoverInfoEntity implements Parcelable {
             /**
              * firstFrame : http://47.93.217.163:8080/faxian/videoImageFile1501997222539.png
              * user_id : 100012
@@ -92,6 +94,8 @@ public class FindDataResponse {
             private String content;
             private String head_portrait;
             private String picture;
+            private String thumbNo; //点赞数
+            private String tab; //1点赞 2 未点赞
 
             protected DiscoverInfoEntity(Parcel in) {
                 firstFrame = in.readString();
@@ -102,6 +106,8 @@ public class FindDataResponse {
                 content = in.readString();
                 head_portrait = in.readString();
                 picture = in.readString();
+                thumbNo = in.readString();
+                tab = in.readString();
             }
 
             @Override
@@ -114,9 +120,27 @@ public class FindDataResponse {
                 dest.writeString(content);
                 dest.writeString(head_portrait);
                 dest.writeString(picture);
+                dest.writeString(thumbNo);
+                dest.writeString(tab);
             }
 
-            public DiscoverInfoEntity(){
+            public String getThumbNo() {
+                return thumbNo;
+            }
+
+            public void setThumbNo(String thumbNo) {
+                this.thumbNo = thumbNo;
+            }
+
+            public String getTab() {
+                return tab;
+            }
+
+            public void setTab(String tab) {
+                this.tab = tab;
+            }
+
+            public DiscoverInfoEntity() {
 
             }
 

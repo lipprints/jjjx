@@ -295,6 +295,50 @@ public class JxAction extends BaseAction {
     }
 
     /**
+     * 点赞
+     *
+     * @param user_id
+     * @param pid
+     * @return
+     * @throws Exception
+     */
+    public InformationResponse addLike(String user_id, String pid) throws Exception {
+        InformationResponse response = new InformationResponse();
+        String url = getURL(Constants.ADD_LIKE);
+        RequestParams params = getRequestParams();
+        params.put("user_id", user_id);
+        params.put("pid", pid);
+        String result = httpManager.post(url, params);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, InformationResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 取消点赞
+     *
+     * @param user_id
+     * @param pid
+     * @return
+     * @throws Exception
+     */
+    public InformationResponse cancelLike(String user_id, String pid) throws Exception {
+        InformationResponse response = new InformationResponse();
+        String url = getURL(Constants.CANCEL_LIKE);
+        RequestParams params = getRequestParams();
+        params.put("user_id", user_id);
+        params.put("pid", pid);
+        String result = httpManager.post(url, params);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, InformationResponse.class);
+        }
+        return response;
+    }
+
+    /**
      * 无身份游客有的字段为
      * userid
      * name
@@ -333,6 +377,17 @@ public class JxAction extends BaseAction {
     public FindDataResponse getFindData(int page) throws Exception {
         FindDataResponse response = new FindDataResponse();
         String url = getURL(Constants.FIND_DATA + "?page=" + page);
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, FindDataResponse.class);
+        }
+        return response;
+    }
+
+    public FindDataResponse getFindDataByUserId(int page, String user_id) throws Exception {
+        FindDataResponse response = new FindDataResponse();
+        String url = getURL(Constants.FIND_DATA_LOGIN + "?page=" + page + "&user_id=" + user_id);
         String result = httpManager.get(url);
         if (!TextUtils.isEmpty(result)) {
             Logger.json(result);
