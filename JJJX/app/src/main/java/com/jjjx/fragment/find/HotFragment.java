@@ -43,7 +43,6 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
     private SmartRefreshUtil mRefreshUtil;
     private GlideManage mGlideManage;
     private FindPureAdapter mAdapter;
-    private FindDataResponse.ParaEntity.DiscoverInfoEntity tempDie;
     private int tempPosition;
 
     @Override
@@ -128,8 +127,7 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
                 });
                 mAdapter.setOnLikeButtonClickListener(new FindPureAdapter.OnLikeButtonClickListener() {
                     @Override
-                    public void select(LikeButton likeButton, boolean isCheck, FindDataResponse.ParaEntity.DiscoverInfoEntity die, int position) {
-                        tempDie = die;
+                    public void select(LikeButton likeButton, boolean isCheck, int position) {
                         tempPosition = position;
                         if (isCheck) {
                             request(ADD_LIKE);
@@ -171,9 +169,10 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
         } else if (requestCode == GET_FIND_LOGIN) {
             return action.getFindDataByUserId(mPageIndex, CacheTask.getInstance().getUserId());
         } else if (requestCode == ADD_LIKE) {
-            return action.addLike(CacheTask.getInstance().getUserId(), String.valueOf(tempDie.getPid()));
+
+            return action.addLike(CacheTask.getInstance().getUserId(), String.valueOf(mAdapter.getItem(tempPosition).getPid()));
         } else if (requestCode == CANCEL_LIKE) {
-            return action.cancelLike(CacheTask.getInstance().getUserId(), String.valueOf(tempDie.getPid()));
+            return action.cancelLike(CacheTask.getInstance().getUserId(), String.valueOf(mAdapter.getItem(tempPosition).getPid()));
         }
         return null;
     }
@@ -197,14 +196,16 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
                 return;
             }
         } else if (requestCode == ADD_LIKE) {
-            tempDie.setThumbNo(String.valueOf(Integer.parseInt(tempDie.getThumbNo()) + 1));
-            tempDie.setTab("1");
-            mAdapter.notifyItemChanged(tempPosition, tempDie);
+            FindDataResponse.ParaEntity.DiscoverInfoEntity item = mAdapter.getItem(tempPosition);
+            item.setThumbNo(String.valueOf(Integer.parseInt(item.getThumbNo()) + 1));
+            item.setTab("1");
+            mAdapter.notifyItemChanged(tempPosition);
             Toast.makeText(getActivity(), "点赞成功", Toast.LENGTH_SHORT).show();
         } else if (requestCode == CANCEL_LIKE) {
-            tempDie.setThumbNo(String.valueOf(Integer.parseInt(tempDie.getThumbNo()) - 1));
-            tempDie.setTab("2");
-            mAdapter.notifyItemChanged(tempPosition, tempDie);
+            FindDataResponse.ParaEntity.DiscoverInfoEntity item = mAdapter.getItem(tempPosition);
+            item.setThumbNo(String.valueOf(Integer.parseInt(item.getThumbNo()) - 1));
+            item.setTab("2");
+            mAdapter.notifyItemChanged(tempPosition);
             Toast.makeText(getActivity(), "取消点赞", Toast.LENGTH_SHORT).show();
         }
         mRefreshUtil.stopRefrshLoad();
