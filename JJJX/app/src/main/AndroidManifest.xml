@@ -119,6 +119,10 @@
             android:name=".activity.FindPublishActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.MyCollectionsActivity"
+            android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".activity.ResetPasswordActivity"

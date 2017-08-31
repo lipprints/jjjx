@@ -21,6 +21,7 @@ import com.jjjx.activity.SearchActivity;
 import com.jjjx.adapter.IndexAdapter;
 import com.jjjx.data.response.IndexDataResponse;
 import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
+import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.jjjx.widget.banner.GlideImageLoader;
@@ -60,6 +61,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
     public void onLocation(BDLocation bdLocation) {
         this.bdLocation = bdLocation;
         //TODO 切换线程
+        CacheTask.getInstance().cacheCity(bdLocation.getCity());
         locationTextView.setText(bdLocation.getCity());
     }
 

@@ -88,7 +88,7 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
                     AsyncTaskManager.getInstance(IndexItemDetailsActivity.this).request(ADD_CLASS, new OnDataListener() {
                         @Override
                         public Object doInBackground(int requestCode) throws Exception {
-                            return new JxAction(IndexItemDetailsActivity.this).addAttentionInfo(CacheTask.getInstance().getUserId(), String.valueOf(entity.getId()));
+                            return new JxAction(IndexItemDetailsActivity.this).addCollection(CacheTask.getInstance().getUserId(), String.valueOf(entity.getId()));
 
                         }
 
@@ -115,7 +115,7 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
                     AsyncTaskManager.getInstance(IndexItemDetailsActivity.this).request(CANCEL_CLASS, new OnDataListener() {
                         @Override
                         public Object doInBackground(int requestCode) throws Exception {
-                            return new JxAction(IndexItemDetailsActivity.this).deleteAttentionInfo(CacheTask.getInstance().getUserId(), String.valueOf(entity.getId()));
+                            return new JxAction(IndexItemDetailsActivity.this).deleteCollection(CacheTask.getInstance().getUserId(), String.valueOf(entity.getId()));
                         }
 
                         @Override

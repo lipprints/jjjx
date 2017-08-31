@@ -21,10 +21,10 @@
             app:civ_border_width="2dp" />
 
         <TextView
-            android:layout_marginTop="10dp"
             android:id="@+id/jx_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="张三"
             android:textSize="16sp" />
 
@@ -70,6 +70,7 @@
 
 
             <com.jjjx.widget.ListItemTextView
+                android:id="@+id/mine_my_collection"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 app:tv_list_item_allow_arrow="true"

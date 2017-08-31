@@ -115,6 +115,7 @@ public class IndexDataResponse {
             private String name;
             private String seniority;
             private String distance;
+            private String course_id;
 
             protected ComplaintsEntity(Parcel in) {
                 role = in.readString();
@@ -135,6 +136,7 @@ public class IndexDataResponse {
                 name = in.readString();
                 seniority = in.readString();
                 distance = in.readString();
+                course_id = in.readString();
             }
 
             @Override
@@ -157,6 +159,7 @@ public class IndexDataResponse {
                 dest.writeString(name);
                 dest.writeString(seniority);
                 dest.writeString(distance);
+                dest.writeString(course_id);
             }
 
             @Override
@@ -193,6 +196,14 @@ public class IndexDataResponse {
             }
 
             public ComplaintsEntity() {
+            }
+
+            public String getCourse_id() {
+                return course_id;
+            }
+
+            public void setCourse_id(String course_id) {
+                this.course_id = course_id;
             }
 
             public String getRole() {

@@ -18,6 +18,7 @@ import com.jjjx.App;
 import com.jjjx.Constants;
 import com.jjjx.R;
 import com.jjjx.activity.LoginActivity;
+import com.jjjx.activity.MyCollectionsActivity;
 import com.jjjx.activity.ProfileSettingActivity;
 import com.jjjx.activity.VerifyRoleActivity;
 import com.jjjx.activity.WaitingVerifyActivity;
@@ -46,6 +47,7 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
     ListItemTextView quitTextView;
     ListItemTextView verifyTextView;
     ListItemTextView profileSettingTextView;
+    ListItemTextView myCollectionTextView;
     TextView userName;
 
     @Nullable
@@ -56,11 +58,13 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
         quitTextView = (ListItemTextView) v.findViewById(R.id.mine_quit);
         verifyTextView = (ListItemTextView) v.findViewById(R.id.mine_i_want_verify);
         profileSettingTextView = (ListItemTextView) v.findViewById(R.id.mine_profile_setting);
+        myCollectionTextView = (ListItemTextView) v.findViewById(R.id.mine_my_collection);
         userName = (TextView) v.findViewById(R.id.jx_user_name);
         circleImageView.setOnClickListener(this);
         verifyTextView.setOnClickListener(this);
         profileSettingTextView.setOnClickListener(this);
         quitTextView.setOnClickListener(this);
+        myCollectionTextView.setOnClickListener(this);
         Glide.with(getActivity()).load(CacheTask.getInstance().getPortrait()).into(new SimpleTarget<GlideDrawable>() {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
@@ -157,6 +161,9 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
                 CacheTask.getInstance().clearAllCache();
                 NToast.shortToast(getActivity(), "退出成功");
                 getActivity().finish();
+                break;
+            case R.id.mine_my_collection://我的收藏
+                startActivity(new Intent(getActivity(),MyCollectionsActivity.class));
                 break;
             default:
                 new ImagePicker.Builder(getActivity())

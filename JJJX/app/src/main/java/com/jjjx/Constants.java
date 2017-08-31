@@ -63,4 +63,15 @@ public class Constants {
     public static final String ADD_LIKE = "app/thumbUp";//点赞
     public static final String CANCEL_LIKE = "app/thumbUpCancel";//取消点赞
 
+    public static final String COLLECTION = "app/collectCourse"; //收藏课程
+    public static final String COLLECTION_CANCEL = "app/collectCourseCancel"; //取消收藏课程
+
+    public static final String MY_COLLECTION = "app/queryMyCollections"; //我收藏的课程列表
+
+
+    /**
+     * http://47.93.217.163:8080/app/collectCourse 	输入参数：user_id,course_id
+     * URL：http://47.93.217.163:8080/app/queryMyCollections 	输入参数：user_id
+     */
+
 }

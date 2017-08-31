@@ -107,6 +107,16 @@ public class CacheTask {
         editor.apply();
     }
 
+    public void cacheCity(String city) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("city", city);
+        editor.apply();
+    }
+
+    public String getCity() {
+        return preferences.getString("city", null);
+    }
+
     public String getSex() {
         return preferences.getString("sex", null);
     }
@@ -186,6 +196,7 @@ public class CacheTask {
         editor.putString("userRole", role);
         editor.apply();
     }
+
 
     public boolean isLogin() {
         return (!TextUtils.isEmpty(preferences.getString("userId", "")));

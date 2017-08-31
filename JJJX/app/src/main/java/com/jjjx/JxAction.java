@@ -11,6 +11,7 @@ import com.jjjx.data.response.GetVerifyCodeResponse;
 import com.jjjx.data.response.IndexDataResponse;
 import com.jjjx.data.response.InformationResponse;
 import com.jjjx.data.response.LoginResponse;
+import com.jjjx.data.response.MyCollectionResponse;
 import com.jjjx.data.response.RegisterResponse;
 import com.jjjx.data.response.RequestRoleResponse;
 import com.jjjx.utils.AMUtils;
@@ -48,6 +49,7 @@ public class JxAction extends BaseAction {
         RequestParams params = getRequestParams();
         params.put("name", account);
         params.put("pwd", pwd);
+        params.put("city", CacheTask.getInstance().getCity());
         String result = httpManager.post(url, params);
         if (!TextUtils.isEmpty(result)) {
             Logger.json(result);
@@ -251,7 +253,7 @@ public class JxAction extends BaseAction {
     }
 
     /**
-     * 添加收藏
+     * 关注用户
      *
      * @param user_id
      * @param byuser_id
@@ -273,7 +275,7 @@ public class JxAction extends BaseAction {
     }
 
     /**
-     * 取消收藏
+     * 取消关注用户
      *
      * @param user_id
      * @param byuser_id
@@ -315,6 +317,52 @@ public class JxAction extends BaseAction {
         }
         return response;
     }
+
+    /**
+     * 添加收藏
+     *
+     * @param user_id
+     * @param course_id
+     * @return
+     * @throws Exception
+     */
+    public InformationResponse addCollection(String user_id, String course_id) throws Exception {
+        InformationResponse response = new InformationResponse();
+        String url = getURL(Constants.COLLECTION);
+        RequestParams params = getRequestParams();
+        params.put("user_id", user_id);
+        params.put("course_id", course_id);
+        String result = httpManager.post(url, params);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, InformationResponse.class);
+        }
+        return response;
+    }
+
+
+    /**
+     * 取消收藏
+     *
+     * @param user_id
+     * @param course_id
+     * @return
+     * @throws Exception
+     */
+    public InformationResponse deleteCollection(String user_id, String course_id) throws Exception {
+        InformationResponse response = new InformationResponse();
+        String url = getURL(Constants.COLLECTION_CANCEL);
+        RequestParams params = getRequestParams();
+        params.put("user_id", user_id);
+        params.put("course_id", course_id);
+        String result = httpManager.post(url, params);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, InformationResponse.class);
+        }
+        return response;
+    }
+
 
     /**
      * 取消点赞
@@ -374,6 +422,13 @@ public class JxAction extends BaseAction {
         return response;
     }
 
+    /**
+     * 无需依赖登录的发现数据
+     *
+     * @param page
+     * @return
+     * @throws Exception
+     */
     public FindDataResponse getFindData(int page) throws Exception {
         FindDataResponse response = new FindDataResponse();
         String url = getURL(Constants.FIND_DATA + "?page=" + page);
@@ -385,6 +440,14 @@ public class JxAction extends BaseAction {
         return response;
     }
 
+    /**
+     * 需要依赖登录的发现数据
+     *
+     * @param page
+     * @param user_id
+     * @return
+     * @throws Exception
+     */
     public FindDataResponse getFindDataByUserId(int page, String user_id) throws Exception {
         FindDataResponse response = new FindDataResponse();
         String url = getURL(Constants.FIND_DATA_LOGIN + "?page=" + page + "&user_id=" + user_id);
@@ -392,6 +455,23 @@ public class JxAction extends BaseAction {
         if (!TextUtils.isEmpty(result)) {
             Logger.json(result);
             response = jsonToBean(result, FindDataResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 获取我收藏的列表
+     *
+     * @return
+     * @throws Exception
+     */
+    public IndexDataResponse getMyCollections() throws Exception {
+        IndexDataResponse response = new IndexDataResponse();
+        String url = getURL(Constants.MY_COLLECTION + "?user_id=" + CacheTask.getInstance().getUserId());
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, IndexDataResponse.class);
         }
         return response;
     }
