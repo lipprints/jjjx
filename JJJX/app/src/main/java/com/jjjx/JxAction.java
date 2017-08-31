@@ -14,6 +14,7 @@ import com.jjjx.data.response.LoginResponse;
 import com.jjjx.data.response.MyCollectionResponse;
 import com.jjjx.data.response.RegisterResponse;
 import com.jjjx.data.response.RequestRoleResponse;
+import com.jjjx.data.response.UserProfileResponse;
 import com.jjjx.utils.AMUtils;
 import com.jjjx.utils.CacheTask;
 import com.orhanobut.logger.Logger;
@@ -472,6 +473,21 @@ public class JxAction extends BaseAction {
         if (!TextUtils.isEmpty(result)) {
             Logger.json(result);
             response = jsonToBean(result, IndexDataResponse.class);
+        }
+        return response;
+    }
+
+
+    /**
+     * 查询用户详情接口 包含(1 用户信息 2 是否关注 3 发布的课程 4 发现)
+     */
+    public UserProfileResponse getUserProfile(String user_id) throws Exception {
+        UserProfileResponse response = new UserProfileResponse();
+        String url = getURL(Constants.GET_USER_PROFILE + "?user_id=" + user_id);
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, UserProfileResponse.class);
         }
         return response;
     }

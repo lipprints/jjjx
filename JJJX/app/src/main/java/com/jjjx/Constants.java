@@ -68,10 +68,13 @@ public class Constants {
 
     public static final String MY_COLLECTION = "app/queryMyCollections"; //我收藏的课程列表
 
+    public static final String GET_USER_PROFILE = "app/queryUserAllDiscover"; //查询用户详情 包含(1 用户信息 2 是否关注 3 发布的课程 4 发现)
+
 
     /**
      * http://47.93.217.163:8080/app/collectCourse 	输入参数：user_id,course_id
      * URL：http://47.93.217.163:8080/app/queryMyCollections 	输入参数：user_id
+     * http://47.93.217.163:8080/app/queryUserAllDiscover?user_id=100012
      */
 
 }

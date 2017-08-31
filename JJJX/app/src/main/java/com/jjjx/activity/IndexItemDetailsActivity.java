@@ -1,6 +1,7 @@
 package com.jjjx.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -145,7 +146,10 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
                         NToast.shortToast(IndexItemDetailsActivity.this, "请登录才能做后续操作");
                         return;
                     }
-                    RongIM.getInstance().startPrivateChat(IndexItemDetailsActivity.this, String.valueOf(entity.getUser_id()), entity.getName());
+                    Intent intent = new Intent(IndexItemDetailsActivity.this, UserProfileActivity.class);
+                    intent.putExtra("userId", entity.getUser_id());
+                    startActivity(intent);
+//                    RongIM.getInstance().startPrivateChat(IndexItemDetailsActivity.this, String.valueOf(entity.getUser_id()), entity.getName());
                 }
             });
         }
