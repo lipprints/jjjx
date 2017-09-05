@@ -212,7 +212,7 @@ public class CacheTask {
     }
 
     public String getUserRole() {
-        return preferences.getString("userRole", "0");
+        return preferences.getString("userRole", "1");
     }
 
     /**

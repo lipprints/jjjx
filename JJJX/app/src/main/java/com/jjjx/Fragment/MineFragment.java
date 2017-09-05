@@ -17,6 +17,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.jjjx.App;
 import com.jjjx.Constants;
 import com.jjjx.R;
+import com.jjjx.activity.ClassManageActivity;
 import com.jjjx.activity.LoginActivity;
 import com.jjjx.activity.MyCollectionsActivity;
 import com.jjjx.activity.ProfileSettingActivity;
@@ -67,6 +68,7 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
         profileSettingTextView.setOnClickListener(this);
         quitTextView.setOnClickListener(this);
         myCollectionTextView.setOnClickListener(this);
+        classManageTextView.setOnClickListener(this);
         Glide.with(getActivity()).load(CacheTask.getInstance().getPortrait()).into(new SimpleTarget<GlideDrawable>() {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
@@ -165,7 +167,15 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
                 getActivity().finish();
                 break;
             case R.id.mine_my_collection://我的收藏
-                startActivity(new Intent(getActivity(),MyCollectionsActivity.class));
+                startActivity(new Intent(getActivity(), MyCollectionsActivity.class));
+                break;
+            case R.id.mine_class_manage:
+                if (CacheTask.getInstance().getUserRole().equals("2") || CacheTask.getInstance().getUserRole().equals("3")) {
+                    startActivity(new Intent(getActivity(), ClassManageActivity.class));
+                } else {
+                    NToast.shortToast(getActivity(), "只有老师和学校才能进行课程发布和管理哦,快来加入吧~^_^");
+                }
+
                 break;
             default:
                 new ImagePicker.Builder(getActivity())

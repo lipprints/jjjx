@@ -106,6 +106,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".activity.ClassManageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".activity.UploadExamineActivity"
             android:screenOrientation="portrait" />
         <activity
