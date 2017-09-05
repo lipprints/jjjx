@@ -1,7 +1,6 @@
 package com.jjjx;
 
 
-import static com.baidu.location.h.j.p;
 
 /**
  * Created by AMing on 17/5/7.
@@ -14,27 +13,10 @@ public class Constants {
 
     public static final String DOMAIN = "http://47.93.217.163:8080/";
 
-    /**
-     * 参数:
-     * <p>
-     * name : mobile or email
-     * <p>
-     * pwd
-     */
     public static final String LOGIN_URL = "app/login";
-    /**
-     * 参数:
-     * <p>
-     * flag : 0 注册 1 找回密码
-     * <p>
-     * mobile or email
-     * <p>
-     * pwd
-     */
+
     public static final String REGIST_URL = "app/regist";
-    /**
-     * mobile or email
-     */
+
     public static final String SEND_CODE = "app/checkCaptcha";
 
     public static final String GET_RONGCLOUD_TOKEN = "app/getToken";
@@ -70,11 +52,31 @@ public class Constants {
 
     public static final String GET_USER_PROFILE = "app/queryUserAllDiscover"; //查询用户详情 包含(1 用户信息 2 是否关注 3 发布的课程 4 发现)
 
+    public static final String SORT_BY_SENIORITY = "app/sortBySeniority"; //教龄排序
+
+    public static final String SORT_BY_CLASS_FEE_ASC = "app/sortByClassFeeASC"; //课次价格又低到高
+
+    public static final String SORT_BY_CLASS_FEE_DESC = "app/sortByClassFeeDESC"; //课次价格又高到低
+
+    public static final String CHOICE_TO_TEACHER = "app/choiceToTeacher"; //筛选教师
+
+    public static final String CHOICE_TO_SCHOOL = "app/choiceToSchool";//筛选学校
+
+    public static final String MANAGE_FOR_COURSE = "app/manageForCourse" ; // 我的课程列表
+
+    public static final String DELETE_COURSE_BY_ID = "app/deleteCourseById"; //根据课程id删除课程
+
+    public static final String QUERY_FOR_CITY_WIDE = "app/queryForCityWide"; //发现同城
 
     /**
-     * http://47.93.217.163:8080/app/collectCourse 	输入参数：user_id,course_id
-     * URL：http://47.93.217.163:8080/app/queryMyCollections 	输入参数：user_id
-     * http://47.93.217.163:8080/app/queryUserAllDiscover?user_id=100012
+     * http://47.93.217.163:8080/app/sortByClassFeeASC?page=0
+     * http://47.93.217.163:8080/app/sortBySeniority?page=0
+     * http://47.93.217.163:8080/app/sortByClassFeeDESC 
+     * http://47.93.217.163:8080/app/choiceToTeacher?page=0
+     * http://47.93.217.163:8080/app/choiceToSchool 
+     * http://47.93.217.163:8080/app/manageForCourse 
+     * http://47.93.217.163:8080/app/deleteCourseById?id=100047
+     * http://47.93.217.163:8080/app/queryForCityWide?city=北京
      */
 
 }

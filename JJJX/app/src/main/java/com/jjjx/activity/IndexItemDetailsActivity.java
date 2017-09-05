@@ -147,7 +147,7 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
                         return;
                     }
                     Intent intent = new Intent(IndexItemDetailsActivity.this, UserProfileActivity.class);
-                    intent.putExtra("userId", entity.getUser_id());
+                    intent.putExtra("userId", String.valueOf(entity.getUser_id()));
                     startActivity(intent);
 //                    RongIM.getInstance().startPrivateChat(IndexItemDetailsActivity.this, String.valueOf(entity.getUser_id()), entity.getName());
                 }

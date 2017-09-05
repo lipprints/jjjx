@@ -48,6 +48,7 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
     ListItemTextView verifyTextView;
     ListItemTextView profileSettingTextView;
     ListItemTextView myCollectionTextView;
+    ListItemTextView classManageTextView;
     TextView userName;
 
     @Nullable
@@ -59,6 +60,7 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
         verifyTextView = (ListItemTextView) v.findViewById(R.id.mine_i_want_verify);
         profileSettingTextView = (ListItemTextView) v.findViewById(R.id.mine_profile_setting);
         myCollectionTextView = (ListItemTextView) v.findViewById(R.id.mine_my_collection);
+        classManageTextView = (ListItemTextView) v.findViewById(R.id.mine_class_manage);
         userName = (TextView) v.findViewById(R.id.jx_user_name);
         circleImageView.setOnClickListener(this);
         verifyTextView.setOnClickListener(this);

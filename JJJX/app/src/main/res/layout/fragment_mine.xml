@@ -50,6 +50,7 @@
 
 
             <com.jjjx.widget.ListItemTextView
+                android:id="@+id/mine_class_manage"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 app:tv_list_item_allow_arrow="true"

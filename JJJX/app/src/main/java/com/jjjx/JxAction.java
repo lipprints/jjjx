@@ -19,6 +19,8 @@ import com.jjjx.utils.AMUtils;
 import com.jjjx.utils.CacheTask;
 import com.orhanobut.logger.Logger;
 
+import static com.baidu.location.h.j.p;
+
 /**
  * Created by AMing on 17/5/7.
  * Company RongCloud
@@ -173,6 +175,132 @@ public class JxAction extends BaseAction {
     }
 //    user_id,name ,gender 男女,age 年龄,occupation 职业,seniority 教龄,courses 课程,teacher_amount 教师人数,average_age 平均年龄
 
+    /**
+     * 首页教龄
+     *
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    public IndexDataResponse requestSortBySeniority(int page) throws Exception {
+        IndexDataResponse response = new IndexDataResponse();
+        String url = getURL(Constants.SORT_BY_SENIORITY + "?page=" + page + "&lng2=" + CacheTask.getInstance().getLoginLng() + "&lat2=" + CacheTask.getInstance().getLoginLat());
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, IndexDataResponse.class);
+        }
+        return response;
+    }
+
+
+    /**
+     * 首页课次低到高
+     *
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    public IndexDataResponse requestSortByClassFeeASC(int page) throws Exception {
+        IndexDataResponse response = new IndexDataResponse();
+        String url = getURL(Constants.SORT_BY_CLASS_FEE_ASC + "?page=" + page + "&lng2=" + CacheTask.getInstance().getLoginLng() + "&lat2=" + CacheTask.getInstance().getLoginLat());
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, IndexDataResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 首页课次高到低
+     *
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    public IndexDataResponse requestSortByClassFeeDESC(int page) throws Exception {
+        IndexDataResponse response = new IndexDataResponse();
+        String url = getURL(Constants.SORT_BY_CLASS_FEE_DESC + "?page=" + page + "&lng2=" + CacheTask.getInstance().getLoginLng() + "&lat2=" + CacheTask.getInstance().getLoginLat());
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, IndexDataResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 筛选老师
+     *
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    public IndexDataResponse requestChoiceToTeacher(int page) throws Exception {
+        IndexDataResponse response = new IndexDataResponse();
+        String url = getURL(Constants.CHOICE_TO_TEACHER + "?page=" + page + "&lng2=" + CacheTask.getInstance().getLoginLng() + "&lat2=" + CacheTask.getInstance().getLoginLat());
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, IndexDataResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 筛选学校
+     *
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    public IndexDataResponse requestChoiceToSchool(int page) throws Exception {
+        IndexDataResponse response = new IndexDataResponse();
+        String url = getURL(Constants.CHOICE_TO_SCHOOL + "?page=" + page + "&lng2=" + CacheTask.getInstance().getLoginLng() + "&lat2=" + CacheTask.getInstance().getLoginLat());
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, IndexDataResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 获取我的课程数据列表
+     *
+     * @param user_id
+     * @return
+     * @throws Exception
+     */
+    public IndexDataResponse getClassManageList(String user_id) throws Exception {
+        IndexDataResponse response = new IndexDataResponse();
+        String url = getURL(Constants.MANAGE_FOR_COURSE + "?user_id=" + user_id);
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, IndexDataResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 根据课程 id 删除课程
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public InformationResponse deleteCourseById(String id) throws Exception {
+        InformationResponse response = new InformationResponse();
+        String url = getURL(Constants.DELETE_COURSE_BY_ID + "?id=" + id);
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, InformationResponse.class);
+        }
+        return response;
+    }
 
     /**
      * 设置无身份的用户信息
@@ -442,6 +570,25 @@ public class JxAction extends BaseAction {
     }
 
     /**
+     * 发现同城数据
+     *
+     * @param city
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    public FindDataResponse getFindByCity(String city, int page) throws Exception {
+        FindDataResponse response = new FindDataResponse();
+        String url = getURL(Constants.QUERY_FOR_CITY_WIDE + "?page=" + page + "&city=" + city);
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, FindDataResponse.class);
+        }
+        return response;
+    }
+
+    /**
      * 需要依赖登录的发现数据
      *
      * @param page
@@ -483,7 +630,7 @@ public class JxAction extends BaseAction {
      */
     public UserProfileResponse getUserProfile(String user_id) throws Exception {
         UserProfileResponse response = new UserProfileResponse();
-        String url = getURL(Constants.GET_USER_PROFILE + "?user_id=" + user_id);
+        String url = getURL(Constants.GET_USER_PROFILE + "?user_id=" + CacheTask.getInstance().getUserId() + "&byuser_id=" + user_id);
         String result = httpManager.get(url);
         if (!TextUtils.isEmpty(result)) {
             Logger.json(result);
@@ -491,4 +638,5 @@ public class JxAction extends BaseAction {
         }
         return response;
     }
+
 }
