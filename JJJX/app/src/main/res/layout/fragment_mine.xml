@@ -68,7 +68,9 @@
                 app:tv_list_item_title="我的点赞"
                 app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
 
-            <View style="@style/rce_horizontal_light_thin_divider" />
+            <View
+                style="@style/rce_horizontal_light_thin_divider"
+                android:visibility="gone" />
 
 
             <com.jjjx.widget.ListItemTextView
