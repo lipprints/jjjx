@@ -37,6 +37,7 @@ public class UserProfileActivity extends BaseActivity implements ViewPager.OnPag
     String byuser_id;
     private ViewPager mViewPager;
     private List<Fragment> mFragment = new ArrayList<>();
+    private TextView findTopTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class UserProfileActivity extends BaseActivity implements ViewPager.OnPag
             }
         });
         mViewPager = (ViewPager) findViewById(R.id.user_profile_viewpager);
-
+        findTopTextView = (TextView) findViewById(R.id.user_profile_top_text);
 
     }
 
@@ -108,6 +109,7 @@ public class UserProfileActivity extends BaseActivity implements ViewPager.OnPag
 
                 if (CacheTask.getInstance().getUserRole().equals("2") || CacheTask.getInstance().getUserRole().equals("3")) {
                     mFragment.add(ProfileClassFragment.newInstance(response.getPara().getCourseRelease())); //课程的Fragment
+                    findTopTextView.setVisibility(View.VISIBLE);
                 }
                 mFragment.add(ProfileFindFragment.newInstance(response.getPara().getDiscoverInfo()));//发现的 Fragment
                 FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {

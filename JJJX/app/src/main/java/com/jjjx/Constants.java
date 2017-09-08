@@ -1,6 +1,7 @@
 package com.jjjx;
 
 
+import static com.baidu.location.h.j.p;
 
 /**
  * Created by AMing on 17/5/7.
@@ -33,9 +34,11 @@ public class Constants {
 
     public static final String INDEX_ALL = "app/queryAllCourseRelease"; //首页数据
 
-    public static final String ADD_ATTENTION_INFO = "add/addAttentionInfo";
+    public static final String ADD_ATTENTION_INFO = "app/addAttentionInfo"; //关注
 
-    public static final String DELETE_ATTENTION_INFO = "add/deleteAttentionInfo";
+    public static final String DELETE_ATTENTION_INFO = "app/deleteAttentionInfo"; //取消关注
+
+    public static final String QUERY_MY_ATTENTIONINFO = "app/queryMyAttentionInfo";
 
     public static final String SEARCH = "app/queryCourseReleaseByWhere";
 
@@ -77,6 +80,7 @@ public class Constants {
      * http://47.93.217.163:8080/app/manageForCourse 
      * http://47.93.217.163:8080/app/deleteCourseById?id=100047
      * http://47.93.217.163:8080/app/queryForCityWide?city=北京
+     * http://47.93.217.163:8080/app/queryMyAttentionInfo?user_id=100005
      */
 
 }

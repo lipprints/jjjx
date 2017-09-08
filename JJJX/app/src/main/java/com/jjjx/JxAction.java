@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.jjjx.data.BaseAction;
 import com.jjjx.data.okhttp.RequestParams;
+import com.jjjx.data.response.AttentionInfoListResponse;
 import com.jjjx.data.response.FindDataResponse;
 import com.jjjx.data.response.GetRongCloudTokenResponse;
 import com.jjjx.data.response.GetVerifyCodeResponse;
@@ -19,6 +20,7 @@ import com.jjjx.utils.AMUtils;
 import com.jjjx.utils.CacheTask;
 import com.orhanobut.logger.Logger;
 
+import static com.baidu.location.h.j.e;
 import static com.baidu.location.h.j.p;
 
 /**
@@ -165,7 +167,12 @@ public class JxAction extends BaseAction {
      */
     public IndexDataResponse requestIndexData(int page) throws Exception {
         IndexDataResponse response = new IndexDataResponse();
-        String url = getURL(Constants.INDEX_ALL + "?page=" + page + "&lng2=" + CacheTask.getInstance().getLoginLng() + "&lat2=" + CacheTask.getInstance().getLoginLat());
+        String url;
+        if (TextUtils.isEmpty(CacheTask.getInstance().getUserId())) {
+            url = getURL(Constants.INDEX_ALL + "?page=" + page + "&lng2=" + CacheTask.getInstance().getLoginLng() + "&lat2=" + CacheTask.getInstance().getLoginLat());
+        } else {
+            url = getURL(Constants.INDEX_ALL + "?page=" + page + "&lng2=" + CacheTask.getInstance().getLoginLng() + "&lat2=" + CacheTask.getInstance().getLoginLat() + "&user_id=" + CacheTask.getInstance().getUserId());
+        }
         String result = httpManager.get(url);
         if (!TextUtils.isEmpty(result)) {
             Logger.json(result);
@@ -421,6 +428,23 @@ public class JxAction extends BaseAction {
         if (!TextUtils.isEmpty(result)) {
             Logger.json(result);
             response = jsonToBean(result, InformationResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 我关注的列表
+     *
+     * @return
+     * @throws Exception
+     */
+    public AttentionInfoListResponse getMyAttentionInfoList() throws Exception {
+        AttentionInfoListResponse response = new AttentionInfoListResponse();
+        String url = getURL(Constants.QUERY_MY_ATTENTIONINFO + "?user_id=" + CacheTask.getInstance().getUserId());
+        String result = httpManager.get(url);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, AttentionInfoListResponse.class);
         }
         return response;
     }

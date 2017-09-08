@@ -61,16 +61,14 @@
 
 
             <com.jjjx.widget.ListItemTextView
+                android:id="@+id/mine_my_follow_list"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:visibility="gone"
                 app:tv_list_item_allow_arrow="true"
-                app:tv_list_item_title="我的点赞"
+                app:tv_list_item_title="我的关注"
                 app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
 
-            <View
-                style="@style/rce_horizontal_light_thin_divider"
-                android:visibility="gone" />
+            <View style="@style/rce_horizontal_light_thin_divider" />
 
 
             <com.jjjx.widget.ListItemTextView

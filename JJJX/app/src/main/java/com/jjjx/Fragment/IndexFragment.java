@@ -42,7 +42,7 @@ import java.util.List;
  * Created by AMing on 17/5/8.
  * Company RongCloud
  */
-public class IndexFragment extends BaseFragment implements OnBDLocationListener, View.OnClickListener, AdapterView.OnItemClickListener, PublishActivity.RefreshDataListener {
+public class IndexFragment extends BaseFragment implements OnBDLocationListener, View.OnClickListener, AdapterView.OnItemClickListener, PublishActivity.RefreshDataListener, IndexItemDetailsActivity.RefreshListener {
     private List<String> images;
     private TextView locationTextView;
     private ListView indexListView;
@@ -144,6 +144,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
         mSmartRefreshUtil = new SmartRefreshUtil(mSmartRefreshLayout);
         App.getInstance().addOnBDLocationObserver(this);
         PublishActivity.setRefreshDataListener(this);
+        IndexItemDetailsActivity.setRefreshListener(this);
         request(GET_INDEX);
 
         AppProgressDialog.show(getContext());
@@ -281,4 +282,8 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
         }
     }
 
+    @Override
+    public void onRefresh() {
+        refresh();
+    }
 }

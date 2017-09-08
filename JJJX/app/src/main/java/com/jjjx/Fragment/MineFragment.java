@@ -1,8 +1,10 @@
 package com.jjjx.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.jjjx.R;
 import com.jjjx.activity.ClassManageActivity;
 import com.jjjx.activity.LoginActivity;
 import com.jjjx.activity.MyCollectionsActivity;
+import com.jjjx.activity.MyFollowListActivity;
 import com.jjjx.activity.ProfileSettingActivity;
 import com.jjjx.activity.VerifyRoleActivity;
 import com.jjjx.activity.WaitingVerifyActivity;
@@ -37,6 +40,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.baidu.location.h.j.n;
 
 /**
  * Created by AMing on 17/5/8.
@@ -50,6 +54,7 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
     ListItemTextView profileSettingTextView;
     ListItemTextView myCollectionTextView;
     ListItemTextView classManageTextView;
+    ListItemTextView myFollowListTextView;
     TextView userName;
 
     @Nullable
@@ -62,6 +67,7 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
         profileSettingTextView = (ListItemTextView) v.findViewById(R.id.mine_profile_setting);
         myCollectionTextView = (ListItemTextView) v.findViewById(R.id.mine_my_collection);
         classManageTextView = (ListItemTextView) v.findViewById(R.id.mine_class_manage);
+        myFollowListTextView = (ListItemTextView) v.findViewById(R.id.mine_my_follow_list);
         userName = (TextView) v.findViewById(R.id.jx_user_name);
         circleImageView.setOnClickListener(this);
         verifyTextView.setOnClickListener(this);
@@ -69,6 +75,7 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
         quitTextView.setOnClickListener(this);
         myCollectionTextView.setOnClickListener(this);
         classManageTextView.setOnClickListener(this);
+        myFollowListTextView.setOnClickListener(this);
         Glide.with(getActivity()).load(CacheTask.getInstance().getPortrait()).into(new SimpleTarget<GlideDrawable>() {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
@@ -162,9 +169,26 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
                 startActivity(new Intent(getActivity(), ProfileSettingActivity.class));
                 break;
             case R.id.mine_quit:
-                CacheTask.getInstance().clearAllCache();
-                NToast.shortToast(getActivity(), "退出成功");
-                getActivity().finish();
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("提示")
+                        .setMessage("是否退出应用?")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                CacheTask.getInstance().clearAllCache();
+                                NToast.shortToast(getActivity(), "退出成功");
+                                getActivity().finish();
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .show();
+
                 break;
             case R.id.mine_my_collection://我的收藏
                 startActivity(new Intent(getActivity(), MyCollectionsActivity.class));
@@ -175,7 +199,9 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
                 } else {
                     NToast.shortToast(getActivity(), "只有老师和学校才能进行课程发布和管理哦,快来加入吧~^_^");
                 }
-
+                break;
+            case R.id.mine_my_follow_list:
+                startActivity(new Intent(getActivity(), MyFollowListActivity.class));
                 break;
             default:
                 new ImagePicker.Builder(getActivity())

@@ -107,6 +107,7 @@ public class IndexDataResponse {
             private String teachingDate;
             private String contactNumber;
             private String teachingAddress;
+
             /**
              * 该详情 item id
              */
@@ -116,6 +117,7 @@ public class IndexDataResponse {
             private String seniority;
             private String distance;
             private String course_id;
+            private String tab;
 
             protected ComplaintsEntity(Parcel in) {
                 role = in.readString();
@@ -137,6 +139,7 @@ public class IndexDataResponse {
                 seniority = in.readString();
                 distance = in.readString();
                 course_id = in.readString();
+                tab = in.readString();
             }
 
             @Override
@@ -160,6 +163,7 @@ public class IndexDataResponse {
                 dest.writeString(seniority);
                 dest.writeString(distance);
                 dest.writeString(course_id);
+                dest.writeString(tab);
             }
 
             @Override
@@ -324,6 +328,14 @@ public class IndexDataResponse {
 
             public void setHead_portrait(String head_portrait) {
                 this.head_portrait = head_portrait;
+            }
+
+            public String getTab() {
+                return tab;
+            }
+
+            public void setTab(String tab) {
+                this.tab = tab;
             }
 
             public String getDistance() {

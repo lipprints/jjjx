@@ -13,12 +13,14 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jjjx.JxAction;
 import com.jjjx.R;
 import com.jjjx.adapter.IndexItemAdapter;
 import com.jjjx.data.async.AsyncTaskManager;
 import com.jjjx.data.async.OnDataListener;
 import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
+import com.jjjx.fragment.IndexFragment;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.like.LikeButton;
@@ -51,6 +53,8 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
     private View headView;
     private View footView;
     private IndexItemAdapter adapter;
+    private SimpleDraweeView simpleDraweeView;
+    private TextView name;
     private LikeButton likeButton;
     private TextView chatButton;
 
@@ -70,6 +74,22 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
         itemListView.setAdapter(adapter);
         entity = getIntent().getParcelableExtra("indexItemData");
         if (entity != null) {
+            simpleDraweeView = (SimpleDraweeView) findViewById(R.id.index_item_user_head);
+            name = (TextView) findViewById(R.id.index_item_user_name);
+            simpleDraweeView.setImageURI(entity.getHead_portrait());
+            simpleDraweeView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!CacheTask.getInstance().isLogin()) {
+                        NToast.shortToast(IndexItemDetailsActivity.this, "请登录才能做后续操作");
+                        return;
+                    }
+                    Intent intent = new Intent(IndexItemDetailsActivity.this, UserProfileActivity.class);
+                    intent.putExtra("userId", String.valueOf(entity.getUser_id()));
+                    startActivity(intent);
+                }
+            });
+            name.setText(entity.getName());
             if (entity.getVideo() != null && !TextUtils.isEmpty(entity.getVideo())) {
                 mJcVideoPlayerStandard = (JCVideoPlayerStandard) headView.findViewById(R.id.jc_video);
                 mJcVideoPlayerStandard.setVisibility(View.VISIBLE);
@@ -101,6 +121,9 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(int requestCode, Object result) {
                             NToast.shortToast(IndexItemDetailsActivity.this, "收藏成功");
+                            if (mRefreshListener != null) {
+                                mRefreshListener.onRefresh();
+                            }
                         }
 
                         @Override
@@ -127,6 +150,9 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(int requestCode, Object result) {
                             NToast.shortToast(IndexItemDetailsActivity.this, "已取消收藏");
+                            if (mRefreshListener != null) {
+                                mRefreshListener.onRefresh();
+                            }
                         }
 
                         @Override
@@ -138,7 +164,14 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
             });
             if (!CacheTask.getInstance().isLogin()) {
                 likeButton.setVisibility(View.GONE);
+            } else {
+                likeButton.setVisibility(View.VISIBLE);
+                if (entity.getTab().equals("1")) {
+                    likeButton.setLiked(true);
+                }
             }
+
+
             chatButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -146,10 +179,7 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
                         NToast.shortToast(IndexItemDetailsActivity.this, "请登录才能做后续操作");
                         return;
                     }
-                    Intent intent = new Intent(IndexItemDetailsActivity.this, UserProfileActivity.class);
-                    intent.putExtra("userId", String.valueOf(entity.getUser_id()));
-                    startActivity(intent);
-//                    RongIM.getInstance().startPrivateChat(IndexItemDetailsActivity.this, String.valueOf(entity.getUser_id()), entity.getName());
+                    RongIM.getInstance().startPrivateChat(IndexItemDetailsActivity.this, String.valueOf(entity.getUser_id()), entity.getName());
                 }
             });
         }
@@ -235,6 +265,16 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
+    }
+
+    private static RefreshListener mRefreshListener;
+
+    public interface RefreshListener {
+        void onRefresh();
+    }
+
+    public static void setRefreshListener(RefreshListener refreshListener) {
+        mRefreshListener = refreshListener;
     }
 
 }
