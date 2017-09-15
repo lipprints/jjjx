@@ -5,19 +5,23 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jjjx.R;
 import com.jjjx.adapter.CommentAdapter;
 import com.jjjx.data.response.AddCommentResponse;
 import com.jjjx.data.response.CommentListResponse;
 import com.jjjx.data.response.FindDataResponse;
+import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.jjjx.widget.commentdialog.BottomDialog;
@@ -40,7 +44,7 @@ public class FindImageActivity extends BaseActivity {
     private static final int ADD_COMMENT = 211;
     private static final int GET_COMMENT_LIST = 212;
 
-    SimpleDraweeView simpleDraweeView;
+    ImageView imageView;
     TextView commentButton;
 
     private EditText mEditText;
@@ -54,6 +58,7 @@ public class FindImageActivity extends BaseActivity {
     private List<CommentListResponse.ParaEntity.DiscoverInfoEntity> data = new ArrayList<>();
     private ListView commentList;
     private CommentAdapter adapter;
+    private View headView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +66,9 @@ public class FindImageActivity extends BaseActivity {
         setContentView(R.layout.activity_find_image);
         setTitle("发现详情");
         entity = getIntent().getParcelableExtra("FindImageEntity");
-        simpleDraweeView = (SimpleDraweeView) findViewById(R.id.find_image);
-        simpleDraweeView.setImageURI(entity.getPicture());
+
         commentButton = (TextView) findViewById(R.id.comment_button);
+        commentButton.setVisibility(CacheTask.getInstance().isLogin() ? View.VISIBLE : View.GONE);
         commentList = (ListView) findViewById(R.id.comment_list);
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +96,11 @@ public class FindImageActivity extends BaseActivity {
             }
         });
         mSmartRefreshUtil = new SmartRefreshUtil(mSmartRefreshLayout);
+        headView = LayoutInflater.from(this).inflate(R.layout.find_image_head_view, commentList, false);
+        imageView = (ImageView) headView.findViewById(R.id.find_image);
+        Glide.with(this).load(entity.getPicture()).into(imageView);
         adapter = new CommentAdapter(data, mContext);
+        commentList.addHeaderView(headView);
         commentList.setAdapter(adapter);
         request(GET_COMMENT_LIST);
     }
@@ -187,16 +196,16 @@ public class FindImageActivity extends BaseActivity {
                 if (response.getPara().getDiscoverInfo().size() > 0) {
                     if (isRefresh) {//是下拉刷新
                         adapter.refreshAdapter(response.getPara().getDiscoverInfo());
+                        if (isMoveList) {
+                            new android.os.Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    commentList.smoothScrollToPosition(1);
+                                }
+                            }, 300);
+                        }
                     } else {//是上拉加载
                         adapter.addDataAdapter(response.getPara().getDiscoverInfo());
-                    }
-                    if (isMoveList) {
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                commentList.smoothScrollToPosition(0);
-                            }
-                        }, 300);
                     }
                     mSmartRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_SUCCESS);
                 } else {
