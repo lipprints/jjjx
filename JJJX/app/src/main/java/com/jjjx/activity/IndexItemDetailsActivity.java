@@ -14,13 +14,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jjjx.App;
 import com.jjjx.JxAction;
 import com.jjjx.R;
 import com.jjjx.adapter.IndexItemAdapter;
 import com.jjjx.data.async.AsyncTaskManager;
 import com.jjjx.data.async.OnDataListener;
 import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
-import com.jjjx.fragment.IndexFragment;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.like.LikeButton;
@@ -120,10 +120,15 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
 
                         @Override
                         public void onSuccess(int requestCode, Object result) {
-                            NToast.shortToast(IndexItemDetailsActivity.this, "收藏成功");
-                            if (mRefreshListener != null) {
-                                mRefreshListener.onRefresh();
-                            }
+                            App.applicationHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    NToast.shortToast(IndexItemDetailsActivity.this, "收藏成功");
+                                    if (mRefreshListener != null) {
+                                        mRefreshListener.onRefresh();
+                                    }
+                                }
+                            });
                         }
 
                         @Override
@@ -149,10 +154,16 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
 
                         @Override
                         public void onSuccess(int requestCode, Object result) {
-                            NToast.shortToast(IndexItemDetailsActivity.this, "已取消收藏");
-                            if (mRefreshListener != null) {
-                                mRefreshListener.onRefresh();
-                            }
+                            App.applicationHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    NToast.shortToast(IndexItemDetailsActivity.this, "已取消收藏");
+                                    if (mRefreshListener != null) {
+                                        mRefreshListener.onRefresh();
+                                    }
+                                }
+                            });
+
                         }
 
                         @Override

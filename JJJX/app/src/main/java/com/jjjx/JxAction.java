@@ -5,7 +5,9 @@ import android.text.TextUtils;
 
 import com.jjjx.data.BaseAction;
 import com.jjjx.data.okhttp.RequestParams;
+import com.jjjx.data.response.AddCommentResponse;
 import com.jjjx.data.response.AttentionInfoListResponse;
+import com.jjjx.data.response.CommentListResponse;
 import com.jjjx.data.response.FindDataResponse;
 import com.jjjx.data.response.GetRongCloudTokenResponse;
 import com.jjjx.data.response.GetVerifyCodeResponse;
@@ -659,6 +661,49 @@ public class JxAction extends BaseAction {
         if (!TextUtils.isEmpty(result)) {
             Logger.json(result);
             response = jsonToBean(result, UserProfileResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 添加评论
+     *
+     * @param pid 发现数据的 id
+     * @return
+     * @throws Exception
+     */
+    public AddCommentResponse addComment(String pid, String content) throws Exception {
+        AddCommentResponse response = new AddCommentResponse();
+        String url = getURL(Constants.ADD_COMMENT);
+        RequestParams params = getRequestParams();
+        params.put("user_id", CacheTask.getInstance().getUserId());
+        params.put("pid", pid);
+        params.put("content", content);
+        String result = httpManager.post(url, params);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, AddCommentResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 获取评论列表
+     *
+     * @param pid  发现数据的 id
+     * @param page 分页
+     * @return
+     */
+    public CommentListResponse getCommentList(String pid, String page) throws Exception {
+        CommentListResponse response = new CommentListResponse();
+        String url = getURL(Constants.GET_COMMENT_LIST);
+        RequestParams params = getRequestParams();
+        params.put("page", page);
+        params.put("pid", pid);
+        String result = httpManager.post(url, params);
+        if (!TextUtils.isEmpty(result)) {
+            Logger.json(result);
+            response = jsonToBean(result, CommentListResponse.class);
         }
         return response;
     }

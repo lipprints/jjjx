@@ -71,6 +71,10 @@ public class Constants {
 
     public static final String QUERY_FOR_CITY_WIDE = "app/queryForCityWide"; //发现同城
 
+    public static final String ADD_COMMENT = "app/addComment";
+
+    public static final String GET_COMMENT_LIST = "app/getCommentList";
+
     /**
      * http://47.93.217.163:8080/app/sortByClassFeeASC?page=0
      * http://47.93.217.163:8080/app/sortBySeniority?page=0
