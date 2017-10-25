@@ -69,7 +69,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 GetVerifyCodeResponse response = (GetVerifyCodeResponse) result;
                 if (response.getHead().getCode().equals(String.valueOf(10000))) {
                     NToast.shortToast(this, "请求成功,请注意查收验证码");
-                } else if (response.getHead().getCode().equals("E0008")) {
+                } else if ("E0008".equals(response.getHead().getCode())) {
                     NToast.shortToast(this, "3 分钟内不能重复获取验证码");
                 }
                 break;
@@ -83,9 +83,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     setResult(99,intent);
                     finish();
 
-                } else if (registerResponse.getHead().getCode().equals("E0001")) {
+                } else if ("E0001".equals(registerResponse.getHead().getCode())) {
                     //两次密码不一致
-                } else if (registerResponse.getHead().getCode().equals("E0004")) {
+                } else if ("E0004".equals(registerResponse.getHead().getCode())) {
                     //请先发送验证码
                 }
                 NToast.shortToast(this, registerResponse.getHead().getMsg());

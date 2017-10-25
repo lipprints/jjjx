@@ -99,11 +99,13 @@ public class CityFragment extends XBaseLazyFragment {
                 mRecyclerView.setAdapter(mAdapter);
             }
             //如果数据为0，开启自动刷新
-            if (mAdapter.getDatas().size() == 0)
+            if (mAdapter.getDatas().size() == 0) {
                 mSmartRefreshLayout.autoRefresh();
+            }
             //每次在这里需要允许glide加载图片
-            if (getContext() != null && mGlideManage != null)
+            if (getContext() != null && mGlideManage != null) {
                 mGlideManage.getRequestManager().resumeRequests();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -112,10 +114,12 @@ public class CityFragment extends XBaseLazyFragment {
 
     @Override
     public String closeFragment() {
-        if (mAdapter != null)
+        if (mAdapter != null) {
             mAdapter.removeDataAll();
-        if (mRecyclerView != null)
+        }
+        if (mRecyclerView != null) {
             mRecyclerView.removeAllViews();
+        }
         mAdapter = null;
         mGlideManage = null;
         mRefreshUtil = null;

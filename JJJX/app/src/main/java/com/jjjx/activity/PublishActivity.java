@@ -157,7 +157,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
             try {
                 String filePath = data.getStringExtra("videoUrl");
                 Log.e("lzf_video", filePath);
-                if (filePath != null && !filePath.equals("")) {
+                if (filePath != null && !"".equals(filePath)) {
                     if (filePath.startsWith("file://")) {
                         filePath = data.getStringExtra("videoUrl").substring(7, filePath.length());
                         Log.e("video", "视频保存在：" + filePath);

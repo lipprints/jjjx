@@ -112,6 +112,7 @@ public class WheelView extends ScrollView {
 
         scrollerTask = new Runnable() {
 
+            @Override
             public void run() {
 
                 int newY = getScrollY();

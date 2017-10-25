@@ -147,8 +147,9 @@ public class ActivityPageManager {
 		for (int i = 0; i < nrOfChildren; i++) {
 			View view = viewGroup.getChildAt(i);
 			unbindViewReferences(view);
-			if (view instanceof ViewGroup)
-				unbindViewGroupReferences((ViewGroup) view);
+			if (view instanceof ViewGroup) {
+                unbindViewGroupReferences((ViewGroup) view);
+            }
 		}
 		try {
 			viewGroup.removeAllViews();

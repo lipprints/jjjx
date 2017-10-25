@@ -183,7 +183,7 @@ public class FindImageActivity extends BaseActivity {
     public void onSuccess(int requestCode, Object result) {
         if (requestCode == ADD_COMMENT) {
             AddCommentResponse response = (AddCommentResponse) result;
-            if (response.getHead().getCode().equals("S0009")) {
+            if ("S0009".equals(response.getHead().getCode())) {
                 NToast.shortToast(mContext, "评论成功");
                 isRefresh = true;
                 mPageIndex = 0;
@@ -192,7 +192,7 @@ public class FindImageActivity extends BaseActivity {
             }
         } else if (requestCode == GET_COMMENT_LIST) {
             CommentListResponse response = (CommentListResponse) result;
-            if (response.getHead().getCode().equals("10000")) {
+            if ("10000".equals(response.getHead().getCode())) {
                 if (response.getPara().getDiscoverInfo().size() > 0) {
                     if (isRefresh) {//是下拉刷新
                         adapter.refreshAdapter(response.getPara().getDiscoverInfo());

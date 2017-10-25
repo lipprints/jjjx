@@ -85,7 +85,7 @@ public class SplashActivity extends BaseActivity {
         super.onSuccess(requestCode, result);
         if (requestCode == GET_INDEX_DATA && result != null) {
             IndexDataResponse response = (IndexDataResponse) result;
-            if (response.getHead().getCode().equals("10000")) {
+            if ("10000".equals(response.getHead().getCode())) {
 //                List<IndexDataResponse.ParaEntity.ComplaintsEntity> indexData = response.getPara().getComplaints();
 //                ArrayList<IndexDataResponse.ParaEntity.ComplaintsEntity> arrayList = (ArrayList<IndexDataResponse.ParaEntity.ComplaintsEntity>) indexData;
 //                Intent intent = new Intent(SplashActivity.this, MainActivity.class);

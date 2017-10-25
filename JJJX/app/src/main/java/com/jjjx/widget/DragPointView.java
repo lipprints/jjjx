@@ -66,6 +66,7 @@ public class DragPointView extends TextView {
         }
     }
 
+    @Override
     @SuppressWarnings("deprecation")
     public void setBackgroundColor(int backgroundColor) {
         this.backgroundColor = backgroundColor;
@@ -106,7 +107,7 @@ public class DragPointView extends TextView {
                 if (scrollParent != null) {
                     scrollParent.requestDisallowInterceptTouchEvent(true);
                 }
-                int location[] = new int[2];
+                int[] location = new int[2];
                 getLocationOnScreen(location);
                 x = location[0] + (getWidth() / 2) - p[0];
                 y = location[1] + (getHeight() / 2) - p[1];
@@ -150,8 +151,9 @@ public class DragPointView extends TextView {
             } catch (ClassCastException e) {
                 return null;
             }
-            if (v == null)
+            if (v == null) {
                 return null;
+            }
             if (v instanceof AbsListView || v instanceof ScrollView || v instanceof ViewPager) {
                 return (ViewGroup) v;
             }

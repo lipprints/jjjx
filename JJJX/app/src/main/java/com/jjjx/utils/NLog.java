@@ -46,7 +46,9 @@ public class NLog {
 
 	private static void log(int priority, Throwable ex, String tag, Object... args) {
 		
-		if (isDebug == false) return;
+		if (isDebug == false) {
+            return;
+        }
 
 		String log = "";
 		if (ex == null) {

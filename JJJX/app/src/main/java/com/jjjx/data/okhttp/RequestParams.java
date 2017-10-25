@@ -74,8 +74,9 @@ public class RequestParams {
     public RequestParams(Object... keysAndValues) {
         init();
         int len = keysAndValues.length;
-        if (len % 2 != 0)
+        if (len % 2 != 0) {
             throw new IllegalArgumentException("Supplied arguments must be even");
+        }
         for (int i = 0; i < len; i += 2) {
             String key = String.valueOf(keysAndValues[i]);
             String val = String.valueOf(keysAndValues[i + 1]);
@@ -249,8 +250,11 @@ public class RequestParams {
             if(urlParams != null){
                 StringBuilder sb = new StringBuilder();
                 sb.append(url);
-                if (url.indexOf('&') > 0 || url.indexOf('?') > 0) sb.append("&");
-                else sb.append("?");
+                if (url.indexOf('&') > 0 || url.indexOf('?') > 0) {
+                    sb.append("&");
+                } else {
+                    sb.append("?");
+                }
                 for (ConcurrentHashMap.Entry<String, String> param : urlParams.entrySet()) {
                     String urlValue = URLEncoder.encode(param.getValue(), "UTF-8");
                     sb.append(param.getKey()).append("=").append(urlValue).append("&");

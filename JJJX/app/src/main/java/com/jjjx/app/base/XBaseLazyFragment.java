@@ -39,12 +39,14 @@ public abstract class XBaseLazyFragment extends BaseFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
             isVisible = true;
-            if (isVisible && isPrepared == true)
+            if (isVisible && isPrepared == true) {
                 onVisible();
+            }
         } else {
             isVisible = false;
-            if (!isVisible && isPrepared == true)
+            if (!isVisible && isPrepared == true) {
                 onInvisible();
+            }
         }
     }
 
@@ -69,14 +71,16 @@ public abstract class XBaseLazyFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //当布局加载完成，并且界面显示的时候才会调用
-        if (isPrepared && isVisible)
+        if (isPrepared && isVisible) {
             lazyLoad();// 数据处理
+        }
     }
 
 
     protected void onVisible() {//当fragment显示的时候
-        if (isPrepared && isVisible)
+        if (isPrepared && isVisible) {
             lazyLoad();// 数据处理
+        }
     }
 
     @LayoutRes

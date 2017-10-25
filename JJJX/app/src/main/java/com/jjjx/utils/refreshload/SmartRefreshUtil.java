@@ -58,18 +58,21 @@ public class SmartRefreshUtil {
      * 立即停止刷新加载
      */
     public void stopRefrshLoad() {
-        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isRefreshing())
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isRefreshing()) {
             mSmartRefreshLayout.finishRefresh(200);
-        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isLoading())
+        }
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isLoading()) {
             mSmartRefreshLayout.finishLoadmore(200);
+        }
     }
 
     /**
      * 立即停止刷新加载
      */
     public void stopRefrshLoad(int loadStatus) {
-        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isRefreshing())
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isRefreshing()) {
             mSmartRefreshLayout.finishRefresh();
+        }
         if (mSmartRefreshLayout != null && mSmartRefreshLayout.isLoading()) {
             switch (loadStatus){
                 case LOAD_NO:
@@ -92,10 +95,12 @@ public class SmartRefreshUtil {
      * 立即停止刷新加载
      */
     public void stopRefrshLoad(int refrshDelayed, int loadDelayed) {
-        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isRefreshing())
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isRefreshing()) {
             mSmartRefreshLayout.finishRefresh(refrshDelayed);
-        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isLoading())
+        }
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isLoading()) {
             mSmartRefreshLayout.finishLoadmore(loadDelayed);
+        }
 
     }
 

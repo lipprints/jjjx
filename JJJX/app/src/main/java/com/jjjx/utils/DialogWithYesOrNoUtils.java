@@ -64,6 +64,7 @@ public class DialogWithYesOrNoUtils {
         et_search = (EditText) layout.findViewById(R.id.searchC);
         et_search.setHint(hintText);
         dialog.setPositiveButton(OKText, new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int which) {
                 String s = et_search.getText().toString().trim();
                 callBack.executeEditEvent(s);
@@ -71,6 +72,7 @@ public class DialogWithYesOrNoUtils {
         });
 
         dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int which) {
 
             }

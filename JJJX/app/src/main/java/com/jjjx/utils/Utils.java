@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
@@ -89,30 +88,7 @@ public class Utils {
 
 
 
-    /**
-     * @param phoneNum
-     * @return
-     * @方法说明:截取带有+86和非数字的手机号码
-     * @方法名称:checkPhone
-     * @返回值:String
-     */
-    public static String checkPhone(String phoneNum) {
-        char[] phone = phoneNum.toCharArray();
-        String phoneStr = "";
-        for (int i = 0; i < phone.length; i++) {
-            // 验证是否是数字
-            Pattern pattern = Pattern.compile("[0-9]*");
-            if (pattern.matcher(phone[i] + "").matches()) {
-                // 如果是数字
-                phoneStr = phoneStr + phone[i];
-            }
-        }
-        if (phoneStr.indexOf("86") == 0) {
-            phoneStr = phoneStr.substring(2, phoneStr.length());
-        }
-        // 验证是否是正确的手机号码
-        return phoneStr;
-    }
+
 
     /**
      * @param loginId
@@ -154,8 +130,9 @@ public class Utils {
        // String telRegex = "^[1][3-8]\\d{9}$|^[0-9]\\d{7}$|^[0][9]\\d{8}$|^[6]([8|6])\\d{5}$";
         if(TextUtils.isEmpty(mobiles)){
             return false;
-        }else
+        }else {
             return mobiles.matches(telRegex);
+        }
     }
 
     /**
@@ -166,8 +143,9 @@ public class Utils {
         String cardRegex = "\\d{17}[\\d|x]|\\d{15}";
         if(TextUtils.isEmpty(card)){
             return false;
-        }else
+        }else {
             return card.matches(cardRegex);
+        }
     }
 
     /**
@@ -362,8 +340,9 @@ public class Utils {
         } else if (w < h && h > hh) {// 如果高度高的话根据宽度固定大小缩
             be = (int) (newOpts.outHeight / hh);
         }
-        if (be <= 0)
+        if (be <= 0) {
             be = 1;
+        }
         newOpts.inSampleSize = be;// 设置缩放比例
         // 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
@@ -636,8 +615,9 @@ public class Utils {
      * @返回 Bitmap
      */
     public static Bitmap matrixBitmap(Bitmap bitmap, String path) {
-        if (bitmap == null)
+        if (bitmap == null) {
             return null;
+        }
         int angle = getExifOrientation(path);
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
@@ -902,17 +882,20 @@ public class Utils {
             // 删除子文
             if (files[i].isFile()) {
                 flag = deleteFile(files[i].getAbsolutePath());
-                if (!flag)
+                if (!flag) {
                     break;
+                }
             } // 删除子目
             else {
                 flag = deleteDirectory(files[i].getAbsolutePath());
-                if (!flag)
+                if (!flag) {
                     break;
+                }
             }
         }
-        if (!flag)
+        if (!flag) {
             return false;
+        }
         // 删除当前目录
         if (dirFile.delete()) {
             return true;
@@ -980,8 +963,9 @@ public class Utils {
      */
     public static String getDate(String parten, Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat(parten);
-        if (date != null)
+        if (date != null) {
             return sdf.format(date);
+        }
         return "";
     }
 
@@ -1366,8 +1350,9 @@ public class Utils {
      * @返回 int
      */
     public static int toInt(Object obj) {
-        if (obj == null)
+        if (obj == null) {
             return 0;
+        }
         return toInt(obj.toString(), 0);
     }
 
@@ -1613,65 +1598,6 @@ public class Utils {
 
     }
 
-    /**
-     * @param tag1
-     * @param tag2
-     * @param value
-     * @param context
-     * @方法说明:保存参数，此方法没有被使 @方法名称:savaValue
-     * @返回 void
-     */
-    public static void savaValue(String tag1, String tag2, Object value,
-                                 Context context) {
-        SharedPreferences sp = context.getSharedPreferences(tag1 + "value",
-                context.MODE_PRIVATE);
-        if (value instanceof Boolean) {
-            sp.edit().putBoolean(tag1 + "value" + tag2, (Boolean) value)
-                    .commit();
-
-        } else if (value instanceof Integer || value instanceof Byte) {
-            sp.edit().putInt(tag1 + "value" + tag2, (Integer) value).commit();
-
-        } else if (value instanceof Long) {
-            sp.edit().putLong(tag1 + "value" + tag2, (Long) value).commit();
-        } else if (value instanceof Float) {
-            sp.edit().putFloat(tag1 + "value" + tag2, (Float) value).commit();
-
-        } else if (value instanceof String) {
-            sp.edit().putString(tag1 + "value" + tag2, (String) value).commit();
-
-        }
-
-    }
-
-    /**
-     * @param tag1
-     * @param tag2
-     * @param T
-     * @param context
-     * @param defaultValue
-     * @return
-     * @方法说明:返回共享首选项中的数据，此方法没有被使 @方法名称:getValue
-     * @返回 Object
-     */
-    public static Object getValue(String tag1, String tag2, Class<?> T,
-                                  Context context, Object defaultValue) {
-        SharedPreferences sp = context.getSharedPreferences(tag1 + "value",
-                context.MODE_PRIVATE);
-        if (T == Boolean.class) {
-            return sp.getBoolean(tag1 + "value" + tag2, (Boolean) defaultValue);
-
-        } else if (T == Integer.class || T == Byte.class) {
-            return sp.getInt(tag1 + "value" + tag2, (Integer) defaultValue);
-        } else if (T == Long.class) {
-            return sp.getLong(tag1 + "value" + tag2, (Long) defaultValue);
-        } else if (T == Float.class) {
-            return sp.getFloat(tag1 + "value" + tag2, (Float) defaultValue);
-        } else if (T == String.class) {
-            return sp.getString(tag1 + "value" + tag2, (String) defaultValue);
-        }
-        return null;
-    }
 
     /**
      * @param c
@@ -1899,8 +1825,9 @@ public class Utils {
      * @返回 String
      */
     public static String getFileName(String filePath) {
-        if (isEmpty(filePath))
+        if (isEmpty(filePath)) {
             return "";
+        }
         int index0 = filePath.lastIndexOf(".");
         if (index0 != -1) {
             filePath = filePath.substring(0, index0);
@@ -2024,8 +1951,9 @@ public class Utils {
                 c[i] = (char) 32;
                 continue;
             }
-            if (c[i] > 65280 && c[i] < 65375)
+            if (c[i] > 65280 && c[i] < 65375) {
                 c[i] = (char) (c[i] - 65248);
+            }
         }
         return new String(c);
     }
@@ -2060,8 +1988,9 @@ public class Utils {
                     .compile("^((13[0-9])|(14[0-9])|(15[0-9])|(18[0-9]))\\d{8}$");
             Matcher m = p.matcher(mobiles);
             return m.matches();
-        } else
+        } else {
             return false;
+        }
     }
 
     /**

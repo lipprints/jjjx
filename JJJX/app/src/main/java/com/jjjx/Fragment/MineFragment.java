@@ -194,7 +194,7 @@ public class MineFragment extends android.support.v4.app.Fragment implements Vie
                 startActivity(new Intent(getActivity(), MyCollectionsActivity.class));
                 break;
             case R.id.mine_class_manage:
-                if (CacheTask.getInstance().getUserRole().equals("2") || CacheTask.getInstance().getUserRole().equals("3")) {
+                if ("2".equals(CacheTask.getInstance().getUserRole()) || "3".equals(CacheTask.getInstance().getUserRole())) {
                     startActivity(new Intent(getActivity(), ClassManageActivity.class));
                 } else {
                     NToast.shortToast(getActivity(), "只有老师和学校才能进行课程发布和管理哦,快来加入吧~^_^");

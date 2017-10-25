@@ -78,7 +78,9 @@ public class LogInterceptor implements Interceptor {
             NLog.e(TAG, "url : " + clone.request().url());
             NLog.e(TAG, "code : " + clone.code());
             NLog.e(TAG, "protocol : " + clone.protocol());
-            if (!TextUtils.isEmpty(clone.message())) Log.e(TAG, "message : " + clone.message());
+            if (!TextUtils.isEmpty(clone.message())) {
+                Log.e(TAG, "message : " + clone.message());
+            }
 
             ResponseBody body = clone.body();
             if (body != null) {
@@ -105,15 +107,17 @@ public class LogInterceptor implements Interceptor {
     }
 
     private boolean isText(MediaType mediaType) {
-        if (mediaType.type() != null && mediaType.type().equals("text")) {
+        if (mediaType.type() != null && "text".equals(mediaType.type())) {
             return true;
         }
         if (mediaType.subtype() != null) {
-            if (mediaType.subtype().equals("json") ||
-                    mediaType.subtype().equals("xml") ||
-                    mediaType.subtype().equals("html") ||
-                    mediaType.subtype().equals("webviewhtml")) //
+            if ("json".equals(mediaType.subtype()) ||
+                    "xml".equals(mediaType.subtype()) ||
+                    "html".equals(mediaType.subtype()) ||
+                    "webviewhtml".equals(mediaType.subtype())) //
+            {
                 return true;
+            }
         }
         return false;
     }

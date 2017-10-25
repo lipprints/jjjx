@@ -54,8 +54,9 @@ public class LocationService {
     public boolean setLocationOption(LocationClientOption option) {
         boolean isSuccess = false;
         if (option != null) {
-            if (client.isStarted())
+            if (client.isStarted()) {
                 client.stop();
+            }
             DIYoption = option;
             client.setLocOption(option);
             isSuccess = true;

@@ -86,7 +86,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (requestCode) {
             case JX_LOGIN:
                 LoginResponse response = (LoginResponse) result;
-                if (response.getHead().getCode().equals("10000")) {
+                if ("10000".equals(response.getHead().getCode())) {
                     userId = String.valueOf(response.getPara().getUser_id());
                     CacheTask.getInstance().cacheUserId(userId);
                     CacheTask.getInstance().cacheAccount(accountString);
@@ -97,14 +97,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     CacheTask.getInstance().cachePortrait(Constants.DOMAIN + response.getPara().getHead_portrait());
 
                     request(GET_RONG_CLOUD_TOKEN);
-                } else if (response.getHead().getCode().equals("E0003")) {
+                } else if ("E0003".equals(response.getHead().getCode())) {
                     NToast.shortToast(this, response.getHead().getMsg());
                     LoadDialog.dismiss(LoginActivity.this);
                 }
                 break;
             case GET_RONG_CLOUD_TOKEN:
                 GetRongCloudTokenResponse getTokenResponse = (GetRongCloudTokenResponse) result;
-                if (getTokenResponse.getHead().getCode().equals("000000")) {
+                if ("000000".equals(getTokenResponse.getHead().getCode())) {
                     CacheTask.getInstance().cacheToken(getTokenResponse.getPara().getToken().getToken());
                     RongIM.connect(getTokenResponse.getPara().getToken().getToken(), new RongIMClient.ConnectCallback() {
                         @Override

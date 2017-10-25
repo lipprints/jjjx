@@ -50,8 +50,9 @@ public class AMUtils {
      */
     public static void onInactive(Context context, EditText et) {
 
-        if (et == null)
+        if (et == null) {
             return;
+        }
 
         et.clearFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -59,8 +60,9 @@ public class AMUtils {
     }
 
     public static void onActive(Context context, EditText et) {
-        if (et == null)
+        if (et == null) {
             return;
+        }
 
         et.requestFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);

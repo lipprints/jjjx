@@ -46,8 +46,9 @@ public class ConversationActivity extends BaseActivity {
         setContentView(R.layout.activity_converstion);
         Intent intent = getIntent();
 
-        if (intent == null || intent.getData() == null)
+        if (intent == null || intent.getData() == null) {
             return;
+        }
 
         mTargetId = intent.getData().getQueryParameter("targetId");
         mConversationType = Conversation.ConversationType.valueOf(intent.getData()
@@ -64,13 +65,14 @@ public class ConversationActivity extends BaseActivity {
      */
     private void isPushMessage(Intent intent) {
 
-        if (intent == null || intent.getData() == null)
+        if (intent == null || intent.getData() == null) {
             return;
+        }
         //push
-        if (intent.getData().getScheme().equals("rong") && intent.getData().getQueryParameter("isFromPush") != null) {
+        if ("rong".equals(intent.getData().getScheme()) && intent.getData().getQueryParameter("isFromPush") != null) {
 
             //通过intent.getData().getQueryParameter("push") 为true，判断是否是push消息
-            if (intent.getData().getQueryParameter("isFromPush").equals("true")) {
+            if ("true".equals(intent.getData().getQueryParameter("isFromPush"))) {
                 //只有收到系统消息和不落地 push 消息的时候，pushId 不为 null。而且这两种消息只能通过 server 来发送，客户端发送不了。
                 //RongIM.getInstance().getRongIMClient().recordNotificationEvent(id);
 //                if (mDialog != null && !mDialog.isShowing()) {
@@ -132,7 +134,7 @@ public class ConversationActivity extends BaseActivity {
 
         String token = CacheTask.getInstance().getToken();
 
-        if (token.equals("default")) {
+        if ("default".equals(token)) {
             NLog.e("ConversationActivity push", "push2");
             startActivity(new Intent(ConversationActivity.this, LoginActivity.class));
 //            SealAppContext.getInstance().popAllActivity();

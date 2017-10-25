@@ -86,7 +86,7 @@ public class ClassManageActivity extends BaseActivity implements AdapterView.OnI
     public void onSuccess(int requestCode, Object result) {
         if (requestCode == GET_CLASS_MANAGE_LIST) {
             IndexDataResponse response = (IndexDataResponse) result;
-            if (response.getHead().getCode().equals("10000")) {
+            if ("10000".equals(response.getHead().getCode())) {
                 if (response.getPara().getComplaints().size() > 0) {
                     adapter.refreshAdapter(response.getPara().getComplaints());
                 } else {

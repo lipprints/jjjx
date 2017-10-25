@@ -459,7 +459,7 @@ public class ProfileSettingActivity extends BaseActivity implements View.OnClick
         switch (requestCode) {
             case SAVE_INFO_PERSON:
                 InformationResponse personResponse = (InformationResponse) result;
-                if (personResponse.getHead().getCode().equals("10000")) {
+                if ("10000".equals(personResponse.getHead().getCode())) {
                     CacheTask.getInstance().cacheName(personName);
                     CacheTask.getInstance().cacheSex(personSex);
                     if (mProfileChangeListener != null) {
@@ -471,7 +471,7 @@ public class ProfileSettingActivity extends BaseActivity implements View.OnClick
                 break;
             case SAVE_INFO_TEACHER:
                 InformationResponse teacherResponse = (InformationResponse) result;
-                if (teacherResponse.getHead().getCode().equals("10000")) {
+                if ("10000".equals(teacherResponse.getHead().getCode())) {
                     CacheTask.getInstance().cacheName(teacherName);
                     CacheTask.getInstance().cacheSex(teacherSex);
                     CacheTask.getInstance().cacheLearnYear(teacherLearnYear);
@@ -485,7 +485,7 @@ public class ProfileSettingActivity extends BaseActivity implements View.OnClick
                 break;
             case SAVE_INFO_ORGANIZATION:
                 InformationResponse organResponse = (InformationResponse) result;
-                if (organResponse.getHead().getCode().equals("10000")) {
+                if ("10000".equals(organResponse.getHead().getCode())) {
                     CacheTask.getInstance().cacheName(organName);
                     CacheTask.getInstance().cacheLearnYear(organLearnYear);//办学时长
                     CacheTask.getInstance().cacheMainClass(organMainClass);
@@ -496,7 +496,7 @@ public class ProfileSettingActivity extends BaseActivity implements View.OnClick
                     }
                     NToast.shortToast(mContext, "更新成功");
                     finish();
-                } else if (organResponse.getHead().getCode().equals("10001")) {
+                } else if ("10001".equals(organResponse.getHead().getCode())) {
                     NToast.shortToast(mContext, "更新失败");
                 }
                 break;

@@ -142,11 +142,13 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
                 mRecyclerView.setAdapter(mAdapter);
             }
             //如果数据为0，开启自动刷新
-            if (mAdapter.getDatas().size() == 0)
+            if (mAdapter.getDatas().size() == 0) {
                 mSmartRefreshLayout.autoRefresh();
+            }
             //每次在这里需要允许glide加载图片
-            if (getContext() != null && mGlideManage != null)
+            if (getContext() != null && mGlideManage != null) {
                 mGlideManage.getRequestManager().resumeRequests();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,8 +156,9 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
 
     @Override
     public String closeFragment() {
-        if (mAdapter != null)
+        if (mAdapter != null) {
             mAdapter.removeDataAll();
+        }
         if (mRecyclerView != null) {
             mRecyclerView.removeAllViews();
         }
@@ -184,7 +187,7 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
     public void onSuccess(int requestCode, Object result) {
         if (result != null && (requestCode == GET_FIND_LOGIN || requestCode == GET_FIND)) {
             FindDataResponse response = (FindDataResponse) result;
-            if (response.getHead().getCode().equals("10000") && isNoCloseFragment) {
+            if ("10000".equals(response.getHead().getCode()) && isNoCloseFragment) {
                 //TODO fragment没有被销毁
                 if (response.getPara().getDiscoverInfo().size() > 0) {
                     if (isRefresh) {
@@ -217,8 +220,9 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
     @Override
     public void onFailure(int requestCode, int state, Object result) {
         super.onFailure(requestCode, state, result);
-        if (isNoCloseFragment)
+        if (isNoCloseFragment) {
             mRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_ERROR);
+        }
     }
 
     @Override

@@ -146,8 +146,9 @@ public class RightDialog extends BaseDialog {
         setTag(TAG);
         show(mFragmentManager);
         if(mCutDown!=-1){
-            if(mHandle!=null&&mHandle.hasMessages(DISSMISS_MSG_CODE))
+            if(mHandle!=null&&mHandle.hasMessages(DISSMISS_MSG_CODE)) {
                 mHandle.removeMessages(DISSMISS_MSG_CODE);
+            }
             mCutDown=getCutDownTime();
             cutDownTime = new CutDownTime();
             cutDownTime.start();
@@ -198,7 +199,8 @@ public class RightDialog extends BaseDialog {
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         mCutDown = -1;
-        if(cutDownTime!=null)
+        if(cutDownTime!=null) {
             cutDownTime.interrupt();
+        }
     }
 }

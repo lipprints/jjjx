@@ -177,7 +177,7 @@ public class IndexItemDetailsActivity extends AppCompatActivity {
                 likeButton.setVisibility(View.GONE);
             } else {
                 likeButton.setVisibility(View.VISIBLE);
-                if (entity.getTab().equals("1")) {
+                if ("1".equals(entity.getTab())) {
                     likeButton.setLiked(true);
                 }
             }

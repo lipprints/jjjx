@@ -37,15 +37,17 @@ public class AppProgressDialog extends ProgressDialog {
         AppProgressDialog progressDialog = show(context, null, message, true, true, new OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                if (mListDialog != null)
+                if (mListDialog != null) {
                     mListDialog.clear();
+                }
             }
         });
         //只允许一个弹出框存在
-        if (mListDialog == null)
+        if (mListDialog == null) {
             mListDialog = new ArrayList<>();
-        else
+        } else {
             onDismiss();
+        }
         mListDialog.add(progressDialog);
         return progressDialog;
     }
@@ -63,10 +65,11 @@ public class AppProgressDialog extends ProgressDialog {
                                          boolean cancelable, OnCancelListener cancelListener) {
         //做小于21的兼容，保证dialog不会变形
         AppProgressDialog dialog;
-        if (Build.VERSION.SDK_INT >= 21)
+        if (Build.VERSION.SDK_INT >= 21) {
             dialog = new AppProgressDialog(context, R.style.AppProgressDialog);
-        else
+        } else {
             dialog = new AppProgressDialog(context, AlertDialog.THEME_HOLO_LIGHT);
+        }
         //排列为横着的,用来做上传进度条的
 //        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         dialog.setTitle(title);
@@ -83,8 +86,9 @@ public class AppProgressDialog extends ProgressDialog {
     public static void onDismiss() {
         if (mListDialog != null) {
             for (AppProgressDialog progressDialog : mListDialog) {
-                if (progressDialog != null)
+                if (progressDialog != null) {
                     progressDialog.dismiss();
+                }
             }
             mListDialog.clear();
         }

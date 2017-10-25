@@ -48,7 +48,7 @@ public class MyCollectionsActivity extends BaseActivity implements AdapterView.O
     @Override
     public void onSuccess(int requestCode, Object result) {
         IndexDataResponse response = (IndexDataResponse) result;
-        if (response.getHead().getCode().equals("10000")) {
+        if ("10000".equals(response.getHead().getCode())) {
             List<IndexDataResponse.ParaEntity.ComplaintsEntity> complaintsEntities = response.getPara().getComplaints();
             if (complaintsEntities.size() > 0) {
                 adapter.refreshAdapter(complaintsEntities);

@@ -55,11 +55,11 @@ public class VerifyRoleActivity extends BaseActivity {
     public void onSuccess(int requestCode, Object result) {
         if (result != null) {
             RequestRoleResponse response = (RequestRoleResponse) result;
-            if (response.getHead().getCode().equals("S0000")) {
+            if ("S0000".equals(response.getHead().getCode())) {
                 NToast.longToast(mContext, "申请成功,我们工作人员将在 1 个工作日内对您的申请进行审核~");
                 CacheTask.getInstance().cacheRole("4");
                 finish();
-            } else if (response.getHead().getCode().equals("S0002")) {
+            } else if ("S0002".equals(response.getHead().getCode())) {
                 NToast.shortToast(mContext, "申请已提交，正在审核。请勿重复申请~");
             }
         }

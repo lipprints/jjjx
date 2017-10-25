@@ -151,7 +151,7 @@ public class OkHttpUtils {
         logbuilder.append("----------------------------------------------------------").append("\n");
         logbuilder.append("  method  : " + request.method()).append("\n");
         logbuilder.append("  request : " + url);
-        if (request.method().equals("POST")) {
+        if ("POST".equals(request.method())) {
             logbuilder.append("?").append(params.toString());
         }
         logbuilder.append("\n");

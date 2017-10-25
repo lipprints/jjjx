@@ -29,18 +29,21 @@ public class FindPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         if (position == 0) {
             //热门
-            if (mHotFragment == null)
+            if (mHotFragment == null) {
                 mHotFragment = new HotFragment();
+            }
             return mHotFragment;
         } else if (position == 1) {
             //关注
-            if (mFollowFragment == null)
+            if (mFollowFragment == null) {
                 mFollowFragment = new FollowFragment();
+            }
             return mFollowFragment;
         } else if (position == 2) {
             //同城
-            if (mCityFragment == null)
+            if (mCityFragment == null) {
                 mCityFragment = new CityFragment();
+            }
             return mCityFragment;
         } else {
 //            if (mHotFragment == null)

@@ -89,14 +89,14 @@ public class UserProfileActivity extends BaseActivity implements ViewPager.OnPag
     public void onSuccess(int requestCode, Object result) {
         if (requestCode == QUERY_USER_INFO) {
             UserProfileResponse response = (UserProfileResponse) result;
-            if (response.getHead().getCode().equals("10000")) {
+            if ("10000".equals(response.getHead().getCode())) {
                 simpleDraweeView.setImageURI(response.getPara().getUser().getHead_portrait());
                 nameTextView.setText(response.getPara().getUser().getName());
                 if (CacheTask.getInstance().getUserId().equals(String.valueOf(response.getPara().getUser().getUser_id()))) {
                     followButton.setVisibility(View.GONE);
                 } else {
                     followButton.setVisibility(View.VISIBLE);
-                    if (response.getPara().getTab().equals("2")) { //未关注
+                    if ("2".equals(response.getPara().getTab())) { //未关注
                         followButton.setText("关注");
                         followInt = 0;
                     } else {
@@ -107,7 +107,7 @@ public class UserProfileActivity extends BaseActivity implements ViewPager.OnPag
 
                 byuser_id = String.valueOf(response.getPara().getUser().getUser_id());
 
-                if (CacheTask.getInstance().getUserRole().equals("2") || CacheTask.getInstance().getUserRole().equals("3")) {
+                if ("2".equals(CacheTask.getInstance().getUserRole()) || "3".equals(CacheTask.getInstance().getUserRole())) {
                     mFragment.add(ProfileClassFragment.newInstance(response.getPara().getCourseRelease())); //课程的Fragment
                     findTopTextView.setVisibility(View.VISIBLE);
                 }

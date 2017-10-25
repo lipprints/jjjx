@@ -69,8 +69,9 @@ public class CircleView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        if (width != 0 && height != 0)
+        if (width != 0 && height != 0) {
             setMeasuredDimension(width, height);
+        }
     }
 
 

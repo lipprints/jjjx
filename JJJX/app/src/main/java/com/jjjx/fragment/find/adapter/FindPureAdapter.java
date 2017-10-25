@@ -64,7 +64,7 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
             likeButton.setVisibility(View.VISIBLE);
             findNumber.setVisibility(View.VISIBLE);
             findNumber.setText(die.getThumbNo());
-            likeButton.setLiked(die.getTab().equals("1"));
+            likeButton.setLiked("1".equals(die.getTab()));
             likeButton.setOnLikeListener(new OnLikeListener() {
                 @Override
                 public void liked(LikeButton likeButton) {

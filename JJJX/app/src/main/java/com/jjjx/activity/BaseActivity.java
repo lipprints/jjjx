@@ -185,6 +185,7 @@ public class BaseActivity extends FragmentActivity implements OnDataListener {
     /**
      * 设置标题
      */
+    @Override
     public void setTitle(int titleId) {
         tv_title.setText(getString(titleId));
     }

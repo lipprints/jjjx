@@ -56,7 +56,9 @@ public class DownTimer {
                 } else {
                     NLog.e(TAG, "DownTimerListener 监听不能为空");
                 }
-                if (mCountDownTimer != null)mCountDownTimer.cancel();
+                if (mCountDownTimer != null) {
+                    mCountDownTimer.cancel();
+                }
             }
 
         } .start();
@@ -66,7 +68,9 @@ public class DownTimer {
      * [停止倒计时功能]<BR>
      */
     public void stopDown() {
-        if (mCountDownTimer != null)mCountDownTimer.cancel();
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
     }
 
     /**

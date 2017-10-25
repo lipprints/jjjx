@@ -262,7 +262,7 @@ public class IndexFragment extends BaseFragment implements OnBDLocationListener,
             case GET_INDEX:
                 mSmartRefreshUtil.stopRefrshLoad();
                 IndexDataResponse response = (IndexDataResponse) result;
-                if (response.getHead().getCode().equals("10000")) {
+                if ("10000".equals(response.getHead().getCode())) {
                     //  NToast.shortToast(getActivity(), "刷新成功");
                     List<ComplaintsEntity> complaintsEntities = response.getPara().getComplaints();
                     if (complaintsEntities.size() > 0) {

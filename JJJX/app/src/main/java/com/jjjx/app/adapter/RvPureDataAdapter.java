@@ -14,8 +14,9 @@ public abstract class RvPureDataAdapter<T> extends RvPureAdapter {
     protected List<T> mDatas;//一般数据
 
     public List<T> getDatas() {
-        if (mDatas == null)
+        if (mDatas == null) {
             mDatas = new ArrayList<>();
+        }
         return mDatas;
     }
 
@@ -26,19 +27,22 @@ public abstract class RvPureDataAdapter<T> extends RvPureAdapter {
      * @param isRefresh 是否刷新
      */
     public void setDatas(List<T> datas, boolean isRefresh) {
-        if (datas == null)
+        if (datas == null) {
             datas = new ArrayList<>();
+        }
         this.mDatas = datas;
-        if (isRefresh)
+        if (isRefresh) {
             notifyDataSetChanged();
+        }
     }
 
     /**
      * 一般使用 不带刷新
      */
     public void setDatas(List<T> datas) {
-        if (datas == null)
+        if (datas == null) {
             datas = new ArrayList<>();
+        }
         mDatas = datas;
     }
 
@@ -52,8 +56,9 @@ public abstract class RvPureDataAdapter<T> extends RvPureAdapter {
         if (this.mDatas == null) {
             this.mDatas = new ArrayList<>();
             this.mDatas.addAll(data);
-            if (isRefresh)
+            if (isRefresh) {
                 notifyDataSetChanged();
+            }
         } else {
             this.mDatas.addAll(data);
             //因为Header也是占有刷新的 下标，所以需要加上
@@ -75,8 +80,9 @@ public abstract class RvPureDataAdapter<T> extends RvPureAdapter {
      * 移除所有数据
      */
     public void removeDataAll() {
-        if (mDatas != null)
+        if (mDatas != null) {
             mDatas.clear();
+        }
         notifyDataSetChanged();
     }
 
@@ -115,9 +121,10 @@ public abstract class RvPureDataAdapter<T> extends RvPureAdapter {
 
     @Override
     public int getItemCount() {
-        if (mDatas != null)
+        if (mDatas != null) {
             return mDatas.size();
-        else
+        } else {
             return 0;
+        }
     }
 }

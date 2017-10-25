@@ -66,8 +66,9 @@ public class LikeButton extends FrameLayout implements View.OnClickListener {
     public LikeButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         
-        if(!isInEditMode())
-        init(context, attrs, defStyleAttr);
+        if(!isInEditMode()) {
+            init(context, attrs, defStyleAttr);
+        }
     }
 
     /**
@@ -87,35 +88,42 @@ public class LikeButton extends FrameLayout implements View.OnClickListener {
         final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LikeButton, defStyle, 0);
 
         iconSize = array.getDimensionPixelSize(R.styleable.LikeButton_icon_size, -1);
-        if (iconSize == -1)
+        if (iconSize == -1) {
             iconSize = 40;
+        }
 
         String iconType = array.getString(R.styleable.LikeButton_icon_type);
 
         likeDrawable = getDrawableFromResource(array, R.styleable.LikeButton_like_drawable);
 
-        if (likeDrawable != null)
+        if (likeDrawable != null) {
             setLikeDrawable(likeDrawable);
+        }
 
         unLikeDrawable = getDrawableFromResource(array, R.styleable.LikeButton_unlike_drawable);
 
-        if (unLikeDrawable != null)
+        if (unLikeDrawable != null) {
             setUnlikeDrawable(unLikeDrawable);
+        }
 
-        if (iconType != null)
-            if (!iconType.isEmpty())
+        if (iconType != null) {
+            if (!iconType.isEmpty()) {
                 currentIcon = parseIconType(iconType);
+            }
+        }
 
 
         circleStartColor = array.getColor(R.styleable.LikeButton_circle_start_color, 0);
 
-        if (circleStartColor != 0)
+        if (circleStartColor != 0) {
             circleView.setStartColor(circleStartColor);
+        }
 
         circleEndColor = array.getColor(R.styleable.LikeButton_circle_end_color, 0);
 
-        if (circleEndColor != 0)
+        if (circleEndColor != 0) {
             circleView.setEndColor(circleEndColor);
+        }
 
         dotPrimaryColor = array.getColor(R.styleable.LikeButton_dots_primary_color, 0);
         dotSecondaryColor = array.getColor(R.styleable.LikeButton_dots_secondary_color, 0);
@@ -156,8 +164,9 @@ public class LikeButton extends FrameLayout implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        if (!isEnabled)
+        if (!isEnabled) {
             return;
+        }
 
         isChecked = !isChecked;
 
@@ -241,8 +250,9 @@ public class LikeButton extends FrameLayout implements View.OnClickListener {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!isEnabled)
+        if (!isEnabled) {
             return true;
+        }
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
