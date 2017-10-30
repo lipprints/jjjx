@@ -10,9 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jjjx.R;
-import com.jjjx.adapter.IndexAdapter;
+import com.jjjx.function.home.adapter.HomeAdapter;
 import com.jjjx.data.response.IndexDataResponse;
-import com.jjjx.data.response.SearchResponse;
 import com.jjjx.utils.NToast;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
     private EditText mSearchEdit;
     private TextView mSearchText;
     public static final int SEARCH = 301;
-    private IndexAdapter adapter;
+    private HomeAdapter adapter;
     private List<IndexDataResponse.ParaEntity.ComplaintsEntity> data = new ArrayList<>();
 
     @Override
@@ -50,7 +49,7 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
         });
         ListView searchListView = (ListView) findViewById(R.id.search_list);
         searchListView.setOnItemClickListener(this);
-        adapter = new IndexAdapter(mContext, data);
+        adapter = new HomeAdapter(mContext, data);
         searchListView.setAdapter(adapter);
     }
 

@@ -4,8 +4,6 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
-//        minSdkVersion 9
-//        targetSdkVersion 19
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
 //        versionCode 2017041917
@@ -30,7 +28,6 @@ android {
             jniLibs.srcDirs = ['src/main/libs']
         }
     }
-//    buildToolsVersion '25.0.0'
 }
 
 dependencies {

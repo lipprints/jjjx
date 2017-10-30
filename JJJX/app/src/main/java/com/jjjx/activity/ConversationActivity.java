@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.jjjx.R;
+import com.jjjx.function.login.LoginActivity;
+import com.jjjx.function.main.MainActivity;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NLog;
 

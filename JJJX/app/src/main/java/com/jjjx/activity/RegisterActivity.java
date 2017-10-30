@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.jjjx.R;
 import com.jjjx.data.response.GetVerifyCodeResponse;
 import com.jjjx.data.response.RegisterResponse;
+import com.jjjx.function.login.LoginActivity;
 import com.jjjx.utils.NToast;
 import com.jjjx.utils.downtime.DownTimer;
 import com.jjjx.utils.downtime.DownTimerListener;

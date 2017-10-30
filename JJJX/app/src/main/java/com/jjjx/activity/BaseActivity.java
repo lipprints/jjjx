@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.gyf.barlibrary.ImmersionBar;
 import com.jjjx.JxAction;
 import com.jjjx.R;
 import com.jjjx.data.ActivityPageManager;
@@ -27,7 +26,7 @@ import com.jjjx.utils.NToast;
  * Company RongCloud
  */
 
-public class BaseActivity extends FragmentActivity implements OnDataListener {
+public class BaseActivity extends AppCompatActivity implements OnDataListener {
 
     protected Context mContext;
     protected JxAction action;
@@ -53,25 +52,26 @@ public class BaseActivity extends FragmentActivity implements OnDataListener {
 //		}
 
         //初始化公共头部
-        mContentView = (ViewFlipper) super.findViewById(R.id.layout_container);
-        layout_head = (RelativeLayout) super.findViewById(R.id.layout_head);
-        btn_left = (TextView) super.findViewById(R.id.btn_left);
+        mContentView = super.findViewById(R.id.layout_container);
+        layout_head = super.findViewById(R.id.layout_head);
+        btn_left =  super.findViewById(R.id.btn_left);
         btn_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        btn_right = (TextView) super.findViewById(R.id.btn_right);
-        tv_title = (TextView) super.findViewById(R.id.tv_title);
-        base_line = (View) super.findViewById(R.id.base_line);
+        btn_right =  super.findViewById(R.id.btn_right);
+        tv_title =  super.findViewById(R.id.tv_title);
+        base_line =  super.findViewById(R.id.base_line);
 
         //初始化异步框架
         action = new JxAction(mContext);
         mAsyncTaskManager = AsyncTaskManager.getInstance(getApplicationContext());
         //Activity管理
         ActivityPageManager.getInstance().addActivity(this);
-        ImmersionBar.with(this).init(); //初始化，默认透明状态栏和黑色导航栏
+        //windowLightStatusBar
+      //  ImmersionBar.with(this).barColor(R.color.white).init(); //初始化，默认透明状态栏和黑色导航栏
     }
 
 
@@ -96,7 +96,7 @@ public class BaseActivity extends FragmentActivity implements OnDataListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ImmersionBar.with(this).destroy(); //不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
+   //     ImmersionBar.with(this).destroy(); //不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
         ActivityPageManager.unbindReferences(mContentView);
         ActivityPageManager.getInstance().removeActivity(this);
         mContentView = null;
@@ -164,6 +164,8 @@ public class BaseActivity extends FragmentActivity implements OnDataListener {
             case AsyncTaskManager.REQUEST_ERROR_CODE:
                 NToast.shortToast(mContext, R.string.common_request_error);
                 break;
+                default:
+                    break;
         }
     }
 

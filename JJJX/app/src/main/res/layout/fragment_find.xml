@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout style="@style/home_title_bar_style">
+    <LinearLayout style="@style/AppTitleBarStyle">
 
         <ImageView
             android:id="@+id/jx_find_publish"

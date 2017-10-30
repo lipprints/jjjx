@@ -6,7 +6,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.jjjx.R;
-import com.jjjx.adapter.IndexAdapter;
+import com.jjjx.function.home.adapter.HomeAdapter;
 import com.jjjx.data.response.IndexDataResponse;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class MyCollectionsActivity extends BaseActivity implements AdapterView.O
 
     private static final int GET_MY_COLLECTIONS = 108;
     private ListView mListView;
-    private IndexAdapter adapter;
+    private HomeAdapter adapter;
     private List<IndexDataResponse.ParaEntity.ComplaintsEntity> data = new ArrayList<>();
 
     @Override
@@ -29,7 +29,7 @@ public class MyCollectionsActivity extends BaseActivity implements AdapterView.O
         setContentView(R.layout.activity_collections);
         setTitle("我的收藏");
         mListView = (ListView) findViewById(R.id.my_collections_list);
-        adapter = new IndexAdapter(this, data);
+        adapter = new HomeAdapter(this, data);
         mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(this);
         request(GET_MY_COLLECTIONS);

@@ -29,6 +29,11 @@
         <attr name="pressIcon" format="reference" />
         <!-- 按钮的padding -->
 
+        <!--图标的宽-->
+        <attr name="iconWith" format="dimension"/>
+        <!--图标的高-->
+        <attr name="iconHeight" format="dimension"/>
+
     </declare-styleable>
 
     <declare-styleable name="LikeButton">

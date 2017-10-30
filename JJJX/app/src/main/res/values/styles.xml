@@ -2,11 +2,14 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="CustomDialog" parent="android:style/Theme.Dialog">
         <!--背景颜色及透明程度-->
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -25,16 +28,15 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsTranslucent">false</item>
     </style>
-    <style name="AppFullscreenTheme" parent="android:Theme.Light.NoTitleBar.Fullscreen"/>
 
-    <!--首页titlebar样式-->
-    <style name="home_title_bar_style">
+    <style name="AppFullscreenTheme" parent="@style/Theme.AppCompat.Light.NoActionBar" />
+
+    <!--titlebar样式-->
+    <style name="AppTitleBarStyle">
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">@color/theme_color</item>
-        <item name="android:paddingLeft">0dp</item>
-        <item name="android:paddingRight">0dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">45dp</item>
     </style>
 
     <style name="rce_horizontal_light_thin_divider">
@@ -64,7 +66,6 @@
     </style>
 
 
-
     <style name="BottomDialog" parent="@android:style/Theme.DeviceDefault.Dialog">
         <item name="android:windowTitleStyle">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -72,6 +73,7 @@
         <item name="android:windowAnimationStyle">@style/BottomDialog.AnimationStyle</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     </style>
+
     <style name="BottomDialog.AnimationStyle" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_to_bottom</item>
@@ -84,10 +86,12 @@
         <item name="android:windowAnimationStyle">@style/UpDialog.AnimationStyle</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     </style>
+
     <style name="UpDialog.AnimationStyle" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/slide_in_from_up</item>
         <item name="android:windowExitAnimation">@anim/slide_out_to_up</item>
     </style>
+
     <style name="RightDialog" parent="@android:style/Theme.DeviceDefault.Dialog">
         <item name="android:windowTitleStyle">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -95,10 +99,38 @@
         <item name="android:windowAnimationStyle">@style/RightDialog.AnimationStyle</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     </style>
+
     <style name="RightDialog.AnimationStyle" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/slide_in_from_right</item>
         <item name="android:windowExitAnimation">@anim/slide_out_to_right</item>
     </style>
 
 
+    <!-- 底部导航按钮 -->
+
+    <style name="BottomBut">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:button">@null</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:textColor">@color/app_txt_black_0</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <!-- 通用线 -->
+    <style name="Line_H">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5sp</item>
+        <item name="android:background">@color/app_divider_color</item>
+    </style>
+
+    <!-- 通用线 -->
+    <style name="Line_H_Drak">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5sp</item>
+        <item name="android:background">#f2f2f2</item>
+    </style>
 </resources>

@@ -10,10 +10,8 @@ import android.widget.ImageView;
 
 import com.jjjx.R;
 import com.jjjx.data.response.IndexDataResponse;
+import com.jjjx.function.main.MainActivity;
 import com.jjjx.utils.CacheTask;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;

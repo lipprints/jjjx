@@ -6,13 +6,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 
-import com.jjjx.App;
 import com.jjjx.Constants;
-import com.jjjx.data.response.RequestRoleResponse;
-import com.jjjx.model.MediaModel;
+import com.jjjx.function.bean.MediaModel;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NLog;
-import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,9 +33,7 @@ import okio.BufferedSink;
 import okio.Okio;
 import okio.Source;
 
-import static com.baidu.location.h.j.F;
 import static com.baidu.location.h.j.e;
-import static com.jjjx.data.json.JsonMananger.jsonToBean;
 
 
 /**

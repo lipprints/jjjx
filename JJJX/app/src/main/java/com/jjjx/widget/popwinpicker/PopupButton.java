@@ -1,16 +1,18 @@
 package com.jjjx.widget.popwinpicker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.jjjx.R;
 
@@ -19,7 +21,8 @@ import com.jjjx.R;
  * 自定义的带弹出框的按钮,类似于美团和大众点评的筛选框
  * Created by Chris on 2014/12/8.
  */
-public class PopupButton extends Button implements PopupWindow.OnDismissListener {
+@SuppressLint("AppCompatCustomView")
+public class PopupButton extends TextView implements PopupWindow.OnDismissListener {
     private int normalBg;//正常状态下的背景
     private int pressBg;//按下状态下的背景
     private int normalIcon;//正常状态下的图标
@@ -32,7 +35,13 @@ public class PopupButton extends Button implements PopupWindow.OnDismissListener
     private int paddingLeft;
     private int paddingRight;
     private int paddingBottom;
+    private int iconWith;//图标宽
+    private int iconHeight;//图标高
     private PopupButtonListener listener;
+    /**
+     * 图标文字是否居中
+     */
+    private boolean textAndIconCenterToRight;
 
     public PopupButton(Context context) {
         super(context);
@@ -59,7 +68,12 @@ public class PopupButton extends Button implements PopupWindow.OnDismissListener
         pressBg = typedArray.getResourceId(R.styleable.popupbtn_pressBg, -1);
         normalIcon = typedArray.getResourceId(R.styleable.popupbtn_normalIcon, -1);
         pressIcon = typedArray.getResourceId(R.styleable.popupbtn_pressIcon, -1);
+
+        iconWith = typedArray.getDimensionPixelOffset(R.styleable.popupbtn_iconWith, -1);
+        iconHeight = typedArray.getDimensionPixelOffset(R.styleable.popupbtn_iconHeight, -1);
+        typedArray.recycle();
     }
+
 
     /**
      * 初始话各种按钮样式
@@ -75,20 +89,20 @@ public class PopupButton extends Button implements PopupWindow.OnDismissListener
         screenWidth = wm.getDefaultDisplay().getWidth();
         screenHeight = wm.getDefaultDisplay().getHeight();
 
-
     }
 
     /**
      * 隐藏弹出框
      */
-    public void hidePopup(){
-        if(popupWindow != null && popupWindow.isShowing()) {
+    public void hidePopup() {
+        if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
     }
 
     /**
      * 设置自定义接口
+     *
      * @param listener
      */
     public void setListener(PopupButtonListener listener) {
@@ -97,19 +111,20 @@ public class PopupButton extends Button implements PopupWindow.OnDismissListener
 
     /**
      * 设置popupwindow的view
+     *
      * @param view
      */
     public void setPopupView(final View view) {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(popupWindow == null) {
+                if (popupWindow == null) {
                     LinearLayout layout = new LinearLayout(context);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) (screenHeight * 0.6));
                     view.setLayoutParams(params);
                     layout.addView(view);
                     layout.setBackgroundColor(Color.argb(60, 0, 0, 0));
-                    popupWindow = new PopupWindow(layout,screenWidth,screenHeight);
+                    popupWindow = new PopupWindow(layout, screenWidth, screenHeight);
                     popupWindow.setFocusable(true);
                     popupWindow.setBackgroundDrawable(new BitmapDrawable());
                     popupWindow.setOutsideTouchable(true);
@@ -121,7 +136,7 @@ public class PopupButton extends Button implements PopupWindow.OnDismissListener
                         }
                     });
                 }
-                if(listener != null) {
+                if (listener != null) {
                     listener.onShow();
                 }
                 setPress();
@@ -136,12 +151,16 @@ public class PopupButton extends Button implements PopupWindow.OnDismissListener
     private void setPress() {
         if (pressBg != -1) {
             this.setBackgroundResource(pressBg);
-            this.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom);
+            this.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         }
         if (pressIcon != -1) {
-            Drawable drawable = getResources().getDrawable(pressIcon);
+            Drawable drawable = ContextCompat.getDrawable(getContext(), pressIcon);
             /// 这一步必须要做,否则不会显示.
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            if (iconHeight != -1 && iconWith != -1) {
+                drawable.setBounds(0, 0, iconWith, iconHeight);
+            } else {
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            }
             this.setCompoundDrawables(null, null, drawable, null);
         }
     }
@@ -152,12 +171,16 @@ public class PopupButton extends Button implements PopupWindow.OnDismissListener
     private void setNormal() {
         if (normalBg != -1) {
             this.setBackgroundResource(normalBg);
-            this.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom);
+            this.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         }
         if (normalIcon != -1) {
-            Drawable drawable = getResources().getDrawable(normalIcon);
+            Drawable drawable = ContextCompat.getDrawable(getContext(), normalIcon);
             /// 这一步必须要做,否则不会显示.
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            if (iconHeight != -1 && iconWith != -1) {
+                drawable.setBounds(0, 0, iconWith, iconHeight);
+            } else {
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            }
             this.setCompoundDrawables(null, null, drawable, null);
         }
     }
@@ -165,7 +188,7 @@ public class PopupButton extends Button implements PopupWindow.OnDismissListener
     @Override
     public void onDismiss() {
         setNormal();
-        if(listener != null) {
+        if (listener != null) {
             listener.onHide();
         }
     }
