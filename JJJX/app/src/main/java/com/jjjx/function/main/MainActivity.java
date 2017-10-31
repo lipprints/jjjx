@@ -23,7 +23,9 @@ import com.jjjx.data.GlideManage;
 import com.jjjx.function.find.FindFragment;
 import com.jjjx.function.home.HomeFragment;
 import com.jjjx.function.login.LoginActivity;
+import com.jjjx.function.message.view.ChatListFragment;
 import com.jjjx.function.my.MyFragment;
+import com.jjjx.utils.AppCompatNotificationBar;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.widget.JxViewPager;
 
@@ -43,7 +45,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private JxViewPager mViewPager;
     private List<Fragment> mFragment = new ArrayList<>();
     private RadioButton mHomeRadio;
-
 
 
     @Override
@@ -67,7 +68,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         mFragment.add(new HomeFragment());
         mFragment.add(new FindFragment());
-        mFragment.add(conversationList);
+        mFragment.add(new ChatListFragment());
         mFragment.add(new MyFragment());
 
         FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -189,6 +190,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      */
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (checkedId == R.id.tab_home || checkedId == R.id.tab_my) {
+            AppCompatNotificationBar.setNotificationBarColor(R.color.app_main_color, this);
+        } else {
+            AppCompatNotificationBar.setNotificationBarColor(R.color.app_sub_color, this);
+        }
         switch (checkedId) {
             // 首页
             case R.id.tab_home:
@@ -201,6 +207,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             // 消息
             case R.id.tab_message:
                 if (CacheTask.getInstance().isLogin()) {
+
                     mViewPager.setCurrentItem(2);
                 } else {
                     startActivity(new Intent(this, LoginActivity.class));

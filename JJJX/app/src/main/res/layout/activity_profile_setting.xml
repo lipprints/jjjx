@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <com.jjjx.widget.CircleImageView
-            android:id="@+id/jx_user_head"
+            android:id="@+id/fm_head"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/login_bg"

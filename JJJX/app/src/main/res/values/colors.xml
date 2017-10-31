@@ -8,11 +8,17 @@
 
     <!--&gt;=23-->
     <color name="colorPrimary_23">#FFD946</color>
-    <color name="colorPrimaryDark_23">#FFD946</color>
+    <color name="colorPrimaryDark_23">#F9F9F9</color>
     <color name="colorAccent_23">#FFD946</color>
+
+    <!--app页面背景色-->
+    <color name="base_color">#F6F7FB</color>
 
     <!--app主色-->
     <color name="app_main_color">#FFD946</color>
+
+    <!--app辅主色-->
+    <color name="app_sub_color">#F9F9F9</color>
 
     <!--app文字黑色-->
     <color name="app_txt_black_0">#000000</color>
@@ -20,8 +26,11 @@
     <!--app文字黑色9-->
     <color name="app_txt_black_9">#999999</color>
 
+    <!--app文字黑色8-->
+    <color name="app_txt_black_8">#888888</color>
+
     <!--分割线-->
-    <color name="app_divider_color">#1Affffff</color>
+    <color name="app_divider_color">#DDDDDD</color>
 
     <color name="bg_color">#EDEDED</color>
     <color name="white">#ffffffff</color>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--我的首页 布局-->
+    <style name="MyMainLinearStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:paddingLeft">14dp</item>
+        <item name="android:paddingRight">14dp</item>
+        <item name="android:paddingTop">14dp</item>
+    </style>
+
+    <!--我的首页箭头-->
+    <style name="MyMainRighJT">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">15dp</item>
+        <item name="android:src">@drawable/ico_right_jiantou</item>
+    </style>
+
+    <!--我的首页，文字-->
+    <style name="MyMainTextViewJT">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textColor">@color/app_txt_black_0</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>

@@ -1,14 +1,14 @@
 package com.jjjx.function.my;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -20,18 +20,18 @@ import com.jjjx.App;
 import com.jjjx.Constants;
 import com.jjjx.R;
 import com.jjjx.activity.ClassManageActivity;
-import com.jjjx.function.login.LoginActivity;
 import com.jjjx.activity.MyCollectionsActivity;
-import com.jjjx.activity.MyFollowListActivity;
 import com.jjjx.activity.ProfileSettingActivity;
 import com.jjjx.activity.VerifyRoleActivity;
 import com.jjjx.activity.WaitingVerifyActivity;
+import com.jjjx.data.GlideManage;
 import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.function.bean.UploadImageModel;
+import com.jjjx.function.login.LoginActivity;
 import com.jjjx.utils.CacheTask;
+import com.jjjx.utils.DpUtil;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.CircleImageView;
-import com.jjjx.widget.ListItemTextView;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
 
@@ -48,56 +48,74 @@ import static android.app.Activity.RESULT_OK;
 public class MyFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     CircleImageView circleImageView;
-    ListItemTextView quitTextView;
-    ListItemTextView verifyTextView;
-    ListItemTextView profileSettingTextView;
-    ListItemTextView myCollectionTextView;
-    ListItemTextView classManageTextView;
-    ListItemTextView myFollowListTextView;
+    // ListItemTextView quitTextView;
+    LinearLayout verifyTextView;
+    LinearLayout profileSettingTextView;
+    LinearLayout myCollectionTextView;
+    LinearLayout classManageTextView;
+    // ListItemTextView myFollowListTextView;
     TextView userName;
+    private TextView mUserId;
+    /**
+     * 用户头像宽高 px
+     */
+    private int mHeadImageWidth;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mine, container, false);
-        circleImageView = (CircleImageView) v.findViewById(R.id.jx_user_head);
-        quitTextView = (ListItemTextView) v.findViewById(R.id.mine_quit);
-        verifyTextView = (ListItemTextView) v.findViewById(R.id.mine_i_want_verify);
-        profileSettingTextView = (ListItemTextView) v.findViewById(R.id.mine_profile_setting);
-        myCollectionTextView = (ListItemTextView) v.findViewById(R.id.mine_my_collection);
-        classManageTextView = (ListItemTextView) v.findViewById(R.id.mine_class_manage);
-        myFollowListTextView = (ListItemTextView) v.findViewById(R.id.mine_my_follow_list);
-        userName = (TextView) v.findViewById(R.id.jx_user_name);
+
+        mHeadImageWidth = DpUtil.dip2px(getContext(), 50);
+
+        ImageView userBackgroud = v.findViewById(R.id.fm_user_bg);
+        circleImageView = v.findViewById(R.id.fm_head);
+        //quitTextView = v.findViewById(R.id.mine_quit);
+        verifyTextView = v.findViewById(R.id.mine_i_want_verify);
+        profileSettingTextView = v.findViewById(R.id.mine_profile_setting);
+        myCollectionTextView = v.findViewById(R.id.mine_my_collection);
+        classManageTextView = v.findViewById(R.id.mine_class_manage);
+        // myFollowListTextView =  v.findViewById(R.id.mine_my_follow_list);
+        userName = v.findViewById(R.id.fm_name);
+        mUserId = v.findViewById(R.id.fm_id);
         circleImageView.setOnClickListener(this);
         verifyTextView.setOnClickListener(this);
         profileSettingTextView.setOnClickListener(this);
-        quitTextView.setOnClickListener(this);
+        //quitTextView.setOnClickListener(this);
         myCollectionTextView.setOnClickListener(this);
         classManageTextView.setOnClickListener(this);
-        myFollowListTextView.setOnClickListener(this);
-        Glide.with(getActivity()).load(CacheTask.getInstance().getPortrait()).into(new SimpleTarget<GlideDrawable>() {
+        // myFollowListTextView.setOnClickListener(this);
+
+        GlideManage glideManage = new GlideManage(getContext());
+        //用户块添加背景色
+        glideManage.getRequestManager().load(R.drawable.ico_user_head_bg).centerCrop().placeholder(R.color.app_sub_color).into(userBackgroud);
+
+        glideManage.getRequestManager().load(CacheTask.getInstance().getPortrait()).override(mHeadImageWidth,mHeadImageWidth).into(new SimpleTarget<GlideDrawable>() {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                 circleImageView.setImageDrawable(resource);
             }
         });
         userName.setText(CacheTask.getInstance().getName());
+        mUserId.setText("ID:"+CacheTask.getInstance().getUserId());
         LoginActivity.setOnLoginDoneListener(new LoginActivity.LoginDoneListener() {
             @Override
             public void done() {
-                Glide.with(getActivity()).load(CacheTask.getInstance().getPortrait()).into(new SimpleTarget<GlideDrawable>() {
+                Glide.with(getActivity()).load(CacheTask.getInstance().getPortrait()).override(mHeadImageWidth,mHeadImageWidth).into(new SimpleTarget<GlideDrawable>() {
                     @Override
                     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                         circleImageView.setImageDrawable(resource);
                     }
                 });
                 userName.setText(CacheTask.getInstance().getName());
+                mUserId.setText("ID:"+CacheTask.getInstance().getUserId());
             }
         });
         ProfileSettingActivity.setProfileChangeListener(new ProfileSettingActivity.ProfileChangeListener() {
             @Override
             public void change() {
                 userName.setText(CacheTask.getInstance().getName());
+
             }
         });
         return v;
@@ -161,34 +179,37 @@ public class MyFragment extends android.support.v4.app.Fragment implements View.
                     case 4:
                         startActivity(new Intent(getActivity(), WaitingVerifyActivity.class));
                         break;
+                    default:
+                        break;
                 }
+
 
                 break;
             case R.id.mine_profile_setting:
                 startActivity(new Intent(getActivity(), ProfileSettingActivity.class));
                 break;
-            case R.id.mine_quit:
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("提示")
-                        .setMessage("是否退出应用?")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                CacheTask.getInstance().clearAllCache();
-                                NToast.shortToast(getActivity(), "退出成功");
-                                getActivity().finish();
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .show();
-
-                break;
+//            case R.id.mine_quit:
+//                new AlertDialog.Builder(getActivity())
+//                        .setTitle("提示")
+//                        .setMessage("是否退出应用?")
+//                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                CacheTask.getInstance().clearAllCache();
+//                                NToast.shortToast(getActivity(), "退出成功");
+//                                getActivity().finish();
+//                                dialogInterface.dismiss();
+//                            }
+//                        })
+//                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                dialogInterface.dismiss();
+//                            }
+//                        })
+//                        .show();
+//
+//                break;
             case R.id.mine_my_collection://我的收藏
                 startActivity(new Intent(getActivity(), MyCollectionsActivity.class));
                 break;
@@ -199,9 +220,9 @@ public class MyFragment extends android.support.v4.app.Fragment implements View.
                     NToast.shortToast(getActivity(), "只有老师和学校才能进行课程发布和管理哦,快来加入吧~^_^");
                 }
                 break;
-            case R.id.mine_my_follow_list:
-                startActivity(new Intent(getActivity(), MyFollowListActivity.class));
-                break;
+//            case R.id.mine_my_follow_list:
+//                startActivity(new Intent(getActivity(), MyFollowListActivity.class));
+//                break;
             default:
                 new ImagePicker.Builder(getActivity())
                         .mode(ImagePicker.Mode.GALLERY)

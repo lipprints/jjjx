@@ -103,7 +103,7 @@ public class ProfileSettingActivity extends BaseActivity implements View.OnClick
             }
         });
 
-        imageView = (CircleImageView) findViewById(R.id.jx_user_head);
+        imageView = (CircleImageView) findViewById(R.id.fm_head);
         if (!TextUtils.isEmpty(CacheTask.getInstance().getPortrait())) {
             Glide.with(mContext).load(CacheTask.getInstance().getPortrait()).into(new SimpleTarget<GlideDrawable>() {
                 @Override

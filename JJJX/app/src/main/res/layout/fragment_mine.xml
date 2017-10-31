@@ -1,125 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
+
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:background="@color/theme_color"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="130dp"
+        android:background="@color/theme_color">
 
-        <com.jjjx.widget.CircleImageView
-            android:id="@+id/jx_user_head"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/login_bg"
-            app:civ_border_color="#999"
-            app:civ_border_width="2dp" />
-
-        <TextView
-            android:id="@+id/jx_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="张三"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Id:xxxx"
-            android:visibility="gone" />
-
-
-    </LinearLayout>
-
-    <include layout="@layout/rce_item_divider_20" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/fm_user_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
             android:orientation="vertical">
 
+            <com.jjjx.widget.CircleImageView
+                android:id="@+id/fm_head"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
 
-            <com.jjjx.widget.ListItemTextView
-                android:id="@+id/mine_class_manage"
+            <TextView
+                android:id="@+id/fm_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/app_txt_black_0"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/fm_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/app_txt_black_8"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View style="@style/Line_bg_H_10" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:tv_list_item_allow_arrow="true"
-                app:tv_list_item_title="课程管理"
-                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+                android:layout_height="wrap_content"
+                android:divider="@drawable/my_horizontal_0_5_divider_shape"
+                android:orientation="vertical"
+                android:showDividers="middle">
 
-            <View style="@style/rce_horizontal_light_thin_divider" />
+                <LinearLayout
+                    android:id="@+id/mine_class_manage"
+                    style="@style/MyMainLinearStyle">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ico_course" />
+
+                    <TextView
+                        style="@style/MyMainTextViewJT"
+                        android:text="课程管理" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView style="@style/MyMainRighJT" />
+
+                </LinearLayout>
 
 
-            <com.jjjx.widget.ListItemTextView
-                android:id="@+id/mine_my_follow_list"
+                <LinearLayout
+                    android:id="@+id/mine_i_want_verify"
+                    style="@style/MyMainLinearStyle">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ico_auth" />
+
+                    <TextView
+                        style="@style/MyMainTextViewJT"
+                        android:text="我要认证" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView style="@style/MyMainRighJT" />
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/MyMainLinearStyle">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ico_about" />
+
+                    <TextView
+                        style="@style/MyMainTextViewJT"
+                        android:text="关于我们" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView style="@style/MyMainRighJT" />
+
+                </LinearLayout>
+
+
+                <LinearLayout style="@style/MyMainLinearStyle">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ico_phone" />
+
+                    <TextView
+                        style="@style/MyMainTextViewJT"
+                        android:text="联系方式" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView style="@style/MyMainRighJT" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/Line_bg_H_10" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:tv_list_item_allow_arrow="true"
-                app:tv_list_item_title="我的关注"
-                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
+                android:layout_height="wrap_content"
+                android:divider="@drawable/my_horizontal_0_5_divider_shape"
+                android:orientation="vertical"
+                android:showDividers="middle">
 
-            <View style="@style/rce_horizontal_light_thin_divider" />
+                <LinearLayout
+                    android:id="@+id/mine_my_collection"
+                    style="@style/MyMainLinearStyle">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ico_collect" />
+
+                    <TextView
+                        style="@style/MyMainTextViewJT"
+                        android:text="我的收藏" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView style="@style/MyMainRighJT" />
+
+                </LinearLayout>
 
 
-            <com.jjjx.widget.ListItemTextView
-                android:id="@+id/mine_my_collection"
+                <LinearLayout style="@style/MyMainLinearStyle">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ico_upadate_pass" />
+
+                    <TextView
+                        style="@style/MyMainTextViewJT"
+                        android:text="修改密码" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView style="@style/MyMainRighJT" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mine_profile_setting"
+                    style="@style/MyMainLinearStyle">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ico_info" />
+
+                    <TextView
+                        style="@style/MyMainTextViewJT"
+                        android:text="我的资料" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView style="@style/MyMainRighJT" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:tv_list_item_allow_arrow="true"
-                app:tv_list_item_title="我的收藏"
-                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
-
-
-            <include layout="@layout/rce_item_divider_20" />
-
-            <com.jjjx.widget.ListItemTextView
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:tv_list_item_allow_arrow="true"
-                app:tv_list_item_title="修改密码"
-                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
-
-            <View style="@style/rce_horizontal_light_thin_divider" />
-
-
-            <com.jjjx.widget.ListItemTextView
-                android:id="@+id/mine_i_want_verify"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:tv_list_item_allow_arrow="true"
-                app:tv_list_item_title="我要认证"
-                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
-
-            <include layout="@layout/rce_item_divider_20" />
-
-            <com.jjjx.widget.ListItemTextView
-                android:id="@+id/mine_profile_setting"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:tv_list_item_allow_arrow="true"
-                app:tv_list_item_title="信息设置"
-                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
-
-            <View style="@style/rce_horizontal_light_thin_divider" />
-
-            <com.jjjx.widget.ListItemTextView
-                android:id="@+id/mine_quit"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:tv_list_item_allow_arrow="true"
-                app:tv_list_item_title="退出登录"
-                app:tv_list_item_title_icon="@drawable/rce_ic_me_setting" />
-
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/app_txt_black_0" />
         </LinearLayout>
     </ScrollView>
 

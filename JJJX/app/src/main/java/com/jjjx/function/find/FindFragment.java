@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -14,24 +14,24 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.jjjx.R;
 import com.jjjx.activity.FindPublishActivity;
 import com.jjjx.fragment.BaseFragment;
-import com.jjjx.function.find.adapter.FindPagerAdapter;
 import com.jjjx.function.bean.TabEntity;
+import com.jjjx.function.find.adapter.FindPagerAdapter;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 
 import java.util.ArrayList;
 
 /**
- * Created by AMing on 17/5/8.
+ *
+ * @author AMing
+ * @date 17/5/8
  * Company RongCloud
  */
 public class FindFragment extends BaseFragment {
 
-
-
     private ViewPager mViewPager;
     private CommonTabLayout mTabLayout;
-    private ImageView findPublish;
+    private TextView findPublish;
 
 
     @Override
@@ -42,8 +42,8 @@ public class FindFragment extends BaseFragment {
     }
 
     private void initView(View view) {
-        mTabLayout = (CommonTabLayout) view.findViewById(R.id.ff_stl);
-        mViewPager = (ViewPager) view.findViewById(R.id.ff_viewpager);
+        mTabLayout = view.findViewById(R.id.ff_stl);
+        mViewPager =  view.findViewById(R.id.ff_viewpager);
         //
         mViewPager.setAdapter(new FindPagerAdapter(getChildFragmentManager(), "热门", "关注", "同城"));
         mViewPager.setOffscreenPageLimit(1);
@@ -80,7 +80,7 @@ public class FindFragment extends BaseFragment {
             }
         });
 
-        findPublish = (ImageView) view.findViewById(R.id.jx_find_publish);
+        findPublish = view.findViewById(R.id.jx_find_publish);
         findPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

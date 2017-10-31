@@ -39,9 +39,9 @@ public class ListItemTextView extends LinearLayout {
 
     private void initView(AttributeSet attrs) {
         inflate(getContext(), R.layout.rce_text_list_item, this);
-        arrowImageView = (ImageView) findViewById(R.id.iv_arrow);
-        titleTextView = (TextView) findViewById(R.id.tv_title);
-        detailTextView = (TextView) findViewById(R.id.tv_detail);
+        arrowImageView = findViewById(R.id.iv_arrow);
+        titleTextView =  findViewById(R.id.tv_title);
+        detailTextView =  findViewById(R.id.tv_detail);
         if (attrs != null) {
             TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.rce_tv_list_item);
             boolean enableArrow = attributes.getBoolean(R.styleable.rce_tv_list_item_tv_list_item_allow_arrow, false);

@@ -34,9 +34,13 @@
     <!--titlebar样式-->
     <style name="AppTitleBarStyle">
         <item name="android:gravity">center_vertical</item>
-        <item name="android:background">@color/theme_color</item>
+        <item name="android:background">@color/app_main_color</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
+    </style>
+
+    <style name="AppTitleBarSubStyle" parent="AppTitleBarStyle">
+        <item name="android:background">@color/app_sub_color</item>
     </style>
 
     <style name="rce_horizontal_light_thin_divider">
@@ -123,14 +127,20 @@
     <!-- 通用线 -->
     <style name="Line_H">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5sp</item>
+        <item name="android:layout_height">0.5dp</item>
         <item name="android:background">@color/app_divider_color</item>
+    </style>
+
+    <style name="Line_bg_H_10">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:background">@color/basecolor</item>
     </style>
 
     <!-- 通用线 -->
     <style name="Line_H_Drak">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5sp</item>
+        <item name="android:layout_height">0.5dp</item>
         <item name="android:background">#f2f2f2</item>
     </style>
 </resources>
