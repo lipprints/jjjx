@@ -2,58 +2,99 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
-    android:orientation="vertical">
-
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/splash_logo" />
-
-
-    <EditText
-        android:id="@+id/jx_login_account"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="60dp"
-        android:hint="手机号/邮箱"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
-
-    <EditText
-        android:id="@+id/jx_login_pwd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="30dp"
-        android:hint="密码"
-        android:inputType="textPassword"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dip"
-        android:layout_marginRight="30dip"
-        android:layout_marginTop="34dip"
-        android:background="@drawable/button"
-        android:onClick="login"
-        android:text="登录"
-        android:textColor="#FFF"
-        android:textSize="18sp" />
-
+        android:id="@+id/al_login"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:divider="@drawable/linearlayout_horizontal_0_5_divider_shape"
+        android:orientation="vertical"
+        android:showDividers="middle|end">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="用户名"
+                android:textColor="@color/app_txt_black_0"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/jx_login_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:background="@null"
+                android:hint="请输入手机号"
+                android:paddingBottom="15dp"
+                android:paddingLeft="7dp"
+                android:paddingTop="15dp"
+                android:textColor="@color/app_txt_black_0"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="密码    "
+                android:textColor="@color/app_txt_black_0"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/jx_login_pwd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:background="@null"
+                android:hint="密码"
+                android:inputType="textPassword"
+                android:paddingBottom="15dp"
+                android:paddingLeft="7dp"
+                android:paddingTop="15dp"
+                android:textColor="@color/app_txt_black_0"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        style="@style/SubmitButtonStyle.8R"
+        android:layout_marginTop="25dp"
+        android:onClick="login"
+        android:text="登录" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <TextView
@@ -63,17 +104,20 @@
             android:padding="5dp"
             android:paddingEnd="10dp"
             android:text="免费注册"
-            android:textColor="#FFF" />
+            android:textColor="@color/app_txt_black_8"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:padding="5dp"
             android:paddingStart="10dp"
             android:text="找回密码"
-            android:textColor="#FFF" />
+            android:textColor="@color/app_txt_black_8"
+            android:textSize="14sp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

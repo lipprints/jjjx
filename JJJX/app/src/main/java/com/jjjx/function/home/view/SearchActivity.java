@@ -1,4 +1,4 @@
-package com.jjjx.activity;
+package com.jjjx.function.home.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jjjx.R;
+import com.jjjx.activity.BaseActivity;
+import com.jjjx.activity.IndexItemDetailsActivity;
 import com.jjjx.function.home.adapter.HomeAdapter;
 import com.jjjx.data.response.IndexDataResponse;
 import com.jjjx.utils.NToast;
@@ -19,7 +21,9 @@ import java.util.List;
 
 
 /**
- * Created by AMing on 17/7/27.
+ *
+ * @author AMing
+ * @date 17/7/27
  * Company RongCloud
  */
 
@@ -35,8 +39,8 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         setTitle("搜索");
-        mSearchEdit = (EditText) findViewById(R.id.search_edit);
-        mSearchText = (TextView) findViewById(R.id.search_btn);
+        mSearchEdit =  findViewById(R.id.search_edit);
+        mSearchText =  findViewById(R.id.search_btn);
         mSearchText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +51,7 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
                 request(SEARCH);
             }
         });
-        ListView searchListView = (ListView) findViewById(R.id.search_list);
+        ListView searchListView =  findViewById(R.id.search_list);
         searchListView.setOnItemClickListener(this);
         adapter = new HomeAdapter(mContext, data);
         searchListView.setAdapter(adapter);

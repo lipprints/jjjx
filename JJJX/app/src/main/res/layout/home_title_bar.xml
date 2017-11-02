@@ -9,7 +9,7 @@
     android:paddingRight="0dp">
 
     <LinearLayout
-        android:id="@+id/titleBar_search_ll"
+        android:id="@+id/fi_search_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

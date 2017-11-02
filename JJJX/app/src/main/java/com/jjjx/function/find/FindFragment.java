@@ -12,10 +12,10 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.jjjx.R;
-import com.jjjx.activity.FindPublishActivity;
-import com.jjjx.fragment.BaseFragment;
-import com.jjjx.function.bean.TabEntity;
+import com.jjjx.app.base.BaseFragment;
+import com.jjjx.function.entity.TabEntity;
 import com.jjjx.function.find.adapter.FindPagerAdapter;
+import com.jjjx.function.find.view.FindPublishActivity;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 
@@ -26,6 +26,7 @@ import java.util.ArrayList;
  * @author AMing
  * @date 17/5/8
  * Company RongCloud
+ * 发现首页
  */
 public class FindFragment extends BaseFragment {
 
@@ -91,8 +92,6 @@ public class FindFragment extends BaseFragment {
                 }
             }
         });
-
-
     }
 
 

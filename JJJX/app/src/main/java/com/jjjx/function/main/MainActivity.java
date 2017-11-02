@@ -45,6 +45,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private JxViewPager mViewPager;
     private List<Fragment> mFragment = new ArrayList<>();
     private RadioButton mHomeRadio;
+    /**
+     * 记录上一个fragment
+     */
+    private int pageTag = -1;
 
 
     @Override
@@ -198,18 +202,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         switch (checkedId) {
             // 首页
             case R.id.tab_home:
+                pageTag = checkedId;
                 mViewPager.setCurrentItem(0);
                 break;
             // 发现
             case R.id.tab_find:
+                pageTag = checkedId;
                 mViewPager.setCurrentItem(1);
                 break;
             // 消息
             case R.id.tab_message:
                 if (CacheTask.getInstance().isLogin()) {
-
                     mViewPager.setCurrentItem(2);
                 } else {
+                    //如果没有登陆，是需要把radioButton的还原到上个位置
+                    ((RadioButton) findViewById(pageTag)).setChecked(true);
                     startActivity(new Intent(this, LoginActivity.class));
                 }
 
@@ -219,6 +226,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 if (CacheTask.getInstance().isLogin()) {
                     mViewPager.setCurrentItem(3);
                 } else {
+                    //如果没有登陆，是需要把radioButton的还原到上个位置
+                    ((RadioButton) findViewById(pageTag)).setChecked(true);
                     startActivity(new Intent(this, LoginActivity.class));
                 }
 
@@ -226,6 +235,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             default:
                 break;
         }
+
     }
 
 }

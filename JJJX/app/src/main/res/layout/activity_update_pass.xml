@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:divider="@drawable/linearlayout_horizontal_0_5_divider_shape"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:showDividers="middle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/aup_reg_phone"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/aup_reg_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@null"
+            android:hint="请输入注册手机号"
+            android:inputType="phone"
+            android:lines="1"
+            android:maxLength="15"
+            android:paddingBottom="15dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="15dp"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/aup_code"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/aup_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@null"
+            android:hint="请输入验证码"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="10"
+            android:paddingBottom="15dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="15dp"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/aup_send_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/find_add_shape"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="获取验证码"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/aup_old_pass"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/aup_old_pass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@null"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:maxLength="20"
+            android:paddingBottom="15dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="15dp"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/aup_new_phone"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/aup_new_pass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@null"
+            android:hint="请输入新密码"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:maxLength="20"
+            android:paddingBottom="15dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="15dp"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/aup_new_phone_again"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/aup_new_pass_again"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@null"
+            android:hint="请再次输入新密码"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:maxLength="20"
+            android:paddingBottom="15dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="15dp"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/aup_submit"
+        style="@style/SubmitButtonStyle.8R"
+        android:layout_marginTop="40dp"
+        android:text="确认" />
+
+</LinearLayout>

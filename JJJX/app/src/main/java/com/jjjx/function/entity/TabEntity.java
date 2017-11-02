@@ -1,4 +1,4 @@
-package com.jjjx.function.bean;
+package com.jjjx.function.entity;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
 

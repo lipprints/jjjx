@@ -3,13 +3,11 @@ package com.jjjx.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jjjx.R;
@@ -20,7 +18,9 @@ import java.util.List;
 
 
 /**
- * Created by AMing on 17/9/6.
+ *
+ * @author AMing
+ * @date 17/9/6
  * Company RongCloud
  */
 public class ProfileFindFragment extends android.support.v4.app.Fragment {

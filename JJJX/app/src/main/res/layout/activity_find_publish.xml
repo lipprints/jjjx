@@ -1,25 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/basecolor">
 
-    <EditText
-        android:id="@+id/find_publish_txt"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@null"
-        android:hint="您的老师第一时间会看见你的发帖，请严肃对待哦！" />
-
-    <com.jjjx.widget.MediaGridView
-        android:id="@+id/find_media_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:gravity="start"
-        android:listSelector="@android:color/transparent"
-        android:numColumns="4"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp" />
+        android:background="@color/white"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="说明"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/find_publish_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="top|left"
+            android:hint="您的老师第一时间会看见你的发帖，请严肃对待哦！"
+            android:maxLength="200"
+            android:maxLines="20"
+            android:minHeight="50dp"
+            android:paddingBottom="7dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+
+        <View
+            style="@style/Line_H"
+            android:layout_marginLeft="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="请上传图片或视屏"
+            android:textColor="@color/app_txt_black_0"
+            android:textSize="14sp" />
+
+        <com.jjjx.widget.MediaGridView
+            android:id="@+id/find_media_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="start"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="4"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/submit_video"
+        style="@style/SubmitButtonStyle"
+        android:layout_alignParentBottom="true"
+        android:text="发布" />
+</RelativeLayout>

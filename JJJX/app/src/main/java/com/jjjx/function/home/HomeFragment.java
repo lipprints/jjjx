@@ -14,7 +14,7 @@ import com.jjjx.OnBDLocationListener;
 import com.jjjx.R;
 import com.jjjx.activity.IndexItemDetailsActivity;
 import com.jjjx.activity.PublishActivity;
-import com.jjjx.activity.SearchActivity;
+import com.jjjx.function.home.view.SearchActivity;
 import com.jjjx.app.base.XBaseFragment;
 import com.jjjx.data.response.IndexDataResponse;
 import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
@@ -128,7 +128,7 @@ public class HomeFragment extends XBaseFragment implements OnBDLocationListener,
         indexListView.setAdapter(mAdapter);
         indexListView.setOnItemClickListener(this);
 
-        mSearchLayout = find(R.id.titleBar_search_ll);
+        mSearchLayout = find(R.id.fi_search_layout);
         mSearchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,4 +1,4 @@
-package com.jjjx.activity;
+package com.jjjx.function.find.view;
 
 import android.Manifest;
 import android.content.Context;
@@ -20,13 +20,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.afollestad.materialcamera.MaterialCamera;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jjjx.App;
 import com.jjjx.R;
+import com.jjjx.activity.BaseActivity;
 import com.jjjx.data.okhttp.OkHttpUtils;
-import com.jjjx.function.bean.MediaModel;
+import com.jjjx.function.entity.MediaModel;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.LoadDialog;
@@ -44,8 +46,10 @@ import java.util.UUID;
 
 
 /**
- * Created by AMing on 17/8/6.
+ * @author AMing
+ * @date 17/8/6
  * Company RongCloud
+ * 发现-发布视屏
  */
 public class FindPublishActivity extends BaseActivity {
 
@@ -68,16 +72,15 @@ public class FindPublishActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_publish);
-        setTitle("发现&发布");
-        publishTextView = (EditText) findViewById(R.id.find_publish_txt);
-        mGridView = (MediaGridView) findViewById(R.id.find_media_view);
+        setTitle("发布");
+        publishTextView = findViewById(R.id.find_publish_txt);
+        TextView submitVideo = findViewById(R.id.submit_video);
+        mGridView = findViewById(R.id.find_media_view);
 
         mediaGridAdapter = new MediaGridAdapter(publishMediaList, this);
         mGridView.setAdapter(mediaGridAdapter);
 
-        btn_right.setVisibility(View.VISIBLE);
-        btn_right.setText("发布");
-        btn_right.setOnClickListener(new View.OnClickListener() {
+        submitVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (publishMediaList.size() == 0 && TextUtils.isEmpty(publishTextView.getText().toString().trim())) {
@@ -156,8 +159,8 @@ public class FindPublishActivity extends BaseActivity {
             if (convertView == null) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.item_media, parent, false);
                 holder = new MediaGridAdapter.ViewHolder();
-                holder.imageView = (SimpleDraweeView) convertView.findViewById(R.id.media_image);
-                holder.deleteImage = (ImageView) convertView.findViewById(R.id.badge_delete);
+                holder.imageView =convertView.findViewById(R.id.media_image);
+                holder.deleteImage =  convertView.findViewById(R.id.badge_delete);
                 convertView.setTag(holder);
             } else {
                 holder = (MediaGridAdapter.ViewHolder) convertView.getTag();

@@ -1,4 +1,4 @@
-package com.jjjx.function.find;
+package com.jjjx.function.find.view;
 
 
 import android.content.Context;
@@ -41,8 +41,11 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
- * Created by AMing on 17/8/8.
+ *
+ * @author AMing
+ * @date 17/8/8
  * Company RongCloud
+ *
  */
 public class FindVideoActivity extends AppCompatActivity implements OnDataListener {
     JCVideoPlayerStandard mJcVideoPlayerStandard;

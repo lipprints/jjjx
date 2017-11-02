@@ -8,4 +8,12 @@
     <string name="confirm">确认</string>
     <string name="forget_password">忘记密码</string>
     <string name="cancel">取消</string>
+
+
+    <string name="aup_reg_phone">注册手机号</string>
+    <string name="aup_code">验证码\u3000\u3000</string>
+    <string name="aup_old_pass">原密码\u3000\u3000</string>
+    <string name="aup_new_phone">新密码\u3000\u3000</string>
+    <string name="aup_new_phone_again">再次输入\u3000</string>
+
 </resources>

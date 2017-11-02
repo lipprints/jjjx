@@ -1,4 +1,4 @@
-package com.jjjx.function.bean;
+package com.jjjx.function.entity;
 
 /**
  * Created by AMing on 17/7/11.

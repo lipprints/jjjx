@@ -1,4 +1,4 @@
-package com.jjjx.function.bean.User;
+package com.jjjx.function.entity.user;
 
 /**
  * Created by AMing on 17/7/27.

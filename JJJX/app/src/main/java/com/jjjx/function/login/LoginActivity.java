@@ -6,8 +6,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jjjx.Constants;
 import com.jjjx.R;
 import com.jjjx.activity.BaseActivity;
@@ -15,11 +17,14 @@ import com.jjjx.activity.RegisterActivity;
 import com.jjjx.activity.ResetPasswordActivity;
 import com.jjjx.data.response.GetRongCloudTokenResponse;
 import com.jjjx.data.response.LoginResponse;
+import com.jjjx.function.entity.eventbus.LoginRefreshBus;
 import com.jjjx.utils.AMUtils;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.LoadDialog;
 import com.jjjx.widget.dialog.AppProgressDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -46,13 +51,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setHeadVisibility(View.GONE);
-        accountET = (EditText) findViewById(R.id.jx_login_account);
-        pwdET = (EditText) findViewById(R.id.jx_login_pwd);
-        registerView = (TextView) findViewById(R.id.tv_register);
-        resetPasswordView = (TextView) findViewById(R.id.tv_reset);
+        setTitle("账号登陆");
+        onInitView();
+    }
+
+    private void onInitView() {
+        ImageView loginIco = findViewById(R.id.al_login);
+        accountET = findViewById(R.id.jx_login_account);
+        pwdET = findViewById(R.id.jx_login_pwd);
+        registerView = findViewById(R.id.tv_register);
+        resetPasswordView = findViewById(R.id.tv_reset);
         registerView.setOnClickListener(this);
         resetPasswordView.setOnClickListener(this);
+
+        Glide.with(this).load(R.drawable.ico_login).into(loginIco);
     }
 
     public void login(View view) {
@@ -78,6 +90,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 return action.login(accountString, pwdString);
             case GET_RONG_CLOUD_TOKEN:
                 return action.getRongCloudToken(accountString);
+            default:
+                break;
         }
         return super.doInBackground(requestCode);
     }
@@ -96,7 +110,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     CacheTask.getInstance().cacheName(response.getPara().getName());
                     CacheTask.getInstance().cacheSex(response.getPara().getGender());
                     CacheTask.getInstance().cachePortrait(Constants.DOMAIN + response.getPara().getHead_portrait());
-
+                    //刷新我的页面
+                    EventBus.getDefault().post(new LoginRefreshBus(true));
                     request(GET_RONG_CLOUD_TOKEN);
                 } else if ("E0003".equals(response.getHead().getCode())) {
                     NToast.shortToast(this, response.getHead().getMsg());
@@ -131,6 +146,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     });
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -148,6 +165,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.tv_reset:
                 startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+                break;
+            default:
                 break;
         }
     }

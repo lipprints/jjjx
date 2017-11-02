@@ -1,4 +1,4 @@
-package com.jjjx.function.bean;
+package com.jjjx.function.entity;
 
 import java.io.File;
 

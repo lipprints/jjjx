@@ -13,7 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jjjx.App;
 import com.jjjx.R;
 import com.jjjx.data.okhttp.OkHttpUtils;
-import com.jjjx.function.bean.MediaModel;
+import com.jjjx.function.entity.MediaModel;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.MediaGridView;
 

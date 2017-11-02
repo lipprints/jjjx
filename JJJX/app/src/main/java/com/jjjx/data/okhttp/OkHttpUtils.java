@@ -7,7 +7,7 @@ import android.util.Log;
 
 
 import com.jjjx.Constants;
-import com.jjjx.function.bean.MediaModel;
+import com.jjjx.function.entity.MediaModel;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NLog;
 

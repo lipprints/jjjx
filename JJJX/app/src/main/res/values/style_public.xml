@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 按钮样式-->
+    <style name="SubmitButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/tv_bg_0r_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">11dp</item>
+        <item name="android:paddingTop">11dp</item>
+        <item name="android:textColor">@color/app_txt_black_0</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!--圆角2dp的按钮-->
+    <style name="SubmitButtonStyle.2R">
+        <item name="android:background">@drawable/tv_bg_2r_shape</item>
+    </style>
+
+    <!--圆角8p的按钮-->
+    <style name="SubmitButtonStyle.8R">
+        <item name="android:background">@drawable/tv_bg_8r_shape</item>
+    </style>
+
+
+</resources>

@@ -30,7 +30,7 @@ import com.jjjx.App;
 import com.jjjx.OnBDLocationListener;
 import com.jjjx.R;
 import com.jjjx.data.okhttp.OkHttpUtils;
-import com.jjjx.function.bean.MediaModel;
+import com.jjjx.function.entity.MediaModel;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.ListItemTextView;

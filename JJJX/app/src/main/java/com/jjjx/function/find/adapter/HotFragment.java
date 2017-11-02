@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.jjjx.R;
 import com.jjjx.activity.FindImageActivity;
-import com.jjjx.function.find.FindVideoActivity;
+import com.jjjx.function.find.view.FindVideoActivity;
 import com.jjjx.function.login.LoginActivity;
 import com.jjjx.app.adapter.RvPureAdapter;
 import com.jjjx.app.base.XBaseLazyFragment;

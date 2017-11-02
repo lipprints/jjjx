@@ -98,7 +98,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.SearchActivity"
+            android:name=".function.home.view.SearchActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -122,10 +122,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.FindImageActivity" />
-        <activity android:name=".function.find.FindVideoActivity" />
+        <activity android:name=".function.find.view.FindVideoActivity" />
 
         <activity
-            android:name=".activity.FindPublishActivity"
+            android:name=".function.find.view.FindPublishActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -155,6 +155,10 @@
                     android:scheme="rong" />
             </intent-filter>
 
+        </activity>
+        <activity android:name=".function.my.view.UpdatePassActivity"
+            android:screenOrientation="portrait" >
+            <!--修改密码-->
         </activity>
     </application>
 
