@@ -11,12 +11,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.jjjx.R;
 import com.jjjx.activity.FindImageActivity;
-import com.jjjx.function.find.view.FindVideoActivity;
-import com.jjjx.function.login.LoginActivity;
 import com.jjjx.app.adapter.RvPureAdapter;
 import com.jjjx.app.base.XBaseLazyFragment;
 import com.jjjx.data.GlideManage;
 import com.jjjx.data.response.FindDataResponse;
+import com.jjjx.function.find.view.FindVideoActivity;
+import com.jjjx.function.login.LoginActivity;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -42,6 +42,7 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
     private GlideManage mGlideManage;
     private FindPureAdapter mAdapter;
     private int tempPosition;
+
 
     @Override
     protected int getContentView() {

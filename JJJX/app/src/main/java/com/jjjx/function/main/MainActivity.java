@@ -1,7 +1,6 @@
 package com.jjjx.function.main;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -31,9 +30,6 @@ import com.jjjx.widget.JxViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imlib.model.Conversation;
 
 /**
  * @author am
@@ -67,7 +63,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initMainViewPager() {
-        ConversationListFragment conversationList = initConversationList();
         mViewPager = findViewById(R.id.main_viewpager);
 
         mFragment.add(new HomeFragment());
@@ -108,24 +103,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mViewPager.setScanScroll(false);
     }
 
-    private ConversationListFragment initConversationList() {
-        ConversationListFragment listFragment = new ConversationListFragment();
-        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
-                .appendPath("conversationlist")
-                //设置私聊会话是否聚合显示
-                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false")
-                //群组
-                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")
-                //公共服务号
-                .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")
-                //订阅号
-                .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")
-                //系统
-                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")
-                .build();
-        listFragment.setUri(uri);
-        return listFragment;
-    }
+
 
     private void initViews() {
         RadioGroup radioGroup = findViewById(R.id.ahm_rg);
@@ -223,13 +201,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             // 我的
             case R.id.tab_my:
-                if (CacheTask.getInstance().isLogin()) {
+                //if (CacheTask.getInstance().isLogin()) {
                     mViewPager.setCurrentItem(3);
-                } else {
-                    //如果没有登陆，是需要把radioButton的还原到上个位置
-                    ((RadioButton) findViewById(pageTag)).setChecked(true);
-                    startActivity(new Intent(this, LoginActivity.class));
-                }
+//                } else {
+//                    //如果没有登陆，是需要把radioButton的还原到上个位置
+//                    ((RadioButton) findViewById(pageTag)).setChecked(true);
+//                    startActivity(new Intent(this, LoginActivity.class));
+//                }
 
                 break;
             default:

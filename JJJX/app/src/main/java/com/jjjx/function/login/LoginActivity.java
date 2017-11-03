@@ -17,14 +17,14 @@ import com.jjjx.activity.RegisterActivity;
 import com.jjjx.activity.ResetPasswordActivity;
 import com.jjjx.data.response.GetRongCloudTokenResponse;
 import com.jjjx.data.response.LoginResponse;
-import com.jjjx.function.entity.eventbus.LoginRefreshBus;
 import com.jjjx.utils.AMUtils;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.LoadDialog;
 import com.jjjx.widget.dialog.AppProgressDialog;
 
-import org.greenrobot.eventbus.EventBus;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -111,7 +111,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     CacheTask.getInstance().cacheSex(response.getPara().getGender());
                     CacheTask.getInstance().cachePortrait(Constants.DOMAIN + response.getPara().getHead_portrait());
                     //刷新我的页面
-                    EventBus.getDefault().post(new LoginRefreshBus(true));
                     request(GET_RONG_CLOUD_TOKEN);
                 } else if ("E0003".equals(response.getHead().getCode())) {
                     NToast.shortToast(this, response.getHead().getMsg());
@@ -132,8 +131,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         public void onSuccess(String s) {
                             AppProgressDialog.onDismiss();
                             NToast.shortToast(LoginActivity.this, "登录成功");
-                            if (mLoginDoneListener != null) {
-                                mLoginDoneListener.done();
+                            if (mLoginDoneListener != null && mLoginDoneListener.size() > 0) {
+                                for (LoginDoneListener listener : mLoginDoneListener) {
+                                    listener.done();
+                                }
                             }
                             finish();
                             Log.e(TAG, s + "----onSuccess");
@@ -181,13 +182,39 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private static LoginDoneListener mLoginDoneListener;
+    private static List<LoginDoneListener> mLoginDoneListener = new ArrayList<>();
 
     public interface LoginDoneListener {
+        /**
+         * 登陆完毕
+         */
         void done();
     }
 
+    /**
+     * 因为有多个监听，会被覆盖，需要用到集合
+     */
     public static void setOnLoginDoneListener(LoginDoneListener loginDoneListener) {
-        mLoginDoneListener = loginDoneListener;
+        if (mLoginDoneListener != null) {
+            mLoginDoneListener.add(loginDoneListener);
+        }
+    }
+
+    public static void removeLoginDoneCallback(LoginDoneListener loginDoneListener) {
+        if (mLoginDoneListener != null) {
+            mLoginDoneListener.remove(loginDoneListener);
+        }
+    }
+
+    public static void removeAllCallback() {
+        if (mLoginDoneListener != null) {
+            mLoginDoneListener.clear();
+            mLoginDoneListener = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

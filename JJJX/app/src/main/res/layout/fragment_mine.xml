@@ -67,7 +67,7 @@
                 android:showDividers="middle">
 
                 <LinearLayout
-                    android:id="@+id/mine_class_manage"
+                    android:id="@+id/fm_class_manage"
                     style="@style/MyMainLinearStyle">
 
                     <ImageView
@@ -90,7 +90,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/mine_i_want_verify"
+                    android:id="@+id/fm_want_verify"
                     style="@style/MyMainLinearStyle">
 
                     <ImageView
@@ -163,7 +163,7 @@
                 android:showDividers="middle">
 
                 <LinearLayout
-                    android:id="@+id/mine_my_collection"
+                    android:id="@+id/fm_my_collection"
                     style="@style/MyMainLinearStyle">
 
                     <ImageView
@@ -208,7 +208,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/mine_profile_setting"
+                    android:id="@+id/fm_profile_setting"
                     style="@style/MyMainLinearStyle">
 
                     <ImageView
