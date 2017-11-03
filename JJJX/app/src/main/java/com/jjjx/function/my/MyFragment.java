@@ -27,6 +27,7 @@ import com.jjjx.app.base.XBaseFragment;
 import com.jjjx.data.GlideManage;
 import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.function.entity.UploadImageModel;
+import com.jjjx.function.entity.eventbus.LoginRefreshBus;
 import com.jjjx.function.login.LoginActivity;
 import com.jjjx.function.my.view.UpdatePassActivity;
 import com.jjjx.utils.CacheTask;
@@ -35,6 +36,10 @@ import com.jjjx.utils.NToast;
 import com.jjjx.widget.CircleImageView;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.IOException;
@@ -89,10 +94,10 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
     private int mHeadImageWidth;
     private GlideManage mGlideManage;
 
-    private LoginActivity.LoginDoneListener mLoginDoneListener;
 
     @Override
     protected int getContentView() {
+        EventBus.getDefault().register(this);
         return R.layout.fragment_mine;
     }
 
@@ -125,25 +130,7 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
         mHeadImageWidth = DpUtil.dip2px(getContext(), 50);
         //用户块添加背景色
         mGlideManage.getRequestManager().load(R.drawable.ico_user_head_bg).centerCrop().placeholder(R.color.app_sub_color).into(mUserBackgroud);
-        //设置登陆监听
-        LoginActivity.setOnLoginDoneListener(mLoginDoneListener = new LoginActivity.LoginDoneListener() {
-            @Override
-            public void done() {
-                mUserName.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Glide.with(getContext()).load(CacheTask.getInstance().getPortrait()).override(mHeadImageWidth, mHeadImageWidth).into(new SimpleTarget<GlideDrawable>() {
-                            @Override
-                            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                                circleImageView.setImageDrawable(resource);
-                            }
-                        });
-                        mUserName.setText(CacheTask.getInstance().getName());
-                        mUserId.setText("ID:" + CacheTask.getInstance().getUserId());
-                    }
-                });
-            }
-        });
+
         ProfileSettingActivity.setProfileChangeListener(new ProfileSettingActivity.ProfileChangeListener() {
             @Override
             public void change() {
@@ -175,6 +162,13 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
             });
             mUserName.setText("欢迎观临，马上登录");
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshPay(LoginRefreshBus refreshBus) {
+       if(refreshBus.isRefresh()){
+           onInitData();
+       }
     }
 
     @Override
@@ -300,8 +294,6 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
 
     @Override
     protected void closeFragment() {
-        if (mLoginDoneListener != null) {
-            LoginActivity.removeLoginDoneCallback(mLoginDoneListener);
-        }
+        EventBus.getDefault().unregister(this);
     }
 }

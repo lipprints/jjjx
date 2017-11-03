@@ -15,20 +15,24 @@ import com.jjjx.app.adapter.RvPureAdapter;
 import com.jjjx.app.base.XBaseLazyFragment;
 import com.jjjx.data.GlideManage;
 import com.jjjx.data.response.FindDataResponse;
+import com.jjjx.function.entity.eventbus.LoginRefreshBus;
 import com.jjjx.function.find.view.FindVideoActivity;
-import com.jjjx.function.login.LoginActivity;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 /**
  * Created by xz on 2017/8/1 0001.
  * 热门
  */
 
-public class HotFragment extends XBaseLazyFragment implements LoginActivity.LoginDoneListener {
+public class HotFragment extends XBaseLazyFragment  {
 
     private static final int GET_FIND = 3;
     private static final int GET_FIND_LOGIN = 4;
@@ -46,6 +50,7 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
 
     @Override
     protected int getContentView() {
+        EventBus.getDefault().register(this);
         return R.layout.fragment_find_hot;
     }
 
@@ -101,7 +106,6 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
         });
         //刷新加载
         mRefreshUtil = new SmartRefreshUtil(mSmartRefreshLayout, mRecyclerView);
-        LoginActivity.setOnLoginDoneListener(this);
     }
 
     @Override
@@ -155,6 +159,7 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
 
     @Override
     public String closeFragment() {
+        EventBus.getDefault().unregister(this);
         if (mAdapter != null) {
             mAdapter.removeDataAll();
         }
@@ -224,8 +229,17 @@ public class HotFragment extends XBaseLazyFragment implements LoginActivity.Logi
         }
     }
 
-    @Override
-    public void done() {
-        request(GET_FIND_LOGIN);
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshPay(LoginRefreshBus refreshBus) {
+        /**
+         * 登录后刷新
+         */
+        if(refreshBus.isRefresh()){
+            request(GET_FIND_LOGIN);
+        }
     }
+
+
+
 }

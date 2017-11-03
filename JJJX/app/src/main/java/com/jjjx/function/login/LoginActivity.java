@@ -17,11 +17,14 @@ import com.jjjx.activity.RegisterActivity;
 import com.jjjx.activity.ResetPasswordActivity;
 import com.jjjx.data.response.GetRongCloudTokenResponse;
 import com.jjjx.data.response.LoginResponse;
+import com.jjjx.function.entity.eventbus.LoginRefreshBus;
 import com.jjjx.utils.AMUtils;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.NToast;
 import com.jjjx.widget.LoadDialog;
 import com.jjjx.widget.dialog.AppProgressDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,12 +133,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         @Override
                         public void onSuccess(String s) {
                             AppProgressDialog.onDismiss();
+                            EventBus.getDefault().post(new LoginRefreshBus(true));
                             NToast.shortToast(LoginActivity.this, "登录成功");
-                            if (mLoginDoneListener != null && mLoginDoneListener.size() > 0) {
-                                for (LoginDoneListener listener : mLoginDoneListener) {
-                                    listener.done();
-                                }
-                            }
                             finish();
                             Log.e(TAG, s + "----onSuccess");
                         }
@@ -172,7 +171,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -182,39 +180,4 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private static List<LoginDoneListener> mLoginDoneListener = new ArrayList<>();
-
-    public interface LoginDoneListener {
-        /**
-         * 登陆完毕
-         */
-        void done();
-    }
-
-    /**
-     * 因为有多个监听，会被覆盖，需要用到集合
-     */
-    public static void setOnLoginDoneListener(LoginDoneListener loginDoneListener) {
-        if (mLoginDoneListener != null) {
-            mLoginDoneListener.add(loginDoneListener);
-        }
-    }
-
-    public static void removeLoginDoneCallback(LoginDoneListener loginDoneListener) {
-        if (mLoginDoneListener != null) {
-            mLoginDoneListener.remove(loginDoneListener);
-        }
-    }
-
-    public static void removeAllCallback() {
-        if (mLoginDoneListener != null) {
-            mLoginDoneListener.clear();
-            mLoginDoneListener = null;
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }
