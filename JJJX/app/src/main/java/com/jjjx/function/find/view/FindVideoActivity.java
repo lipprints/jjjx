@@ -16,9 +16,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jjjx.JxAction;
+import com.jjjx.network.JxAction;
 import com.jjjx.R;
-import com.jjjx.adapter.CommentAdapter;
+import com.jjjx.function.find.adapter.CommentAdapter;
 import com.jjjx.data.async.AsyncTaskManager;
 import com.jjjx.data.async.OnDataListener;
 import com.jjjx.data.response.AddCommentResponse;

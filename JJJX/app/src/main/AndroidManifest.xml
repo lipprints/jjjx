@@ -44,7 +44,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".App"
+        android:name=".app.App"
         android:allowBackup="true"
         android:icon="@drawable/app_ico"
         android:label="@string/app_name"
@@ -52,7 +52,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".function.login.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -81,20 +81,20 @@
             android:name=".function.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".function.login.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PublishActivity"
+            android:name=".function.add.view.PublishActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.VerifyRoleActivity"
+            android:name=".function.my.verify.VerifyRoleActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.ProfileSettingActivity"
+            android:name=".function.my.view.ProfileSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ClassModeActivity"
+            android:name=".function.add.view.ClassModeActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -102,26 +102,26 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.WaitingVerifyActivity"
+            android:name=".function.my.verify.WaitingVerifyActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.ClassManageActivity"
+            android:name=".function.my.view.ClassManageActivity"
             android:screenOrientation="portrait" />
 
 
         <activity
-            android:name=".activity.MyFollowListActivity"
+            android:name=".function.my.view.MyFollowListActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.UploadExamineActivity"
+            android:name=".function.my.verify.UploadExamineActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.IndexItemDetailsActivity"
+            android:name=".function.main.IndexItemDetailsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.FindImageActivity" />
+        <activity android:name=".function.find.FindImageActivity" />
         <activity android:name=".function.find.view.FindVideoActivity" />
 
         <activity
@@ -129,18 +129,18 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.MyCollectionsActivity"
+            android:name=".function.my.view.MyCollectionsActivity"
             android:screenOrientation="portrait" />
 
 
         <activity
-            android:name=".activity.ResetPasswordActivity"
+            android:name=".function.login.ResetPasswordActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.UserProfileActivity" />
+        <activity android:name=".function.my.view.UserProfileActivity" />
 
         <activity
-            android:name=".activity.ConversationActivity"
+            android:name=".function.message.view.ConversationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -156,9 +156,16 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".function.my.view.UpdatePassActivity"
-            android:screenOrientation="portrait" >
+        <activity
+            android:name=".function.my.view.UpdatePassActivity"
+            android:screenOrientation="portrait">
             <!--修改密码-->
+        </activity>
+        <activity
+            android:name=".function.my.verify.IdentityVerifyActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:screenOrientation="portrait">
+            <!--我要认证-->
         </activity>
     </application>
 

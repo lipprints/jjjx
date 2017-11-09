@@ -12,7 +12,7 @@
     <color name="colorAccent_23">#FBD954</color>
 
     <!--app页面背景色-->
-    <color name="base_color">#F6F7FB</color>
+    <color name="basecolor">#F6F7FB</color>
 
     <!--app主色-->
     <color name="app_main_color">#FBD954</color>
@@ -56,8 +56,8 @@
     <!--app灰色-->
     <color name="app_gray_color">#999999</color>
 
-    <!-- 背景色-->
-    <color name="basecolor">#f5f5f5</color>
+
+
 
     <color name="commentColor">#f6f6f6</color>
     <color name="commentTextColor">#999999</color>

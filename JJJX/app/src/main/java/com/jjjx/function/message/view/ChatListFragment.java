@@ -4,7 +4,7 @@ import android.net.Uri;
 import android.view.View;
 
 import com.jjjx.R;
-import com.jjjx.app.base.XBaseFragment;
+import com.jjjx.function.base.XBaseFragment;
 
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;

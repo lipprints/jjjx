@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.jjjx.App;
+import com.jjjx.app.App;
 
 /**
  * Created by xcoder_xz on 2017/5/3 0003.

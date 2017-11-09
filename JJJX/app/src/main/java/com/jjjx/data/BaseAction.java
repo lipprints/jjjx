@@ -3,7 +3,7 @@ package com.jjjx.data;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.jjjx.Constants;
+import com.jjjx.network.Constants;
 import com.jjjx.data.cache.CacheManager;
 import com.jjjx.data.json.JsonMananger;
 import com.jjjx.data.okhttp.OkHttpUtils;

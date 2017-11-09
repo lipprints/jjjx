@@ -153,7 +153,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <View style="@style/Line_bg_H_10" />
+            <View android:id="@+id/fm_line" style="@style/Line_bg_H_10" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,6 +161,7 @@
                 android:divider="@drawable/my_horizontal_0_5_divider_shape"
                 android:orientation="vertical"
                 android:showDividers="middle">
+
 
                 <LinearLayout
                     android:id="@+id/fm_my_collection"
@@ -228,6 +229,7 @@
                     <ImageView style="@style/MyMainRighJT" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/fm_out"
                     style="@style/MyMainLinearStyle">

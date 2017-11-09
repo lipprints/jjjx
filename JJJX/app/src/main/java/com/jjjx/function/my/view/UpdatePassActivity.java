@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jjjx.R;
-import com.jjjx.activity.BaseActivity;
+import com.jjjx.function.base.BaseActivity;
 import com.jjjx.utils.ToastUtil;
 
 /**

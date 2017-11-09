@@ -12,12 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.jjjx.App;
+import com.jjjx.app.App;
 import com.jjjx.R;
-import com.jjjx.activity.BaseActivity;
-import com.jjjx.activity.PublishActivity;
-import com.jjjx.activity.VerifyRoleActivity;
-import com.jjjx.activity.WaitingVerifyActivity;
+import com.jjjx.function.base.BaseActivity;
+import com.jjjx.function.add.view.PublishActivity;
+import com.jjjx.function.my.verify.VerifyRoleActivity;
+import com.jjjx.function.my.verify.WaitingVerifyActivity;
 import com.jjjx.data.GlideManage;
 import com.jjjx.function.find.FindFragment;
 import com.jjjx.function.home.HomeFragment;
@@ -102,7 +102,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
         mViewPager.setScanScroll(false);
     }
-
 
 
     private void initViews() {
@@ -202,7 +201,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             // 我的
             case R.id.tab_my:
                 //if (CacheTask.getInstance().isLogin()) {
-                    mViewPager.setCurrentItem(3);
+                pageTag = checkedId;
+                mViewPager.setCurrentItem(3);
 //                } else {
 //                    //如果没有登陆，是需要把radioButton的还原到上个位置
 //                    ((RadioButton) findViewById(pageTag)).setChecked(true);

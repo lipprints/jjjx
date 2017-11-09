@@ -15,6 +15,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jjjx.R;
+import com.jjjx.widget.popup.NsdkPopupWindow;
 
 
 /**
@@ -23,11 +24,24 @@ import com.jjjx.R;
  */
 @SuppressLint("AppCompatCustomView")
 public class PopupButton extends TextView implements PopupWindow.OnDismissListener {
-    private int normalBg;//正常状态下的背景
-    private int pressBg;//按下状态下的背景
-    private int normalIcon;//正常状态下的图标
-    private int pressIcon;//按下状态下的图标
-    private PopupWindow popupWindow;
+    /**
+     * 正常状态下的背景
+     */
+    private int normalBg;
+    /**
+     * 按下状态下的背景
+     */
+    private int pressBg;
+    /**
+     * 正常状态下的图标
+     */
+    private int normalIcon;
+
+    /**
+     * 按下状态下的图标
+     */
+    private int pressIcon;
+    private NsdkPopupWindow popupWindow;
     private Context context;
     private int screenWidth;
     private int screenHeight;
@@ -35,13 +49,16 @@ public class PopupButton extends TextView implements PopupWindow.OnDismissListen
     private int paddingLeft;
     private int paddingRight;
     private int paddingBottom;
-    private int iconWith;//图标宽
-    private int iconHeight;//图标高
-    private PopupButtonListener listener;
     /**
-     * 图标文字是否居中
+     * 图标宽
      */
-    private boolean textAndIconCenterToRight;
+    private int iconWith;
+
+    /**
+     * 图标高
+     */
+    private int iconHeight;
+    private PopupButtonListener listener;
 
     public PopupButton(Context context) {
         super(context);
@@ -124,7 +141,7 @@ public class PopupButton extends TextView implements PopupWindow.OnDismissListen
                     view.setLayoutParams(params);
                     layout.addView(view);
                     layout.setBackgroundColor(Color.argb(60, 0, 0, 0));
-                    popupWindow = new PopupWindow(layout, screenWidth, screenHeight);
+                    popupWindow = new NsdkPopupWindow(layout, screenWidth, screenHeight);
                     popupWindow.setFocusable(true);
                     popupWindow.setBackgroundDrawable(new BitmapDrawable());
                     popupWindow.setOutsideTouchable(true);
@@ -144,6 +161,9 @@ public class PopupButton extends TextView implements PopupWindow.OnDismissListen
             }
         });
     }
+
+
+
 
     /**
      * 设置选中时候的按钮状态

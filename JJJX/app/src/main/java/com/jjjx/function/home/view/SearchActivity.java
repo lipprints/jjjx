@@ -10,8 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jjjx.R;
-import com.jjjx.activity.BaseActivity;
-import com.jjjx.activity.IndexItemDetailsActivity;
+import com.jjjx.function.base.BaseActivity;
+import com.jjjx.function.main.IndexItemDetailsActivity;
 import com.jjjx.function.home.adapter.HomeAdapter;
 import com.jjjx.data.response.IndexDataResponse;
 import com.jjjx.utils.NToast;

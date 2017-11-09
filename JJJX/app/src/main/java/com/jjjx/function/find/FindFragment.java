@@ -12,7 +12,7 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.jjjx.R;
-import com.jjjx.app.base.BaseFragment;
+import com.jjjx.function.base.BaseFragment;
 import com.jjjx.function.entity.TabEntity;
 import com.jjjx.function.find.adapter.FindPagerAdapter;
 import com.jjjx.function.find.view.FindPublishActivity;

@@ -3,7 +3,7 @@ package com.jjjx.utils;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.jjjx.App;
+import com.jjjx.app.App;
 
 public class ToastUtil {
 

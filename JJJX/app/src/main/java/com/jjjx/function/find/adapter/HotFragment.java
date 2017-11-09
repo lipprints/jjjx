@@ -10,18 +10,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jjjx.R;
-import com.jjjx.activity.FindImageActivity;
-import com.jjjx.app.adapter.RvPureAdapter;
-import com.jjjx.app.base.XBaseLazyFragment;
 import com.jjjx.data.GlideManage;
 import com.jjjx.data.response.FindDataResponse;
+import com.jjjx.function.base.XBaseLazyFragment;
 import com.jjjx.function.entity.eventbus.LoginRefreshBus;
+import com.jjjx.function.find.FindImageActivity;
 import com.jjjx.function.find.view.FindVideoActivity;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.xz.xadapter.XRvPureAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -116,7 +116,7 @@ public class HotFragment extends XBaseLazyFragment  {
                 mGlideManage = new GlideManage(getContext());
                 mAdapter = new FindPureAdapter(mGlideManage, getContext());
                 //这里处理点击事件
-                mAdapter.setOnItemClickListener(new RvPureAdapter.OnItemClickListener() {
+                mAdapter.setOnItemClickListener(new XRvPureAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                         FindDataResponse.ParaEntity.DiscoverInfoEntity entity = mAdapter.getItem(position);
@@ -237,6 +237,8 @@ public class HotFragment extends XBaseLazyFragment  {
          */
         if(refreshBus.isRefresh()){
             request(GET_FIND_LOGIN);
+        }else{
+            request(GET_FIND);
         }
     }
 

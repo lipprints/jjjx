@@ -9,13 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.baidu.location.BDLocation;
-import com.jjjx.App;
-import com.jjjx.OnBDLocationListener;
+import com.jjjx.app.App;
+import com.jjjx.network.OnBDLocationListener;
 import com.jjjx.R;
-import com.jjjx.activity.IndexItemDetailsActivity;
-import com.jjjx.activity.PublishActivity;
+import com.jjjx.function.main.IndexItemDetailsActivity;
+import com.jjjx.function.add.view.PublishActivity;
 import com.jjjx.function.home.view.SearchActivity;
-import com.jjjx.app.base.XBaseFragment;
+import com.jjjx.function.base.XBaseFragment;
 import com.jjjx.data.response.IndexDataResponse;
 import com.jjjx.data.response.IndexDataResponse.ParaEntity.ComplaintsEntity;
 import com.jjjx.function.home.adapter.HomeAdapter;
@@ -43,16 +43,20 @@ import java.util.List;
  * 首页
  */
 public class HomeFragment extends XBaseFragment implements OnBDLocationListener, AdapterView.OnItemClickListener, PublishActivity.RefreshDataListener, IndexItemDetailsActivity.RefreshListener, View.OnClickListener {
+    private static final int GET_INDEX = 2;
+
     private List<String> images;
     private HomeAdapter mAdapter;
     private List<ComplaintsEntity> data = new ArrayList<>();
     private BDLocation bdLocation;
 
-    private static final int GET_INDEX = 2;
     private SmartRefreshLayout mSmartRefreshLayout;
     private SmartRefreshUtil mSmartRefreshUtil;
     private LinearLayout mSearchLayout;
-    private int mPageIndex = 0;//页码
+    /**
+     * 页码
+     */
+    private int mPageIndex = 0;
     private boolean isRefresh = false;
     private PopupButton mPopupButton1;
     private PopupButton mPopupButton2;
@@ -82,7 +86,6 @@ public class HomeFragment extends XBaseFragment implements OnBDLocationListener,
 
     @Override
     protected void initView(View view) {
-
         mPopupButton1 = find(R.id.popup_button1);
         mPopupButton2 = find(R.id.popup_button2);
         mPopupButton3 = find(R.id.popup_button3);
@@ -254,6 +257,7 @@ public class HomeFragment extends XBaseFragment implements OnBDLocationListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fi_layout_1:
+                //手心第三方斯蒂芬
                 mPopupButton1.performClick();
                 break;
             case R.id.fi_layout_2:
@@ -290,6 +294,7 @@ public class HomeFragment extends XBaseFragment implements OnBDLocationListener,
         super.onSuccess(requestCode, result);
         switch (requestCode) {
             case GET_INDEX:
+                AppProgressDialog.onDismiss();
                 mSmartRefreshUtil.stopRefrshLoad();
                 IndexDataResponse response = (IndexDataResponse) result;
                 if ("10000".equals(response.getHead().getCode())) {
@@ -307,7 +312,7 @@ public class HomeFragment extends XBaseFragment implements OnBDLocationListener,
                         mSmartRefreshUtil.stopRefrshLoad(SmartRefreshUtil.LOAD_NO);
                     }
                 }
-                AppProgressDialog.onDismiss();
+
                 break;
             default:
                 break;

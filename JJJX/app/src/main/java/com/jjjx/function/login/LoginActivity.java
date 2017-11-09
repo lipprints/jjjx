@@ -10,11 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jjjx.Constants;
+import com.jjjx.network.Constants;
 import com.jjjx.R;
-import com.jjjx.activity.BaseActivity;
-import com.jjjx.activity.RegisterActivity;
-import com.jjjx.activity.ResetPasswordActivity;
+import com.jjjx.function.base.BaseActivity;
 import com.jjjx.data.response.GetRongCloudTokenResponse;
 import com.jjjx.data.response.LoginResponse;
 import com.jjjx.function.entity.eventbus.LoginRefreshBus;
@@ -26,15 +24,15 @@ import com.jjjx.widget.dialog.AppProgressDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 /**
- * Created by AMing on 17/5/7.
+ *
+ * @author AMing
+ * @date 17/5/7
  * Company RongCloud
+ * 登陆页
  */
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {

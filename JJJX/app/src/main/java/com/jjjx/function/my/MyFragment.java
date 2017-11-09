@@ -15,20 +15,20 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.jjjx.App;
-import com.jjjx.Constants;
+import com.jjjx.app.App;
+import com.jjjx.network.Constants;
 import com.jjjx.R;
-import com.jjjx.activity.ClassManageActivity;
-import com.jjjx.activity.MyCollectionsActivity;
-import com.jjjx.activity.ProfileSettingActivity;
-import com.jjjx.activity.VerifyRoleActivity;
-import com.jjjx.activity.WaitingVerifyActivity;
-import com.jjjx.app.base.XBaseFragment;
+import com.jjjx.function.base.XBaseFragment;
 import com.jjjx.data.GlideManage;
 import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.function.entity.UploadImageModel;
 import com.jjjx.function.entity.eventbus.LoginRefreshBus;
 import com.jjjx.function.login.LoginActivity;
+import com.jjjx.function.my.verify.IdentityVerifyActivity;
+import com.jjjx.function.my.verify.WaitingVerifyActivity;
+import com.jjjx.function.my.view.ClassManageActivity;
+import com.jjjx.function.my.view.MyCollectionsActivity;
+import com.jjjx.function.my.view.ProfileSettingActivity;
 import com.jjjx.function.my.view.UpdatePassActivity;
 import com.jjjx.utils.CacheTask;
 import com.jjjx.utils.DpUtil;
@@ -67,11 +67,11 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
     /**
      * 我的资料
      */
-    LinearLayout profileSettingLayout;
+    LinearLayout mProfileSettingLayout;
     /**
      * 我的收藏
      */
-    LinearLayout myCollectionLayout;
+    LinearLayout mMyCollectionLayout;
     /**
      * 课程管理
      */
@@ -89,10 +89,16 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
      */
     private ImageView mUserBackgroud;
     /**
+     * 修改密码
+     */
+    private LinearLayout mUpdatePassLayout;
+    /**
      * 用户头像宽高 px
      */
     private int mHeadImageWidth;
     private GlideManage mGlideManage;
+    private LinearLayout mOutLogin;
+    private View mNoLoginLine;
 
 
     @Override
@@ -106,22 +112,23 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
         mUserBackgroud = find(R.id.fm_user_bg);
         circleImageView = find(R.id.fm_head);
         verifyLayout = find(R.id.fm_want_verify);
-        profileSettingLayout = find(R.id.fm_profile_setting);
-        LinearLayout updatePass = find(R.id.fm_update_pass);
-        myCollectionLayout = find(R.id.fm_my_collection);
+        mProfileSettingLayout = find(R.id.fm_profile_setting);
+        mUpdatePassLayout = find(R.id.fm_update_pass);
+        mMyCollectionLayout = find(R.id.fm_my_collection);
         classManageLayout = find(R.id.fm_class_manage);
         //退出登录
-        LinearLayout outLogin = find(R.id.fm_out);
+        mOutLogin = find(R.id.fm_out);
         mUserId = find(R.id.fm_id);
         mUserName = find(R.id.fm_name);
+        mNoLoginLine = find(R.id.fm_line);
 
         circleImageView.setOnClickListener(this);
         verifyLayout.setOnClickListener(this);
-        profileSettingLayout.setOnClickListener(this);
-        myCollectionLayout.setOnClickListener(this);
+        mProfileSettingLayout.setOnClickListener(this);
+        mMyCollectionLayout.setOnClickListener(this);
         classManageLayout.setOnClickListener(this);
-        updatePass.setOnClickListener(this);
-        outLogin.setOnClickListener(this);
+        mUpdatePassLayout.setOnClickListener(this);
+        mOutLogin.setOnClickListener(this);
     }
 
     @Override
@@ -143,6 +150,11 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
 
     private void onInitData() {
         if (CacheTask.getInstance().isLogin()) {
+            mNoLoginLine.setVisibility(View.VISIBLE);
+            mProfileSettingLayout.setVisibility(View.VISIBLE);
+            mMyCollectionLayout.setVisibility(View.VISIBLE);
+            mUpdatePassLayout.setVisibility(View.VISIBLE);
+            mOutLogin.setVisibility(View.VISIBLE);
             mGlideManage.getRequestManager().load(CacheTask.getInstance().getPortrait()).override(mHeadImageWidth, mHeadImageWidth).into(new SimpleTarget<GlideDrawable>() {
                 @Override
                 public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
@@ -154,6 +166,11 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
             }
             mUserId.setText("ID:" + CacheTask.getInstance().getUserId());
         } else {
+            mNoLoginLine.setVisibility(View.GONE);
+            mOutLogin.setVisibility(View.GONE);
+            mProfileSettingLayout.setVisibility(View.GONE);
+            mUpdatePassLayout.setVisibility(View.GONE);
+            mMyCollectionLayout.setVisibility(View.GONE);
             mGlideManage.getRequestManager().load(R.drawable.ico_user_head).override(mHeadImageWidth, mHeadImageWidth).into(new SimpleTarget<GlideDrawable>() {
                 @Override
                 public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
@@ -161,14 +178,13 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
                 }
             });
             mUserName.setText("欢迎观临，马上登录");
+            mUserId.setText("");
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshPay(LoginRefreshBus refreshBus) {
-       if(refreshBus.isRefresh()){
-           onInitData();
-       }
+        onInitData();
     }
 
     @Override
@@ -245,9 +261,16 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), UpdatePassActivity.class));
                 break;
             case R.id.fm_want_verify:
-                switch (Integer.parseInt(CacheTask.getInstance().getUserRole())) {
+                //我要认证
+                if (!CacheTask.getInstance().isLogin()) {
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                    return;
+                }
+//                switch (Integer.parseInt(CacheTask.getInstance().getUserRole())) {
+                switch (1) {
                     case 1:
-                        startActivity(new Intent(getActivity(), VerifyRoleActivity.class));
+                        //去认证
+                        startActivity(new Intent(getActivity(), IdentityVerifyActivity.class));
                         break;
                     case 2:
                         NToast.shortToast(getActivity(), "当前已经成功审核为教师身份");
@@ -263,12 +286,24 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.fm_profile_setting:
+                if (!CacheTask.getInstance().isLogin()) {
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                    return;
+                }
                 startActivity(new Intent(getActivity(), ProfileSettingActivity.class));
                 break;
             case R.id.fm_my_collection://我的收藏
+                if (!CacheTask.getInstance().isLogin()) {
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                    return;
+                }
                 startActivity(new Intent(getActivity(), MyCollectionsActivity.class));
                 break;
             case R.id.fm_class_manage:
+                if (!CacheTask.getInstance().isLogin()) {
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                    return;
+                }
                 if ("2".equals(CacheTask.getInstance().getUserRole()) || "3".equals(CacheTask.getInstance().getUserRole())) {
                     startActivity(new Intent(getActivity(), ClassManageActivity.class));
                 } else {
@@ -277,6 +312,10 @@ public class MyFragment extends XBaseFragment implements View.OnClickListener {
                 break;
 
             default:
+                if (!CacheTask.getInstance().isLogin()) {
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                    return;
+                }
                 new ImagePicker.Builder(getActivity())
                         .mode(ImagePicker.Mode.GALLERY)
                         .compressLevel(ImagePicker.ComperesLevel.MEDIUM)

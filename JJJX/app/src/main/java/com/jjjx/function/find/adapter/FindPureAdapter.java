@@ -10,8 +10,6 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.jjjx.R;
-import com.jjjx.app.adapter.RvPureDataAdapter;
-import com.jjjx.app.adapter.util.RvViewHolder;
 import com.jjjx.data.GlideManage;
 import com.jjjx.data.response.FindDataResponse;
 import com.jjjx.utils.CacheTask;
@@ -20,6 +18,8 @@ import com.jjjx.widget.CircleImageView;
 import com.jjjx.widget.SquareImageView;
 import com.jjjx.widget.like.LikeButton;
 import com.jjjx.widget.like.OnLikeListener;
+import com.xz.xadapter.XRvPureDataAdapter;
+import com.xz.xadapter.xutil.XRvViewHolder;
 
 import java.lang.ref.WeakReference;
 
@@ -29,7 +29,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  * Created by Administrator on 2017/8/6 0006.
  */
 
-public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEntity.DiscoverInfoEntity> {
+public class FindPureAdapter extends XRvPureDataAdapter<FindDataResponse.ParaEntity.DiscoverInfoEntity> {
     private GlideManage mGlideManage;
     private Context mContext;
     private int mImageWidth;
@@ -51,7 +51,7 @@ public class FindPureAdapter extends RvPureDataAdapter<FindDataResponse.ParaEnti
     }
 
     @Override
-    public void onBindViewHolder(RvViewHolder holder, final int position) {
+    public void onBindViewHolder(XRvViewHolder holder, final int position) {
         final FindDataResponse.ParaEntity.DiscoverInfoEntity die = mDatas.get(position);
 
         SquareImageView imageView = holder.getView(R.id.ifh_iv);

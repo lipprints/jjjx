@@ -7,14 +7,14 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.jjjx.R;
-import com.jjjx.app.adapter.RvPureAdapter;
-import com.jjjx.app.base.XBaseLazyFragment;
 import com.jjjx.data.GlideManage;
+import com.jjjx.function.base.XBaseLazyFragment;
 import com.jjjx.utils.ToastUtil;
 import com.jjjx.utils.refreshload.SmartRefreshUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.xz.xadapter.XRvPureAdapter;
 
 /**
  * Created by xz on 2017/8/1 0001.
@@ -90,7 +90,7 @@ public class FollowFragment extends XBaseLazyFragment {
                 mGlideManage = new GlideManage(getContext());
                 mAdapter = new FindPureAdapter(mGlideManage, getContext());
                 //这里处理点击事件
-                mAdapter.setOnItemClickListener(new RvPureAdapter.OnItemClickListener() {
+                mAdapter.setOnItemClickListener(new XRvPureAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                         ToastUtil.showToast("你点击了咯");

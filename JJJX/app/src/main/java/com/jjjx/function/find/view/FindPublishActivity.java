@@ -24,9 +24,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialcamera.MaterialCamera;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.jjjx.App;
+import com.jjjx.app.App;
 import com.jjjx.R;
-import com.jjjx.activity.BaseActivity;
+import com.jjjx.function.base.BaseActivity;
 import com.jjjx.data.okhttp.OkHttpUtils;
 import com.jjjx.function.entity.MediaModel;
 import com.jjjx.utils.CacheTask;
